@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>MCL Editor</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="shortcut icon" href="http://amordoce.com/favicon.ico">
+		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="assets/css/custom.css">
+	</head>
+	<body>
+		<div id="container">
+			<fieldset>
+				<!--<h1>{{title}}</h1>-->
+				<!--<p>{{{welcome}}}</p>-->
+				<!--<h2>{{username}}:</h2>-->
+				<label>{{region}}:</label><br />
+				<select id="region_edit">
+					{{#regions}}
+						<option value="{{id}}">{{name}}</option>
+					{{/regions}}
+				</select><br />
+				<label>{{name}}:</label><br />
+				<input id="username_edit" type="text" placeholder="{{name_placeholder}}" /><button id="username_submit">{{change_avatar}}</button>
+
+				<br><br>
+				{{love_level}} (-100 a 100)
+				<input id="lovelevel_visible" type="checkbox" title="{{visible_level}}" />
+				<input id="lovelevel_edit" value="0" type="range" min="-100" max="100" />
+
+				<h2>{{chat}}:</h2>
+				<textarea id="bubble_edit" placeholder="{{characters_bubble}}"></textarea>
+				<br />
+				<textarea id="response_edit" placeholder="{{answers}}"></textarea>
+
+				<h2>{{scene}}:</h2>
+				Fundo:
+				<input id="file_scene_edit" type="file" onchange="load_from_file('file_scene_edit', null, '#scene')" />
+				<br>
+				<select id="scene_edit" data-sub="#scene_sub_edit"></select>
+				<select id="scene_sub_edit" data-parent="#scene_edit" data-target="#scene"></select>
+
+				<h2>{{characters}}:</h2>
+				Avatar:
+				<input id="file_edit" type="file" onchange="load_from_file('file_edit', '#scene .player-avatar', null)" />
+				<br>
+				Personagem:
+				<input id="file_char_edit" type="file" />
+
+				<br><br>
+				<label>{{avatar}}:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<select id="avatar_edit"></select>
+				<button class="file_submit" onclick="load_from_file('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>
+
+
+				<br />
+				<label>{{character}} 1:</label>
+				<select id="actor1_edit" data-sub="#actor1_sub_edit"></select>
+				<select id="actor1_sub_edit" data-parent="#actor1_edit" data-target="#actor1"></select>
+				<button class="file_submit" onclick="load_from_file('file_char_edit', '#actor1', null)">{{use_sucrette}}</button>
+
+				<br />
+				<label>{{character}} 2:</label>
+				<select id="actor2_edit" data-sub="#actor2_sub_edit"></select>
+				<select id="actor2_sub_edit" data-parent="#actor2_edit" data-target="#actor2"></select>
+				<button class="file_submit" onclick="load_from_file('file_char_edit', '#actor2', null)">{{use_sucrette}}</button>
+
+				<br />
+				<!--<hr />-->
+				<!--<small>{{{legal}}}</small>-->
+			</fieldset>
+			<div id="scene" style="background-image:url(http://assets.amordoce.com/place/web/high/1-938f8d285289b68b.jpg)">
+				<div class="bubble drag" style="left:65px; bottom:325px; display:none"></div>
+				<img id="actor1" class="actor drag" alt="Personagem 1" style="left:215px; bottom:0" src="http://amordoce.com/assets/emotion.kiss!normal%C2%BFid=1&resolution=web">
+				<img id="actor2" class="actor drag" alt="Personagem 2" style="left:525px; bottom:0" src="http://amordoce.com/assets/emotion.kiss!normal%C2%BFid=2&resolution=web">
+				<div id="loveometer" style="display: none">
+					<div class="outer-gauge">
+						<div class="inner-gauge">
+							<div class="gauge" style="height:50%"></div>
+						</div>
+					</div>
+					<div class="heart">
+						<span class="heart-text">0%</span>
+					</div>
+				</div>
+				<div class="responses-wrapper" style="display:none">
+					<ul class="responses"></ul>
+				</div>
+				<div class="player" style="display:none">
+					<img class="player-avatar" src="http://avatars.amordoce.com/face/d.png" alt="Avatar do personagem">
+				</div>
+			</div>
+		</div>
+		<a href="#scene" id="go-to-scene">{{view_result}} &darr;</a>
+		<script src="assets/js/mustache.js"></script>
+		<script src="assets/js/editor.js"></script>
+		<script src="assets/js/custom.js"></script>
+	</body>
+</html>

@@ -1,0 +1,9 @@
+# OS X and Windows-related files
+.DS_Store
+Thumbs.db
+photothumb.db
+
+# IDE-related
+## Intellij IDEA
+.idea/
+*.iml

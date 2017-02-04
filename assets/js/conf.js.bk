@@ -1,0 +1,1835 @@
+var LANG = {
+	// Custom
+	"use_sucrette": "Usar Sucrette",
+
+	// Original
+	"title": "My Candy Love Editor",
+	"description": "Amor Doce cenas editor.",
+	"welcome": "Bem-vindo ao editor cena não oficial do Amor Doce! Uma ferramenta criada com amor por <a href=\"//tumblr.com/follow/lucasmciruzzi\">Lucas</a> e <a href=\"//tumblr.com/follow/myasaberhagen\">Mya</a>. Esperamos que você se divertir com isso! Você pode publicar as suas criações sob a <a href=\"//tumblr.com/tagged/mcledit\">#mcledit</a> e <a href=\"//tumblr.com/tagged/mcleditor\">#mcleditor</a> etiquetas. <strong>AVISO:</strong> Os criadores desta ferramenta não recebe qualquer tipo de renda, e não será no futuro nenhum. Os créditos para as imagens são dos respectivos autores.",
+	"username": "Nome de usuário",
+	"region": "Região (página onde você registrou o seu Sucrette)",
+	"name": "Nome",
+	"name_placeholder": "O seu nome de usuário (NÃO o seu e-mail)",
+	"change_avatar": "Carregar avatar",
+	"love_level": "Amor nível",
+	"visible_level": "Visível nível",
+	"chat": "Diálogo",
+	"characters_bubble": "Personagens bolha",
+	"position": "Posição",
+	"answers": "Respostas (ENTER para separar)",
+	"scene": "Lugar",
+	"characters": "Personagens",
+	"avatar": "Avatar",
+	"character": "Caráter",
+	"flip_character": "Caráter flip",
+	"legal": "Todas as imagens pertencem a <a href=\"//beemoov.com\">Beemoov</a> e <a href=\"//chinomiko.com\">ChinoMiko</a>.",
+	"view_result": "Ver resultado",
+	"regions": [
+		{
+			"id": "de",
+			"name": "Alemanha (www.sweetamoris.de)"
+		},
+		{
+			"id": "br",
+			"name": "Brasil (www.amordoce.com)"
+		},
+		{
+			"id": "us",
+			"name": "EUA (www.mycandylove.com)"
+		},
+		{
+			"id": "es",
+			"name": "Espanha (www.corazondemelon.es)"
+		},
+		{
+			"id": "fi",
+			"name": "Finlândia (www.flirttistoori.com)"
+		},
+		{
+			"id": "fr",
+			"name": "França (www.amoursucre.com)"
+		},
+		{
+			"id": "hu",
+			"name": "Hungria (www.csabitasboljeles.hu)"
+		},
+		{
+			"id": "it",
+			"name": "Itália (www.dolceflirt.it)"
+		},
+		{
+			"id": "jp",
+			"name": "Japão (www.mycandylove.jp)"
+		},
+		{
+			"id": "mx",
+			"name": "México (www.corazondebombon.com)"
+		},
+		{
+			"id": "pl",
+			"name": "Polônia (www.slodkiflirt.pl)"
+		},
+		{
+			"id": "uk",
+			"name": "Reino Unido (www.sweetcrush.co.uk)"
+		},
+		{
+			"id": "ro",
+			"name": "Roménia (www.sweetflirt.ro)"
+		},
+		{
+			"id": "ru",
+			"name": "Rússia (www.sladkiiflirt.ru)"
+		},
+		{
+			"id": "tr",
+			"name": "Turquia (www.askito-m.com)"
+		}
+	],
+	"emotions": [
+		{
+			"id": "9",
+			"name": "Agatha (Normal)"
+		},
+		{
+			"id": "123",
+			"name": "Alexy (Normal)"
+		},
+		{
+			"id": "125",
+			"name": "Alexy (Serious)"
+		},
+		{
+			"id": "124",
+			"name": "Alexy (Smile)"
+		},
+		{
+			"id": "16",
+			"name": "Amber & Friends (Normal)"
+		},
+		{
+			"id": "144",
+			"name": "Amber & Friends (Track-suit)"
+		},
+		{
+			"id": "37",
+			"name": "Amber (Angry)"
+		},
+		{
+			"id": "105",
+			"name": "Amber (Beach angry)"
+		},
+		{
+			"id": "106",
+			"name": "Amber (Beach burned)"
+		},
+		{
+			"id": "104",
+			"name": "Amber (Beach normal)"
+		},
+		{
+			"id": "107",
+			"name": "Amber (Beach sad)"
+		},
+		{
+			"id": "36",
+			"name": "Amber (Normal)"
+		},
+		{
+			"id": "131",
+			"name": "Armin & Alexy (Normal)"
+		},
+		{
+			"id": "132",
+			"name": "Armin & Alexy (Smile)"
+		},
+		{
+			"id": "248",
+			"name": "Armin & Kentin (Flushed)"
+		},
+		{
+			"id": "128",
+			"name": "Armin (Angry A)"
+		},
+		{
+			"id": "129",
+			"name": "Armin (Angry B)"
+		},
+		{
+			"id": "130",
+			"name": "Armin (Angry C)"
+		},
+		{
+			"id": "236",
+			"name": "Armin (Flushed)"
+		},
+		{
+			"id": "126",
+			"name": "Armin (Normal)"
+		},
+		{
+			"id": "127",
+			"name": "Armin (Smile)"
+		},
+		{
+			"id": "247",
+			"name": "Armin, Nathaniel & Kentin (Flushed)"
+		},
+		{
+			"id": "50",
+			"name": "BLAM"
+		},
+		{
+			"id": "117",
+			"name": "Bat (Happy)"
+		},
+		{
+			"id": "115",
+			"name": "Bat (Normal)"
+		},
+		{
+			"id": "116",
+			"name": "Bat (Smile)"
+		},
+		{
+			"id": "20",
+			"name": "Boris (Flushed)"
+		},
+		{
+			"id": "23",
+			"name": "Boris (Normal)"
+		},
+		{
+			"id": "21",
+			"name": "Boris (Sad)"
+		},
+		{
+			"id": "62",
+			"name": "Capucine (Angry)"
+		},
+		{
+			"id": "60",
+			"name": "Capucine (Normal)"
+		},
+		{
+			"id": "75",
+			"name": "Capucine (Pajamas)"
+		},
+		{
+			"id": "61",
+			"name": "Capucine (Smile)"
+		},
+		{
+			"id": "176",
+			"name": "Castiel & Lysander (Normal)"
+		},
+		{
+			"id": "167",
+			"name": "Castiel & Nathaniel (Track-suit A)"
+		},
+		{
+			"id": "172",
+			"name": "Castiel & Nathaniel (Track-suit B)"
+		},
+		{
+			"id": "12",
+			"name": "Castiel (Angry)"
+		},
+		{
+			"id": "80",
+			"name": "Castiel (Beach angry)"
+		},
+		{
+			"id": "83",
+			"name": "Castiel (Beach flushed serious)"
+		},
+		{
+			"id": "81",
+			"name": "Castiel (Beach flushed)"
+		},
+		{
+			"id": "79",
+			"name": "Castiel (Beach normal)"
+		},
+		{
+			"id": "82",
+			"name": "Castiel (Beach smile)"
+		},
+		{
+			"id": "219",
+			"name": "Castiel (Black hair angry)"
+		},
+		{
+			"id": "218",
+			"name": "Castiel (Black hair normal)"
+		},
+		{
+			"id": "220",
+			"name": "Castiel (Black hair smile A)"
+		},
+		{
+			"id": "221",
+			"name": "Castiel (Black hair smile B)"
+		},
+		{
+			"id": "222",
+			"name": "Castiel (Black hair smile C)"
+		},
+		{
+			"id": "232",
+			"name": "Castiel (Brown Jacket Angry)"
+		},
+		{
+			"id": "260",
+			"name": "Castiel (Brown Jacket Apathetic)"
+		},
+		{
+			"id": "231",
+			"name": "Castiel (Brown Jacket Normal)"
+		},
+		{
+			"id": "233",
+			"name": "Castiel (Brown Jacket Smile)"
+		},
+		{
+			"id": "84",
+			"name": "Castiel (Flushed serious)"
+		},
+		{
+			"id": "13",
+			"name": "Castiel (Flushed)"
+		},
+		{
+			"id": "272",
+			"name": "Castiel (New look angry)"
+		},
+		{
+			"id": "274",
+			"name": "Castiel (New look flushed serious)"
+		},
+		{
+			"id": "273",
+			"name": "Castiel (New look normal)"
+		},
+		{
+			"id": "271",
+			"name": "Castiel (New look smile)"
+		},
+		{
+			"id": "2",
+			"name": "Castiel (Normal)"
+		},
+		{
+			"id": "3",
+			"name": "Castiel (Smile)"
+		},
+		{
+			"id": "175",
+			"name": "Castiel (Sweatshirt normal)"
+		},
+		{
+			"id": "141",
+			"name": "Castiel (Track-suit angry)"
+		},
+		{
+			"id": "143",
+			"name": "Castiel (Track-suit flushed serious)"
+		},
+		{
+			"id": "142",
+			"name": "Castiel (Track-suit flushed)"
+		},
+		{
+			"id": "139",
+			"name": "Castiel (Track-suit normal)"
+		},
+		{
+			"id": "140",
+			"name": "Castiel (Track-suit smile)"
+		},
+		{
+			"id": "181",
+			"name": "Charlie (Embarrassed A)"
+		},
+		{
+			"id": "193",
+			"name": "Charlie (Embarrassed B)"
+		},
+		{
+			"id": "192",
+			"name": "Charlie (Flushed)"
+		},
+		{
+			"id": "180",
+			"name": "Charlie (Normal A)"
+		},
+		{
+			"id": "191",
+			"name": "Charlie (Normal B)"
+		},
+		{
+			"id": "179",
+			"name": "Charlie (Smile)"
+		},
+		{
+			"id": "40",
+			"name": "Charlotte (Normal)"
+		},
+		{
+			"id": "160",
+			"name": "ChiNoMiko (Christmas wink)"
+		},
+		{
+			"id": "111",
+			"name": "ChiNoMiko (Halloween wink)"
+		},
+		{
+			"id": "18",
+			"name": "ChiNoMiko (Happy)"
+		},
+		{
+			"id": "19",
+			"name": "ChiNoMiko (Sad)"
+		},
+		{
+			"id": "22",
+			"name": "ChiNoMiko (Wink)"
+		},
+		{
+			"id": "157",
+			"name": "Cotton (Normal)"
+		},
+		{
+			"id": "158",
+			"name": "Cotton (Smile)"
+		},
+		{
+			"id": "159",
+			"name": "Cotton (Worried)"
+		},
+		{
+			"id": "31",
+			"name": "Dajan (Angry)"
+		},
+		{
+			"id": "33",
+			"name": "Dajan (Normal B)"
+		},
+		{
+			"id": "29",
+			"name": "Dajan (Normal)"
+		},
+		{
+			"id": "30",
+			"name": "Dajan (Smile)"
+		},
+		{
+			"id": "286",
+			"name": "Dakota (Dress Smile glasses B)"
+		},
+		{
+			"id": "291",
+			"name": "Dakota (Dress beaten embarrassed)"
+		},
+		{
+			"id": "290",
+			"name": "Dakota (Dress beaten normal)"
+		},
+		{
+			"id": "292",
+			"name": "Dakota (Dress beaten smile)"
+		},
+		{
+			"id": "282",
+			"name": "Dakota (Dress normal glasses)"
+		},
+		{
+			"id": "281",
+			"name": "Dakota (Dress normal)"
+		},
+		{
+			"id": "283",
+			"name": "Dakota (Dress smile A)"
+		},
+		{
+			"id": "285",
+			"name": "Dakota (Dress smile B)"
+		},
+		{
+			"id": "284",
+			"name": "Dakota (Dress smile glasses A)"
+		},
+		{
+			"id": "90",
+			"name": "Dakota (Normal)"
+		},
+		{
+			"id": "91",
+			"name": "Dakota (Smile A)"
+		},
+		{
+			"id": "92",
+			"name": "Dakota (Smile B)"
+		},
+		{
+			"id": "164",
+			"name": "Dakota (Track-suit Normal)"
+		},
+		{
+			"id": "165",
+			"name": "Dakota (Track-suit Smile A)"
+		},
+		{
+			"id": "166",
+			"name": "Dakota (Track-suit Smile B)"
+		},
+		{
+			"id": "265",
+			"name": "Dark Castiel (Normal)"
+		},
+		{
+			"id": "261",
+			"name": "Dark Louis"
+		},
+		{
+			"id": "264",
+			"name": "Dark Nathaniel (Normal)"
+		},
+		{
+			"id": "263",
+			"name": "Dark Nathaniel (Smile)"
+		},
+		{
+			"id": "266",
+			"name": "Dark Principal (Angry)"
+		},
+		{
+			"id": "255",
+			"name": "Deborah (Angry)"
+		},
+		{
+			"id": "259",
+			"name": "Deborah (Crying)"
+		},
+		{
+			"id": "217",
+			"name": "Deborah (Flushed)"
+		},
+		{
+			"id": "215",
+			"name": "Deborah (Normal)"
+		},
+		{
+			"id": "258",
+			"name": "Deborah (Sad smile)"
+		},
+		{
+			"id": "230",
+			"name": "Deborah (Sad)"
+		},
+		{
+			"id": "216",
+			"name": "Deborah (Smile)"
+		},
+		{
+			"id": "235",
+			"name": "Deborah (Wet)"
+		},
+		{
+			"id": "257",
+			"name": "Deborah (Worried)"
+		},
+		{
+			"id": "89",
+			"name": "Demon (Afraid)"
+		},
+		{
+			"id": "88",
+			"name": "Demon (Angry)"
+		},
+		{
+			"id": "87",
+			"name": "Demon (Happy)"
+		},
+		{
+			"id": "114",
+			"name": "Dimitri (Angry)"
+		},
+		{
+			"id": "112",
+			"name": "Dimitri (Normal)"
+		},
+		{
+			"id": "113",
+			"name": "Dimitri (Smile)"
+		},
+		{
+			"id": "289",
+			"name": "Dimitri (Suit angry)"
+		},
+		{
+			"id": "287",
+			"name": "Dimitri (Suit embarrassed)"
+		},
+		{
+			"id": "288",
+			"name": "Dimitri (Suit normal)"
+		},
+		{
+			"id": "45",
+			"name": "Evil laugh"
+		},
+		{
+			"id": "110",
+			"name": "F Letter"
+		},
+		{
+			"id": "241",
+			"name": "Frog"
+		},
+		{
+			"id": "53",
+			"name": "Hit"
+		},
+		{
+			"id": "85",
+			"name": "Iris (Beach smile)"
+		},
+		{
+			"id": "69",
+			"name": "Iris (Flushed)"
+		},
+		{
+			"id": "17",
+			"name": "Iris (Normal)"
+		},
+		{
+			"id": "77",
+			"name": "Iris (Smile)"
+		},
+		{
+			"id": "147",
+			"name": "Iris (Track-suit flushed)"
+		},
+		{
+			"id": "145",
+			"name": "Iris (Track-suit normal)"
+		},
+		{
+			"id": "146",
+			"name": "Iris (Track-suit smile)"
+		},
+		{
+			"id": "28",
+			"name": "Jade (Angry)"
+		},
+		{
+			"id": "32",
+			"name": "Jade (Normal B)"
+		},
+		{
+			"id": "26",
+			"name": "Jade (Normal)"
+		},
+		{
+			"id": "27",
+			"name": "Jade (Smile)"
+		},
+		{
+			"id": "7",
+			"name": "Ken (Crying)"
+		},
+		{
+			"id": "14",
+			"name": "Ken (Flushed)"
+		},
+		{
+			"id": "6",
+			"name": "Ken (In love)"
+		},
+		{
+			"id": "5",
+			"name": "Ken (Normal)"
+		},
+		{
+			"id": "205",
+			"name": "Kentin (Angry A)"
+		},
+		{
+			"id": "210",
+			"name": "Kentin (Angry B)"
+		},
+		{
+			"id": "275",
+			"name": "Kentin (Angry B)"
+		},
+		{
+			"id": "206",
+			"name": "Kentin (Flushed A)"
+		},
+		{
+			"id": "207",
+			"name": "Kentin (Flushed B)"
+		},
+		{
+			"id": "208",
+			"name": "Kentin (Flushed happy)"
+		},
+		{
+			"id": "209",
+			"name": "Kentin (Happy)"
+		},
+		{
+			"id": "202",
+			"name": "Kentin (Normal)"
+		},
+		{
+			"id": "204",
+			"name": "Kentin (Smile)"
+		},
+		{
+			"id": "203",
+			"name": "Kentin (Worried)"
+		},
+		{
+			"id": "68",
+			"name": "Kim (Angry)"
+		},
+		{
+			"id": "66",
+			"name": "Kim (Normal)"
+		},
+		{
+			"id": "67",
+			"name": "Kim (Smile)"
+		},
+		{
+			"id": "163",
+			"name": "Kim (Track-suit Angry)"
+		},
+		{
+			"id": "161",
+			"name": "Kim (Track-suit Normal)"
+		},
+		{
+			"id": "162",
+			"name": "Kim (Track-suit Smile)"
+		},
+		{
+			"id": "278",
+			"name": "Laeti (Flushed)"
+		},
+		{
+			"id": "276",
+			"name": "Laeti (Normal)"
+		},
+		{
+			"id": "279",
+			"name": "Laeti (Pouty)"
+		},
+		{
+			"id": "277",
+			"name": "Laeti (Smile)"
+		},
+		{
+			"id": "72",
+			"name": "Leigh (Flushed)"
+		},
+		{
+			"id": "256",
+			"name": "Leigh (MIB Normal)"
+		},
+		{
+			"id": "254",
+			"name": "Leigh (MIB with glasses)"
+		},
+		{
+			"id": "70",
+			"name": "Leigh (Normal)"
+		},
+		{
+			"id": "71",
+			"name": "Leigh (Worried)"
+		},
+		{
+			"id": "39",
+			"name": "Li (Angry)"
+		},
+		{
+			"id": "38",
+			"name": "Li (Normal)"
+		},
+		{
+			"id": "51",
+			"name": "Li (Sad)"
+		},
+		{
+			"id": "108",
+			"name": "Louis (Beach normal)"
+		},
+		{
+			"id": "246",
+			"name": "Louis (Normal)"
+		},
+		{
+			"id": "169",
+			"name": "Lys & Castiel (Track-suit A)"
+		},
+		{
+			"id": "170",
+			"name": "Lys & Castiel (Track-suit B)"
+		},
+		{
+			"id": "173",
+			"name": "Lys & Castiel (Track-suit C)"
+		},
+		{
+			"id": "171",
+			"name": "Lys & Nathaniel (Track-suit A)"
+		},
+		{
+			"id": "174",
+			"name": "Lys & Nathaniel (Track-suit B)"
+		},
+		{
+			"id": "48",
+			"name": "Lysander (Angry)"
+		},
+		{
+			"id": "98",
+			"name": "Lysander (Beach angry)"
+		},
+		{
+			"id": "99",
+			"name": "Lysander (Beach flushed)"
+		},
+		{
+			"id": "96",
+			"name": "Lysander (Beach normal)"
+		},
+		{
+			"id": "97",
+			"name": "Lysander (Beach smile)"
+		},
+		{
+			"id": "86",
+			"name": "Lysander (Flushed A)"
+		},
+		{
+			"id": "118",
+			"name": "Lysander (Flushed B)"
+		},
+		{
+			"id": "250",
+			"name": "Lysander (Flushed B)"
+		},
+		{
+			"id": "119",
+			"name": "Lysander (Flushed C)"
+		},
+		{
+			"id": "47",
+			"name": "Lysander (Normal)"
+		},
+		{
+			"id": "49",
+			"name": "Lysander (Smile)"
+		},
+		{
+			"id": "150",
+			"name": "Lysander (Track-suit angry)"
+		},
+		{
+			"id": "151",
+			"name": "Lysander (Track-suit flushed A)"
+		},
+		{
+			"id": "152",
+			"name": "Lysander (Track-suit flushed B)"
+		},
+		{
+			"id": "148",
+			"name": "Lysander (Track-suit normal)"
+		},
+		{
+			"id": "149",
+			"name": "Lysander (Track-suit smile)"
+		},
+		{
+			"id": "249",
+			"name": "Lysander (Worried)"
+		},
+		{
+			"id": "57",
+			"name": "Melody (Normal)"
+		},
+		{
+			"id": "74",
+			"name": "Melody (Pajamas)"
+		},
+		{
+			"id": "58",
+			"name": "Melody (Smile)"
+		},
+		{
+			"id": "153",
+			"name": "Melody (Track-suit normal)"
+		},
+		{
+			"id": "154",
+			"name": "Melody (Track-suit smile)"
+		},
+		{
+			"id": "59",
+			"name": "Melody (Worried)"
+		},
+		{
+			"id": "34",
+			"name": "Mr. Faraize (Normal)"
+		},
+		{
+			"id": "46",
+			"name": "Mysterious shadow"
+		},
+		{
+			"id": "52",
+			"name": "Nathaniel & Castiel"
+		},
+		{
+			"id": "253",
+			"name": "Nathaniel & Kentin (Angry)"
+		},
+		{
+			"id": "251",
+			"name": "Nathaniel & Kentin (Flushed A)"
+		},
+		{
+			"id": "252",
+			"name": "Nathaniel & Kentin (Flushed B)"
+		},
+		{
+			"id": "10",
+			"name": "Nathaniel (Angry)"
+		},
+		{
+			"id": "102",
+			"name": "Nathaniel (Beach angry)"
+		},
+		{
+			"id": "103",
+			"name": "Nathaniel (Beach flushed)"
+		},
+		{
+			"id": "100",
+			"name": "Nathaniel (Beach normal)"
+		},
+		{
+			"id": "101",
+			"name": "Nathaniel (Beach smile)"
+		},
+		{
+			"id": "11",
+			"name": "Nathaniel (Flushed)"
+		},
+		{
+			"id": "268",
+			"name": "Nathaniel (New look angry)"
+		},
+		{
+			"id": "270",
+			"name": "Nathaniel (New look flushed)"
+		},
+		{
+			"id": "269",
+			"name": "Nathaniel (New look normal)"
+		},
+		{
+			"id": "267",
+			"name": "Nathaniel (New look smile)"
+		},
+		{
+			"id": "1",
+			"name": "Nathaniel (Normal)"
+		},
+		{
+			"id": "4",
+			"name": "Nathaniel (Smile)"
+		},
+		{
+			"id": "137",
+			"name": "Nathaniel (Track-suit angry)"
+		},
+		{
+			"id": "138",
+			"name": "Nathaniel (Track-suit flushed)"
+		},
+		{
+			"id": "135",
+			"name": "Nathaniel (Track-suit normal)"
+		},
+		{
+			"id": "136",
+			"name": "Nathaniel (Track-suit smile)"
+		},
+		{
+			"id": "224",
+			"name": "Nathaniel (Vest angry)"
+		},
+		{
+			"id": "226",
+			"name": "Nathaniel (Vest flushed)"
+		},
+		{
+			"id": "223",
+			"name": "Nathaniel (Vest normal)"
+		},
+		{
+			"id": "225",
+			"name": "Nathaniel (Vest smile)"
+		},
+		{
+			"id": "211",
+			"name": "Nina (Evil)"
+		},
+		{
+			"id": "212",
+			"name": "Nina (Normal)"
+		},
+		{
+			"id": "214",
+			"name": "Nina (Smile)"
+		},
+		{
+			"id": "213",
+			"name": "Nina (Tongue)"
+		},
+		{
+			"id": "55",
+			"name": "Peggy (Angry)"
+		},
+		{
+			"id": "54",
+			"name": "Peggy (Normal)"
+		},
+		{
+			"id": "56",
+			"name": "Peggy (Smile)"
+		},
+		{
+			"id": "240",
+			"name": "Reindeer"
+		},
+		{
+			"id": "243",
+			"name": "Reindeer (Blue Collar)"
+		},
+		{
+			"id": "245",
+			"name": "Reindeer (Golden Collar)"
+		},
+		{
+			"id": "242",
+			"name": "Reindeer (Normal)"
+		},
+		{
+			"id": "244",
+			"name": "Reindeer (Pink Collar)"
+		},
+		{
+			"id": "42",
+			"name": "Rosalya (Angry A)"
+		},
+		{
+			"id": "94",
+			"name": "Rosalya (Angry B)"
+		},
+		{
+			"id": "95",
+			"name": "Rosalya (Beach normal)"
+		},
+		{
+			"id": "93",
+			"name": "Rosalya (Beach smile)"
+		},
+		{
+			"id": "41",
+			"name": "Rosalya (Normal)"
+		},
+		{
+			"id": "73",
+			"name": "Rosalya (Pajamas)"
+		},
+		{
+			"id": "44",
+			"name": "Rosalya (Sad)"
+		},
+		{
+			"id": "43",
+			"name": "Rosalya (Smile)"
+		},
+		{
+			"id": "998",
+			"name": "Sucrette Mamãe"
+		},
+		{
+			"id": "999",
+			"name": "Sucrette Papai"
+		},
+		{
+			"id": "15",
+			"name": "The Principal (Angry)"
+		},
+		{
+			"id": "8",
+			"name": "The Principal (Normal)"
+		},
+		{
+			"id": "227",
+			"name": "The Witch (Normal)"
+		},
+		{
+			"id": "229",
+			"name": "The Witch (Serious)"
+		},
+		{
+			"id": "228",
+			"name": "The Witch (Smile)"
+		},
+		{
+			"id": "238",
+			"name": "Tije (Normal)"
+		},
+		{
+			"id": "237",
+			"name": "Tije (Smile A)"
+		},
+		{
+			"id": "239",
+			"name": "Tije (Smile B)"
+		},
+		{
+			"id": "64",
+			"name": "Violette (Flushed)"
+		},
+		{
+			"id": "63",
+			"name": "Violette (Normal)"
+		},
+		{
+			"id": "76",
+			"name": "Violette (Pajamas)"
+		},
+		{
+			"id": "65",
+			"name": "Violette (Sad)"
+		},
+		{
+			"id": "168",
+			"name": "Violette (Track-suit Sad)"
+		},
+		{
+			"id": "155",
+			"name": "Violette (Track-suit normal)"
+		},
+		{
+			"id": "156",
+			"name": "Violette (Track-suit smile)"
+		},
+		{
+			"id": "262",
+			"name": "WTF?!"
+		},
+		{
+			"id": "189",
+			"name": "Wenka & Willi (Normal)"
+		},
+		{
+			"id": "182",
+			"name": "Wenka (Normal A)"
+		},
+		{
+			"id": "198",
+			"name": "Wenka (Normal B)"
+		},
+		{
+			"id": "183",
+			"name": "Wenka (Smile A)"
+		},
+		{
+			"id": "199",
+			"name": "Wenka (Smile B)"
+		},
+		{
+			"id": "184",
+			"name": "Wenka (Tongue A)"
+		},
+		{
+			"id": "200",
+			"name": "Wenka (Tongue A)"
+		},
+		{
+			"id": "280",
+			"name": "Whores"
+		},
+		{
+			"id": "185",
+			"name": "Willi (Normal A)"
+		},
+		{
+			"id": "194",
+			"name": "Willi (Normal B)"
+		},
+		{
+			"id": "188",
+			"name": "Willi (Sad A)"
+		},
+		{
+			"id": "196",
+			"name": "Willi (Sad B)"
+		},
+		{
+			"id": "187",
+			"name": "Willi (Shock A)"
+		},
+		{
+			"id": "197",
+			"name": "Willi (Shock B)"
+		},
+		{
+			"id": "186",
+			"name": "Willi (Smile A)"
+		},
+		{
+			"id": "195",
+			"name": "Willi (Smile B)"
+		},
+		{
+			"id": "0",
+			"name": "[Nobody]"
+		},
+		{
+			"id": "s",
+			"name": "[Sucrette]"
+		}
+	],
+	"avatars": [
+		{
+			"id": "34",
+			"name": "Alexy"
+		},
+		{
+			"id": "10",
+			"name": "Amber & Friends"
+		},
+		{
+			"id": "35",
+			"name": "Armin"
+		},
+		{
+			"id": "33",
+			"name": "Bat"
+		},
+		{
+			"id": "15",
+			"name": "Boris"
+		},
+		{
+			"id": "26",
+			"name": "Capucine"
+		},
+		{
+			"id": "2",
+			"name": "Castiel"
+		},
+		{
+			"id": "12",
+			"name": "ChiNoMiko"
+		},
+		{
+			"id": "36",
+			"name": "Cotton"
+		},
+		{
+			"id": "19",
+			"name": "Dajan"
+		},
+		{
+			"id": "31",
+			"name": "Dakota"
+		},
+		{
+			"id": "43",
+			"name": "Dark Louis"
+		},
+		{
+			"id": "40",
+			"name": "Deborah"
+		},
+		{
+			"id": "30",
+			"name": "Demon"
+		},
+		{
+			"id": "32",
+			"name": "Dimitri"
+		},
+		{
+			"id": "11",
+			"name": "Iris"
+		},
+		{
+			"id": "18",
+			"name": "Jade"
+		},
+		{
+			"id": "6",
+			"name": "Ken"
+		},
+		{
+			"id": "38",
+			"name": "Kentin"
+		},
+		{
+			"id": "28",
+			"name": "Kim"
+		},
+		{
+			"id": "29",
+			"name": "Leigh"
+		},
+		{
+			"id": "23",
+			"name": "Lysander"
+		},
+		{
+			"id": "25",
+			"name": "Melody"
+		},
+		{
+			"id": "20",
+			"name": "Mr. Faraize"
+		},
+		{
+			"id": "1",
+			"name": "Nathaniel"
+		},
+		{
+			"id": "39",
+			"name": "Nina"
+		},
+		{
+			"id": "24",
+			"name": "Peggy"
+		},
+		{
+			"id": "22",
+			"name": "Rosalya"
+		},
+		{
+			"id": "7",
+			"name": "The Principal"
+		},
+		{
+			"id": "41",
+			"name": "Viktor"
+		},
+		{
+			"id": "27",
+			"name": "Violette"
+		},
+		{
+			"id": "37",
+			"name": "Wenka & Willi"
+		},
+		{
+			"id": "0",
+			"name": "[Nobody]"
+		},
+		{
+			"id": "s",
+			"name": "[Sucrette]"
+		}
+	],
+	"scenes": [
+		{
+			"id": "128",
+			"name": "Alternative World"
+		},
+		{
+			"id": "87",
+			"name": "Basement"
+		},
+		{
+			"id": "22",
+			"name": "Beach 1"
+		},
+		{
+			"id": "23",
+			"name": "Beach 2"
+		},
+		{
+			"id": "24",
+			"name": "Beach 3"
+		},
+		{
+			"id": "25",
+			"name": "Beach 4"
+		},
+		{
+			"id": "26",
+			"name": "Beach 5"
+		},
+		{
+			"id": "27",
+			"name": "Beach 6"
+		},
+		{
+			"id": "28",
+			"name": "Beach 7"
+		},
+		{
+			"id": "30",
+			"name": "Beach 9"
+		},
+		{
+			"id": "116",
+			"name": "Building entrance"
+		},
+		{
+			"id": "39",
+			"name": "Bus"
+		},
+		{
+			"id": "123",
+			"name": "Bus stop"
+		},
+		{
+			"id": "124",
+			"name": "Cafeteria"
+		},
+		{
+			"id": "38",
+			"name": "Christmas 1"
+		},
+		{
+			"id": "115",
+			"name": "Christmas House 1"
+		},
+		{
+			"id": "120",
+			"name": "City 1"
+		},
+		{
+			"id": "107",
+			"name": "Class Room A (Dark)"
+		},
+		{
+			"id": "1",
+			"name": "Class Room A (Day)"
+		},
+		{
+			"id": "7",
+			"name": "Class Room A (Night)"
+		},
+		{
+			"id": "96",
+			"name": "Class Room A (Sepia)"
+		},
+		{
+			"id": "21",
+			"name": "Class Room B (Day)"
+		},
+		{
+			"id": "95",
+			"name": "Class Room B (Sepia)"
+		},
+		{
+			"id": "88",
+			"name": "Concert"
+		},
+		{
+			"id": "4",
+			"name": "Court yard (Day)"
+		},
+		{
+			"id": "11",
+			"name": "Court yard (Night)"
+		},
+		{
+			"id": "90",
+			"name": "Court yard (Sepia)"
+		},
+		{
+			"id": "127",
+			"name": "Court yard (Stargate day)"
+		},
+		{
+			"id": "129",
+			"name": "Court yard (Stargate night)"
+		},
+		{
+			"id": "35",
+			"name": "Dark Forest 1"
+		},
+		{
+			"id": "80",
+			"name": "Dress Room"
+		},
+		{
+			"id": "110",
+			"name": "First Floor (Day)"
+		},
+		{
+			"id": "5",
+			"name": "Garden Club (Day)"
+		},
+		{
+			"id": "13",
+			"name": "Garden Club (Night)"
+		},
+		{
+			"id": "91",
+			"name": "Garden Club (Sepia)"
+		},
+		{
+			"id": "32",
+			"name": "Graveyard 1"
+		},
+		{
+			"id": "33",
+			"name": "Graveyard 2"
+		},
+		{
+			"id": "34",
+			"name": "Graveyard 3"
+		},
+		{
+			"id": "36",
+			"name": "Graveyard Dimitri"
+		},
+		{
+			"id": "106",
+			"name": "Gymnasium (Dark)"
+		},
+		{
+			"id": "6",
+			"name": "Gymnasium (Day)"
+		},
+		{
+			"id": "12",
+			"name": "Gymnasium (Night)"
+		},
+		{
+			"id": "92",
+			"name": "Gymnasium (Sepia)"
+		},
+		{
+			"id": "100",
+			"name": "Halloween Lake"
+		},
+		{
+			"id": "102",
+			"name": "Halloween Path"
+		},
+		{
+			"id": "132",
+			"name": "Laboratory (Day)"
+		},
+		{
+			"id": "103",
+			"name": "Main Hallway (Dark)"
+		},
+		{
+			"id": "125",
+			"name": "Main Hallway (Day B)"
+		},
+		{
+			"id": "3",
+			"name": "Main Hallway (Day)"
+		},
+		{
+			"id": "8",
+			"name": "Main Hallway (Night)"
+		},
+		{
+			"id": "89",
+			"name": "Main Hallway (Sepia)"
+		},
+		{
+			"id": "130",
+			"name": "Man Hallway (Night B)"
+		},
+		{
+			"id": "20",
+			"name": "Melody's Bathroom (Day)"
+		},
+		{
+			"id": "19",
+			"name": "Melody's Hallway (Day)"
+		},
+		{
+			"id": "18",
+			"name": "Melody's Room (Day)"
+		},
+		{
+			"id": "119",
+			"name": "Park"
+		},
+		{
+			"id": "118",
+			"name": "Park entrance"
+		},
+		{
+			"id": "81",
+			"name": "Praire 01"
+		},
+		{
+			"id": "82",
+			"name": "Praire 02"
+		},
+		{
+			"id": "83",
+			"name": "Praire 03"
+		},
+		{
+			"id": "40",
+			"name": "Race 01"
+		},
+		{
+			"id": "41",
+			"name": "Race 02"
+		},
+		{
+			"id": "42",
+			"name": "Race 03"
+		},
+		{
+			"id": "43",
+			"name": "Race 04"
+		},
+		{
+			"id": "44",
+			"name": "Race 05"
+		},
+		{
+			"id": "46",
+			"name": "Race 06"
+		},
+		{
+			"id": "48",
+			"name": "Race 07"
+		},
+		{
+			"id": "52",
+			"name": "Race 08"
+		},
+		{
+			"id": "62",
+			"name": "Race 09"
+		},
+		{
+			"id": "63",
+			"name": "Race 10"
+		},
+		{
+			"id": "67",
+			"name": "Race 11"
+		},
+		{
+			"id": "68",
+			"name": "Race 12"
+		},
+		{
+			"id": "69",
+			"name": "Race 13"
+		},
+		{
+			"id": "70",
+			"name": "Race 14"
+		},
+		{
+			"id": "71",
+			"name": "Race 15"
+		},
+		{
+			"id": "72",
+			"name": "Race 16"
+		},
+		{
+			"id": "73",
+			"name": "Race 17"
+		},
+		{
+			"id": "74",
+			"name": "Race 18"
+		},
+		{
+			"id": "75",
+			"name": "Race 19"
+		},
+		{
+			"id": "76",
+			"name": "Race Night 01"
+		},
+		{
+			"id": "77",
+			"name": "Race Night 02"
+		},
+		{
+			"id": "78",
+			"name": "Race Night 03"
+		},
+		{
+			"id": "79",
+			"name": "Race Night 04"
+		},
+		{
+			"id": "113",
+			"name": "Reindeer Barn 1"
+		},
+		{
+			"id": "114",
+			"name": "Reindeer Barn 2"
+		},
+		{
+			"id": "9",
+			"name": "Second Hallway (Night)"
+		},
+		{
+			"id": "14",
+			"name": "Second Hallway (Night)"
+		},
+		{
+			"id": "94",
+			"name": "Second Hallway (Sepia)"
+		},
+		{
+			"id": "111",
+			"name": "Snow Mountain 1"
+		},
+		{
+			"id": "112",
+			"name": "Snow Mountain 2"
+		},
+		{
+			"id": "109",
+			"name": "Staircase (Blurred)"
+		},
+		{
+			"id": "15",
+			"name": "Staircase (Day)"
+		},
+		{
+			"id": "16",
+			"name": "Staircase (Night)"
+		},
+		{
+			"id": "121",
+			"name": "Stores 1"
+		},
+		{
+			"id": "122",
+			"name": "Stores 2"
+		},
+		{
+			"id": "108",
+			"name": "Student Council Room (Dark)"
+		},
+		{
+			"id": "126",
+			"name": "Student Council Room (Day B)"
+		},
+		{
+			"id": "2",
+			"name": "Student Council Room (Day)"
+		},
+		{
+			"id": "131",
+			"name": "Student Council Room (Night B)"
+		},
+		{
+			"id": "10",
+			"name": "Student Council Room (Night)"
+		},
+		{
+			"id": "93",
+			"name": "Student Council Room (Sepia)"
+		},
+		{
+			"id": "37",
+			"name": "Sucrette Floor"
+		},
+		{
+			"id": "17",
+			"name": "Teacher's Lounge (Day)"
+		},
+		{
+			"id": "133",
+			"name": "The Mall 01"
+		},
+		{
+			"id": "134",
+			"name": "The Mall 02"
+		},
+		{
+			"id": "135",
+			"name": "The Mall 03"
+		},
+		{
+			"id": "136",
+			"name": "The Mall 04"
+		},
+		{
+			"id": "137",
+			"name": "The Mall 05"
+		},
+		{
+			"id": "138",
+			"name": "The Mall 06"
+		},
+		{
+			"id": "139",
+			"name": "The Mall 07"
+		},
+		{
+			"id": "140",
+			"name": "The Mall 08"
+		},
+		{
+			"id": "141",
+			"name": "The Mall 09"
+		},
+		{
+			"id": "142",
+			"name": "The Mall 10"
+		},
+		{
+			"id": "143",
+			"name": "The Mall 11"
+		},
+		{
+			"id": "144",
+			"name": "The Mall 12"
+		},
+		{
+			"id": "145",
+			"name": "The Mall 13"
+		},
+		{
+			"id": "31",
+			"name": "The Twilight Zone"
+		},
+		{
+			"id": "99",
+			"name": "The Witch's House (Door)"
+		},
+		{
+			"id": "101",
+			"name": "The Witch's House (Front)"
+		},
+		{
+			"id": "98",
+			"name": "The Witch's House (Inside)"
+		}
+	]
+};
