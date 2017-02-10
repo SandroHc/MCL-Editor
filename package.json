@@ -1,0 +1,28 @@
+{
+  "name": "mcl-editor",
+  "version": "0.0.1",
+  "description": "MyCandyLove Editor, an offline fanfic creation tool for MyCandyLove.",
+  "main": "index.html",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "coffee-script": "^1.12.3"
+  },
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://SandroHc@github.com/SandroHc/MCL-Editor.git"
+  },
+  "keywords": [
+    "html",
+    "js",
+    "coffeescript"
+  ],
+  "author": "SandroHc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SandroHc/MCL-Editor/issues"
+  },
+  "homepage": "https://github.com/SandroHc/MCL-Editor#readme"
+}

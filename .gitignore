@@ -7,3 +7,6 @@ photothumb.db
 ## Intellij IDEA
 .idea/
 *.iml
+
+# NodeJS-related
+node_modules/
