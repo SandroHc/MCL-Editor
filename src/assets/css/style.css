@@ -34,7 +34,7 @@ h2 {
     margin-top: .5em; }
 
 a {
-  color: #fd305;
+  color: #fd3050;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
@@ -108,17 +108,15 @@ a {
     line-height: 24px;
     font-size: 18px;
     padding: 3px 40px; }
-
-.response .text {
-  font-family: "Trebuchet MS", "Arial", sans-serif;
-  color: #000; }
-
-.response:hover, .response.checked {
-  color: #fff;
-  cursor: pointer;
-  background: linear-gradient(0deg, #64a625 0, #8cc503 100%); }
-  .response:hover .text, .response.checked .text {
-    color: #fff; }
+    .responses .response .text {
+      font-family: "Trebuchet MS", "Arial", sans-serif;
+      color: #000; }
+    .responses .response:hover, .responses .response.checked {
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(0deg, #64a625 0, #8cc503 100%); }
+      .responses .response:hover .text, .responses .response.checked .text {
+        color: #fff; }
 
 .player {
   width: 250px;
@@ -126,7 +124,6 @@ a {
   position: absolute;
   bottom: -70px;
   left: 25px;
-  z-index: 2;
   margin: auto;
   border-radius: 50%;
   background: #fff;
@@ -157,7 +154,7 @@ a {
   height: 92.24138%; }
   .actor.flipX {
     transform: scaleX(-1);
-    filter: FlipH; }
+    filter: FlipH(); }
 
 fieldset {
   border: 1px solid #e4dbd5;
@@ -200,7 +197,7 @@ button {
   color: #fff;
   text-transform: uppercase;
   min-height: 2.5em;
-  background-color: #fd305;
+  background-color: #fd3050;
   border: 1px solid #ec2040;
   border-radius: 0 4px 4px 0;
   float: right;
@@ -241,31 +238,10 @@ iframe {
   display: inline;
   float: none; }
 
-#scene_edit {
-  width: auto;
-  min-width: 190px; }
-
-#scene_sub_edit {
-  width: auto;
-  min-width: 190px; }
-
-#avatar_edit {
-  width: auto;
-  min-width: 190px; }
-
-#actor1_edit {
-  width: auto;
-  min-width: 190px; }
-
-#actor1_sub_edit {
-  width: auto;
-  min-width: 190px; }
-
-#actor2_edit {
-  width: auto;
-  min-width: 190px; }
-
-#actor2_sub_edit {
+#avatar_edit,
+#scene_edit, #scene_sub_edit,
+#actor1_edit, #actor1_sub_edit,
+#actor2_edit, #actor2_sub_edit {
   width: auto;
   min-width: 190px; }
 
