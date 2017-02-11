@@ -1,3 +1,10 @@
+drag = false
+offsetX = 0
+offsetY = 0
+startX = 0
+startY = 0
+highest_zIndex = 0
+
 set_cookie = (key, val) ->
 	date = new Date
 	date.setDate date.getDate() + 30
@@ -24,24 +31,31 @@ drag_start = (e) ->
 	if e.preventDefault
 		e.preventDefault()
 
-	# calculate event X, Y coordinates
-	@offsetX = e.clientX
-	@offsetY = e.clientY
-	e.target.onmousemove = drag_move
+	# Calculate event X, Y coordinates
+	offsetX = e.clientX
+	offsetY = e.clientY
+
 	drag = e.target
+	drag.onmousemove = drag_move
+
 	# Default positions
 	if !e.target.style.left
 		e.target.style.left = '0px'
 	if !e.target.style.bottom
 		e.target.style.bottom = '0px'
+
+	# Store initial position
+	startX = parseInt(e.target.style.left)
+	startY = parseInt(e.target.style.bottom)
+
 	highest_zIndex++
 	e.target.style.zIndex = highest_zIndex
-	# Store initial position
-	@startX = parseInt(e.target.style.left)
-	@startY = parseInt(e.target.style.bottom)
+
 	false
 
 drag_move = (e) ->
+	console.log startX
+
 	e = e or window.event
 	if !e.target
 		e.target = e.srcElement # IE uses srcElement, others use target
@@ -386,10 +400,3 @@ load_from_file = (file_in, img_out, bg_out) ->
 	document.head.appendChild scriptTag
 ) window, document, (a) ->
 	document.querySelector a
-
-drag = false
-offsetX = undefined
-offsetY = undefined
-startX = undefined
-startY = undefined
-highest_zIndex = 0

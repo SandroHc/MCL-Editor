@@ -1,5 +1,17 @@
 var double_click, drag, drag_move, drag_start, drag_stop, get_cookie, highest_zIndex, load_from_file, offsetX, offsetY, set_cookie, startX, startY;
 
+drag = false;
+
+offsetX = 0;
+
+offsetY = 0;
+
+startX = 0;
+
+startY = 0;
+
+highest_zIndex = 0;
+
 set_cookie = function(key, val) {
   var date;
   date = new Date;
@@ -15,7 +27,6 @@ get_cookie = function(key) {
 };
 
 drag_start = function(e) {
-  var drag, offsetX, offsetY, startX, startY;
   e = e || window.event;
   if (e.target.className.indexOf('drag') === -1) {
     return true;
@@ -32,23 +43,24 @@ drag_start = function(e) {
   }
   offsetX = e.clientX;
   offsetY = e.clientY;
-  e.target.onmousemove = drag_move;
   drag = e.target;
+  drag.onmousemove = drag_move;
   if (!e.target.style.left) {
     e.target.style.left = '0px';
   }
   if (!e.target.style.bottom) {
     e.target.style.bottom = '0px';
   }
-  highest_zIndex++;
-  e.target.style.zIndex = highest_zIndex;
   startX = parseInt(e.target.style.left);
   startY = parseInt(e.target.style.bottom);
+  highest_zIndex++;
+  e.target.style.zIndex = highest_zIndex;
   return false;
 };
 
 drag_move = function(e) {
   var is_pnj;
+  console.log(startX);
   e = e || window.event;
   if (!e.target) {
     e.target = e.srcElement;
@@ -65,7 +77,6 @@ drag_move = function(e) {
 };
 
 drag_stop = function(e) {
-  var drag;
   e = e || window.event;
   if (!e.target) {
     e.target = e.srcElement;
@@ -448,15 +459,3 @@ load_from_file = function(file_in, img_out, bg_out) {
 })(window, document, function(a) {
   return document.querySelector(a);
 });
-
-drag = false;
-
-offsetX = void 0;
-
-offsetY = void 0;
-
-startX = void 0;
-
-startY = void 0;
-
-highest_zIndex = 0;
