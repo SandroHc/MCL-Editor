@@ -124,17 +124,21 @@ load_from_file = function(file_in, img_out, bg_out) {
 (function(window, document, querySelector) {
   var populate_avatars, populate_emotions, populate_emotions_sub, populate_scenes, populate_scenes_sub, scriptTag;
   scriptTag = document.createElement('script');
-  populate_scenes = function(inputs) {
-    return inputs.forEach(function(input_id) {
+  populate_scenes = function(inputs, defaults) {
+    return inputs.forEach(function(input_id, input_index) {
       var input;
       input = querySelector(input_id);
-      return CONFIG.scenes.forEach(function(e, i) {
-        var el;
+      CONFIG.scenes.forEach(function(e, i) {
+        var el, ref;
         el = document.createElement('option');
         el.textContent = e.name;
         el.value = i;
+        el.selected = (ref = e.name === defaults[input_index]) != null ? ref : {
+          'true': void 0
+        };
         return input.appendChild(el);
       });
+      return $(input).material_select;
     });
   };
   populate_scenes_sub = function(index, input) {
@@ -152,36 +156,42 @@ load_from_file = function(file_in, img_out, bg_out) {
       el.dataset.scene = index;
       return input.appendChild(el);
     });
+    $(input).material_select();
     return input.dispatchEvent(new Event('change'));
   };
-  populate_avatars = function(inputs) {
-    return inputs.forEach(function(input_id) {
+  populate_avatars = function(inputs, defaults) {
+    return inputs.forEach(function(input_id, input_index) {
       var input;
       input = querySelector(input_id);
-      return CONFIG.avatars.forEach(function(e, i) {
-        var el;
+      CONFIG.avatars.forEach(function(e, i) {
+        var el, ref;
         el = document.createElement('option');
         el.textContent = e.name;
         el.value = i;
         el.dataset.checksum = e.checksum;
-        if (e.name === '[Sucrette]') {
-          el.selected = 'true';
-        }
+        el.selected = (ref = e.name === defaults[input_index]) != null ? ref : {
+          'true': void 0
+        };
         return input.appendChild(el);
       });
+      return $(input).material_select();
     });
   };
-  populate_emotions = function(inputs) {
-    return inputs.forEach(function(input_id) {
+  populate_emotions = function(inputs, defaults) {
+    return inputs.forEach(function(input_id, input_index) {
       var input;
       input = querySelector(input_id);
-      return CONFIG.emotions.forEach(function(e, i) {
-        var el;
+      CONFIG.emotions.forEach(function(e, i) {
+        var el, ref;
         el = document.createElement('option');
         el.textContent = e.name;
         el.value = i;
+        el.selected = (ref = e.name === defaults[input_index]) != null ? ref : {
+          'true': void 0
+        };
         return input.appendChild(el);
       });
+      return $(input).material_select();
     });
   };
   populate_emotions_sub = function(index, input) {
@@ -196,8 +206,9 @@ load_from_file = function(file_in, img_out, bg_out) {
       el.textContent = e.name;
       el.value = i;
       el.dataset.emotion = index;
-      input.appendChild(el);
+      return input.appendChild(el);
     });
+    $(input).material_select();
     return input.dispatchEvent(new Event('change'));
   };
   scriptTag.addEventListener('load', function() {
@@ -428,13 +439,10 @@ load_from_file = function(file_in, img_out, bg_out) {
         keyup: update_avatar
       }
     });
-    populate_scenes(['#scene_edit']);
-    populate_avatars(['#avatar_edit']);
-    populate_emotions(['#actor1_edit', '#actor2_edit']);
-    querySelector('#scene_edit option[value="8"]').selected = true;
-    querySelector('#actor1_edit option[value="37"]').selected = true;
-    querySelector('#actor2_edit option[value="8"]').selected = true;
-    querySelector('#avatar_edit option[value="33"]').selected = true;
+    populate_scenes(['#scene_edit'], ['Class Room A']);
+    populate_avatars(['#avatar_edit'], ['[Docete]']);
+    populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
+    $('select').material_select();
     event = new Event('change');
     querySelector('#scene_edit').dispatchEvent(event);
     querySelector('#actor1_edit').dispatchEvent(event);

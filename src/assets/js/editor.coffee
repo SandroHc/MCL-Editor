@@ -112,15 +112,17 @@ load_from_file = (file_in, img_out, bg_out) ->
 ((window, document, querySelector) ->
 	scriptTag = document.createElement('script')
 
-	populate_scenes = (inputs) ->
-		inputs.forEach (input_id) ->
+	populate_scenes = (inputs, defaults) ->
+		inputs.forEach (input_id, input_index) ->
 			input = querySelector(input_id)
 			CONFIG.scenes.forEach (e, i) ->
 				el = document.createElement('option')
 				el.textContent = e.name
 				el.value = i
+				el.selected = e.name == defaults[input_index] ? 'true' : undefined
 				input.appendChild el
 
+			$(input).material_select
 
 	populate_scenes_sub = (index, input) ->
 		while input.options.length > 0 # Clear all options
@@ -136,30 +138,35 @@ load_from_file = (file_in, img_out, bg_out) ->
 			el.dataset.scene = index
 			input.appendChild el
 
+		$(input).material_select()
 		input.dispatchEvent new Event('change')
 
 
-	populate_avatars = (inputs) ->
-		inputs.forEach (input_id) ->
+	populate_avatars = (inputs, defaults) ->
+		inputs.forEach (input_id, input_index) ->
 			input = querySelector(input_id)
 			CONFIG.avatars.forEach (e, i) ->
 				el = document.createElement('option')
 				el.textContent = e.name
 				el.value = i
 				el.dataset.checksum = e.checksum
-				if e.name == '[Sucrette]'
-					el.selected = 'true'
+				el.selected = e.name == defaults[input_index] ? 'true' : undefined
 				input.appendChild el
 
+			$(input).material_select()
 
-	populate_emotions = (inputs) ->
-		inputs.forEach (input_id) ->
+
+	populate_emotions = (inputs, defaults) ->
+		inputs.forEach (input_id, input_index) ->
 			input = querySelector(input_id)
 			CONFIG.emotions.forEach (e, i) ->
 				el = document.createElement('option')
 				el.textContent = e.name
 				el.value = i
+				el.selected = e.name == defaults[input_index] ? 'true' : undefined
 				input.appendChild el
+
+			$(input).material_select()
 
 
 	populate_emotions_sub = (index, input) ->
@@ -175,7 +182,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 			el.value = i
 			el.dataset.emotion = index
 			input.appendChild el
-			return
+
+		$(input).material_select()
 		input.dispatchEvent new Event('change')
 
 
@@ -360,15 +368,13 @@ load_from_file = (file_in, img_out, bg_out) ->
 				change: update_avatar
 				keyup: update_avatar
 
-		populate_scenes [ '#scene_edit' ]
-		populate_avatars [ '#avatar_edit' ]
-		populate_emotions [ '#actor1_edit', '#actor2_edit' ]
 
-		# Select default option
-		querySelector('#scene_edit option[value="8"]').selected = true		# Classroom A
-		querySelector('#actor1_edit option[value="37"]').selected = true	# Nathaniel
-		querySelector('#actor2_edit option[value="8"]').selected = true		# Castiel
-		querySelector('#avatar_edit option[value="33"]').selected = true	# Docete
+		populate_scenes [ '#scene_edit' ], [ 'Class Room A' ]
+		populate_avatars [ '#avatar_edit' ], [ '[Docete]' ]
+		populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
+
+		# Pass all selects though Material's API
+		$('select').material_select()
 
 		event = new Event('change')
 		querySelector('#scene_edit').dispatchEvent event
