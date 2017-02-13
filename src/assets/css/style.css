@@ -126,6 +126,9 @@ h1 {
     transform: scaleX(-1);
     filter: FlipH(); }
 
+.file-field {
+  margin-top: 0; }
+
 ul {
   z-index: 100200; }
 

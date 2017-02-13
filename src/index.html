@@ -84,9 +84,15 @@
 					</div>
 
 					<div class="input-field col s12">
-						Fundo:
-						<input id="file_scene_edit" type="file"
-							   onchange="load_from_file('file_scene_edit', null, '#scene')"/>
+						<div class="file-field input-field">
+							<div class="btn">
+								<span>Ficheiro</span>
+								<input id="file_scene_edit" type="file" onchange="load_from_file('file_scene_edit', null, '#scene')">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
 					</div>
 
 					<div class="input-field col s6">
@@ -105,22 +111,19 @@
 						<h5>{{characters}}</h5>
 					</div>
 
-					<div class="input-field col s12">
-						Avatar:
-						<input id="file_edit" type="file"
-							   onchange="load_from_file('file_edit', '#scene .player-avatar', null)"/>
-					</div>
-					<div class="input-field col s12">
-						Personagem:
-						<input id="file_char_edit" type="file"/>
-					</div>
+					<!--<div class="input-field col s12">-->
+						<!--Avatar:-->
+						<!--<input id="file_edit" type="file" onchange="load_from_file('file_edit', '#scene .player-avatar', null)">-->
+					<!--</div>-->
+					<!--<div class="input-field col s12">-->
+						<!--Personagem:-->
+						<!--<input id="file_char_edit" type="file">-->
+					<!--</div>-->
 
 					<div class="input-field col s12">
 						<select id="avatar_edit"></select>
 						<label for="avatar_edit">{{avatar}}</label>
-						<button class="file_submit waves-effect waves-light btn"
-								onclick="load_from_file('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}
-						</button>
+						<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
 					</div>
 
 					<div class="input-field col s6">
@@ -130,11 +133,9 @@
 					<div class="input-field col s6">
 						<select id="actor1_sub_edit" data-parent="#actor1_edit" data-target="#actor1"></select>
 					</div>
-					<div class="input-field col s12">
-						<button class="file_submit waves-effect waves-light btn"
-								onclick="load_from_file('file_char_edit', '#actor1', null)">{{use_sucrette}}
-						</button>
-					</div>
+					<!--<div class="input-field col s12">-->
+						<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor1', null)">{{use_sucrette}}</button>-->
+					<!--</div>-->
 
 					<div class="input-field col s6">
 						<select id="actor2_edit" data-sub="#actor2_sub_edit"></select>
@@ -143,11 +144,9 @@
 					<div class="input-field col s6">
 						<select id="actor2_sub_edit" data-parent="#actor2_edit" data-target="#actor2"></select>
 					</div>
-					<div class="input-field col s12">
-						<button class="file_submit waves-effect waves-light btn"
-								onclick="load_from_file('file_char_edit', '#actor2', null)">{{use_sucrette}}
-						</button>
-					</div>
+					<!--<div class="input-field col s12">-->
+						<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor2', null)">{{use_sucrette}}</button>-->
+					<!--</div>-->
 
 				</div>
 
