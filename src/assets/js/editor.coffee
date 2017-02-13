@@ -16,6 +16,7 @@ get_cookie = (key) ->
 	re = new RegExp('(?:(?:^|.*;\\s*)' + key + '\\s*\\=\\s*([^;]*).*$)|^.*$')
 	document.cookie.replace re, '$1'
 
+
 drag_start = (e) ->
 	e = e or window.event
 	if e.target.className.indexOf('drag') == -1
@@ -53,9 +54,8 @@ drag_start = (e) ->
 
 	false
 
-drag_move = (e) ->
-	console.log startX
 
+drag_move = (e) ->
 	e = e or window.event
 	if !e.target
 		e.target = e.srcElement # IE uses srcElement, others use target
@@ -68,6 +68,7 @@ drag_move = (e) ->
 		e.target.style.bottom = startY - (e.clientY) + offsetY + 'px'
 	false
 
+
 drag_stop = (e) ->
 	e = e or window.event
 	if !e.target
@@ -76,6 +77,7 @@ drag_stop = (e) ->
 	drag = null
 	document.onmousemove = null
 	return
+
 
 double_click = (e) ->
 	e = e or window.event
@@ -387,6 +389,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 		querySelector('#scene_edit').dispatchEvent event
 		querySelector('#actor1_edit').dispatchEvent event
 		querySelector('#actor2_edit').dispatchEvent event
+
+		$('ul.tabs').tabs()
 
 		region = get_cookie('region')
 		if region

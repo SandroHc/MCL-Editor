@@ -14,145 +14,152 @@
 		<link href="https://fonts.googleapis.com/icon?family=Roboto|Material+Icons" rel="stylesheet">
 	</head>
 	<body>
-		<div id="container" class="container row">
-			<div class="col s12 card">
-				<div class="row">
+		<div id="container" class="container">
+			<div class="row">
+				<div class="col s12 card">
 					<div class="col s12">
 						<h1>{{title}}</h1>
-						<p class="hide-on-med-and-down">{{{welcome}}}</p>
 					</div>
 
+					<ul class="tabs">
+						<li class="tab col s3"><a href="#tab-account">{{account}}</a></li>
+						<li class="tab col s3"><a href="#tab-chat">{{chat}}</a></li>
+						<li class="tab col s3"><a href="#tab-scene">{{scene}}</a></li>
+						<li class="tab col s3"><a href="#tab-characters">{{characters}}</a></li>
+					</ul>
 				</div>
-				<div class="row">
 
-					<div class="input-field col s12">
-						<select id="region_edit">
-							{{#regions}}
-								<option value="{{id}}">{{name}}</option>
-							{{/regions}}
-						</select>
-						<label for="region_edit">{{region}}</label>
+				<div id="tab-account" class="col s12">
+					<div class="row">
+						<div class="col s12">
+							<p class="hide-on-med-and-down">{{{welcome}}}</p>
+						</div>
+
+						<div class="input-field col s12">
+							<select id="region_edit">
+								{{#regions}}
+									<option value="{{id}}">{{name}}</option>
+								{{/regions}}
+							</select>
+							<label for="region_edit">{{region}}</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="material-icons prefix">account_circle</i>
+							<input placeholder="{{username_placeholder}}" id="username_edit" type="text" class="validate">
+							<label for="username_edit">{{username}}</label>
+						</div>
+						<div class="input-field col s6">
+							<button id="username_submit" class="waves-effect waves-light btn">{{change_avatar}}</button>
+						</div>
+
 					</div>
+					<div class="divider"></div>
+					<div class="row">
 
-					<div class="input-field col s6">
-						<i class="material-icons prefix">account_circle</i>
-						<input placeholder="{{username_placeholder}}" id="username_edit" type="text" class="validate">
-						<label for="username_edit">{{username}}</label>
+						<div class="input-field col s3">
+							<input id="lovelevel_visible" type="checkbox" class="filled-in">
+							<label for="lovelevel_visible">{{love_level}}</label>
+						</div>
+						<div class="input-field col s9 range-field">
+							<input id="lovelevel_edit" value="0" type="range" min="-100" max="100">
+						</div>
+
 					</div>
-					<div class="input-field col s6">
-						<button id="username_submit" class="waves-effect waves-light btn">{{change_avatar}}</button>
-					</div>
+					<div class="row">
 
-				</div>
-				<div class="divider"></div>
-				<div class="row">
-
-					<div class="input-field col s3">
-						<input id="lovelevel_visible" type="checkbox" class="filled-in">
-						<label for="lovelevel_visible">{{love_level}}</label>
-					</div>
-					<div class="input-field col s9 range-field">
-						<input id="lovelevel_edit" value="0" type="range" min="-100" max="100">
-					</div>
-
-				</div>
-				<div class="divider"></div>
-				<div class="row">
-
-					<div class="input-field col s12">
-						<h5>{{chat}}</h5>
-					</div>
-
-					<div class="input-field col s12">
-						<i class="material-icons prefix">question_answer</i>
-						<textarea placeholder="{{characters_bubble}}" id="bubble_edit" class="materialize-textarea"></textarea>
-						<label for="bubble_edit">{{characters_bubble_label}}</label>
-					</div>
-
-					<div class="input-field col s12">
-						<i class="material-icons prefix">mode_edit</i>
-						<textarea placeholder="{{answers}}" id="response_edit" class="materialize-textarea"></textarea>
-						<label for="bubble_edit">{{answers_label}}</label>
-					</div>
-
-				</div>
-				<div class="divider"></div>
-				<div class="row">
-
-					<div class="input-field col s12">
-						<h5>{{scene}}</h5>
-					</div>
-
-					<div class="input-field col s12">
-						<div class="file-field input-field">
-							<div class="btn">
-								<span>Ficheiro</span>
-								<input id="file_scene_edit" type="file" onchange="load_from_file('file_scene_edit', null, '#scene')">
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text">
-							</div>
+						<div class="col s12">
+							<p class="legal">{{{legal}}}</p>
 						</div>
 					</div>
+				</div>
 
-					<div class="input-field col s6">
-						<select id="scene_edit" data-sub="#scene_sub_edit"></select>
-						<label>Fundo</label>
-					</div>
-					<div class="input-field col s6">
-						<select id="scene_sub_edit" data-parent="#scene_edit" data-target="#scene"></select>
+				<div id="tab-chat" class="col s12">
+					<div class="row">
+
+						<div class="input-field col s12">
+							<i class="material-icons prefix">question_answer</i>
+							<textarea placeholder="{{characters_bubble}}" id="bubble_edit" class="materialize-textarea"></textarea>
+							<label for="bubble_edit">{{characters_bubble_label}}</label>
+						</div>
+
+						<div class="input-field col s12">
+							<i class="material-icons prefix">mode_edit</i>
+							<textarea placeholder="{{answers}}" id="response_edit" class="materialize-textarea"></textarea>
+							<label for="bubble_edit">{{answers_label}}</label>
+						</div>
+
 					</div>
 
 				</div>
-				<div class="divider"></div>
-				<div class="row">
 
-					<div class="input-field col s12">
-						<h5>{{characters}}</h5>
-					</div>
+				<div id="tab-scene" class="col s12">
+					<div class="row">
 
-					<!--<div class="input-field col s12">-->
-						<!--Avatar:-->
-						<!--<input id="file_edit" type="file" onchange="load_from_file('file_edit', '#scene .player-avatar', null)">-->
-					<!--</div>-->
-					<!--<div class="input-field col s12">-->
-						<!--Personagem:-->
-						<!--<input id="file_char_edit" type="file">-->
-					<!--</div>-->
+						<div class="input-field col s12">
+							<div class="file-field input-field">
+								<div class="btn">
+									<span>Ficheiro</span>
+									<input id="file_scene_edit" type="file" onchange="load_from_file('file_scene_edit', null, '#scene')">
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text">
+								</div>
+							</div>
+						</div>
 
-					<div class="input-field col s12">
-						<select id="avatar_edit"></select>
-						<label for="avatar_edit">{{avatar}}</label>
-						<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
-					</div>
+						<div class="input-field col s6">
+							<select id="scene_edit" data-sub="#scene_sub_edit"></select>
+							<label>Fundo</label>
+						</div>
+						<div class="input-field col s6">
+							<select id="scene_sub_edit" data-parent="#scene_edit" data-target="#scene"></select>
+						</div>
 
-					<div class="input-field col s6">
-						<select id="actor1_edit" data-sub="#actor1_sub_edit"></select>
-						<label for="actor1_edit">{{character}} 1</label>
 					</div>
-					<div class="input-field col s6">
-						<select id="actor1_sub_edit" data-parent="#actor1_edit" data-target="#actor1"></select>
-					</div>
-					<!--<div class="input-field col s12">-->
-						<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor1', null)">{{use_sucrette}}</button>-->
-					<!--</div>-->
-
-					<div class="input-field col s6">
-						<select id="actor2_edit" data-sub="#actor2_sub_edit"></select>
-						<label for="actor2_edit">{{character}} 2</label>
-					</div>
-					<div class="input-field col s6">
-						<select id="actor2_sub_edit" data-parent="#actor2_edit" data-target="#actor2"></select>
-					</div>
-					<!--<div class="input-field col s12">-->
-						<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor2', null)">{{use_sucrette}}</button>-->
-					<!--</div>-->
 
 				</div>
 
-				<div class="row">
-					<div class="col s12">
-						<small style="text-align: right">{{{legal}}}</small>
+				<div id="tab-characters" class="col s12">
+					<div class="row">
+
+						<!--<div class="input-field col s12">-->
+							<!--Avatar:-->
+							<!--<input id="file_edit" type="file" onchange="load_from_file('file_edit', '#scene .player-avatar', null)">-->
+						<!--</div>-->
+						<!--<div class="input-field col s12">-->
+							<!--Personagem:-->
+							<!--<input id="file_char_edit" type="file">-->
+						<!--</div>-->
+
+						<div class="input-field col s12">
+							<select id="avatar_edit"></select>
+							<label for="avatar_edit">{{avatar}}</label>
+							<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
+						</div>
+
+						<div class="input-field col s6">
+							<select id="actor1_edit" data-sub="#actor1_sub_edit"></select>
+							<label for="actor1_edit">{{character}} 1</label>
+						</div>
+						<div class="input-field col s6">
+							<select id="actor1_sub_edit" data-parent="#actor1_edit" data-target="#actor1"></select>
+						</div>
+						<!--<div class="input-field col s12">-->
+							<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor1', null)">{{use_sucrette}}</button>-->
+						<!--</div>-->
+
+						<div class="input-field col s6">
+							<select id="actor2_edit" data-sub="#actor2_sub_edit"></select>
+							<label for="actor2_edit">{{character}} 2</label>
+						</div>
+						<div class="input-field col s6">
+							<select id="actor2_sub_edit" data-parent="#actor2_edit" data-target="#actor2"></select>
+						</div>
+						<!--<div class="input-field col s12">-->
+							<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor2', null)">{{use_sucrette}}</button>-->
+						<!--</div>-->
+
 					</div>
 				</div>
 			</div>

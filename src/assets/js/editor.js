@@ -60,7 +60,6 @@ drag_start = function(e) {
 
 drag_move = function(e) {
   var is_pnj;
-  console.log(startX);
   e = e || window.event;
   if (!e.target) {
     e.target = e.srcElement;
@@ -447,6 +446,7 @@ load_from_file = function(file_in, img_out, bg_out) {
     querySelector('#scene_edit').dispatchEvent(event);
     querySelector('#actor1_edit').dispatchEvent(event);
     querySelector('#actor2_edit').dispatchEvent(event);
+    $('ul.tabs').tabs();
     region = get_cookie('region');
     if (region) {
       console.log('REGION | ' + region);
