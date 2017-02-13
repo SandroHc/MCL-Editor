@@ -203,8 +203,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 		render = Mustache.render(querySelector('body').innerHTML, CONFIG)
 		site = 'http://assets.amordoce.com/'
 		assets =
-			body: 'http://avatars.amordoce.com/full/d.png'
-			face: 'http://avatars.amordoce.com/face/d.png'
+			body: 'assets/img/unknown_body.png' # Original: http://avatars.amordoce.com/full/d.png
+			face: 'assets/img/unknown_face.png' # Original: http://avatars.amordoce.com/face/d.png
 		sites =
 			br: 'amordoce.com'
 			de: 'sweetamoris.de'

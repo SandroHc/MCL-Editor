@@ -230,8 +230,8 @@ load_from_file = function(file_in, img_out, bg_out) {
     render = Mustache.render(querySelector('body').innerHTML, CONFIG);
     site = 'http://assets.amordoce.com/';
     assets = {
-      body: 'http://avatars.amordoce.com/full/d.png',
-      face: 'http://avatars.amordoce.com/face/d.png'
+      body: 'assets/img/unknown_body.png',
+      face: 'assets/img/unknown_face.png'
     };
     sites = {
       br: 'amordoce.com',
