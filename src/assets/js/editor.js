@@ -121,8 +121,23 @@ load_from_file = function(file_in, img_out, bg_out) {
 };
 
 (function(window, document, querySelector) {
-  var populate_avatars, populate_emotions, populate_emotions_sub, populate_scenes, populate_scenes_sub, scriptTag;
+  var populate_avatars, populate_emotions, populate_emotions_sub, populate_scenes, populate_scenes_sub, scriptTag, sort_assets;
   scriptTag = document.createElement('script');
+  sort_assets = function() {
+    var comparator;
+    comparator = function(a, b) {
+      var ref, ref1;
+      a = a.name.toUpperCase();
+      b = b.name.toUpperCase();
+      return (ref = a < b) != null ? ref : {
+        1: (ref1 = a > b) != null ? ref1 : -{
+          1: 0
+        }
+      };
+    };
+    CONFIG.avatars.sort(comparator);
+    return CONFIG.emotions.sort(comparator);
+  };
   populate_scenes = function(inputs, defaults) {
     return inputs.forEach(function(input_id, input_index) {
       var input;
@@ -258,7 +273,7 @@ load_from_file = function(file_in, img_out, bg_out) {
           return;
         }
         variation = emotion.variations[this.value];
-        if (variation.id < 900 && variation.checksum) {
+        if (variation.checksum) {
           target.src = site + 'emotion/web/high/' + variation.id + '-' + variation.checksum + '.png';
         } else {
           target.src = 'assets/img/emotion/' + variation.id + '.png';
@@ -370,7 +385,8 @@ load_from_file = function(file_in, img_out, bg_out) {
     querySelector('body').innerHTML = render;
     (function(elements) {
       var el_name, event, results;
-      populate_scenes(['#scene_edit'], ['Class Room A']);
+      sort_assets();
+      populate_scenes(['#scene_edit'], ['Sala de Aula A']);
       populate_avatars(['#avatar_edit'], ['[Docete]']);
       populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
       $('select').material_select();

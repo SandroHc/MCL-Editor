@@ -114,6 +114,16 @@ load_from_file = (file_in, img_out, bg_out) ->
 ((window, document, querySelector) ->
 	scriptTag = document.createElement('script')
 
+	sort_assets = () ->
+		comparator = (a, b) ->
+			a = a.name.toUpperCase()
+			b = b.name.toUpperCase()
+			return a < b ? 1 : a > b ? -1 : 0
+
+		# CONFIG.scenes.sort comparator
+		CONFIG.avatars.sort comparator
+		CONFIG.emotions.sort comparator
+
 	populate_scenes = (inputs, defaults) ->
 		inputs.forEach (input_id, input_index) ->
 			input = querySelector(input_id)
@@ -234,7 +244,7 @@ load_from_file = (file_in, img_out, bg_out) ->
 				if emotion.name == '[Nada]'
 					return
 				variation = emotion.variations[@value]
-				if variation.id < 900 and variation.checksum
+				if variation.checksum
 					target.src = site + 'emotion/web/high/' + variation.id + '-' + variation.checksum + '.png'
 				else # Local hosting
 					target.src = 'assets/img/emotion/' + variation.id + '.png'
@@ -337,7 +347,9 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 		# Bind input events
 		((elements) ->
-			populate_scenes [ '#scene_edit' ], [ 'Class Room A' ]
+			sort_assets()
+
+			populate_scenes [ '#scene_edit' ], [ 'Sala de Aula A' ]
 			populate_avatars [ '#avatar_edit' ], [ '[Docete]' ]
 			populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
 
