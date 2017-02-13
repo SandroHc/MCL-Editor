@@ -243,6 +243,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 			else
 				if emotion.name == '[Nada]'
 					return
+
+				target.src = ''
 				variation = emotion.variations[@value]
 				if variation.checksum
 					target.src = site + 'emotion/web/high/' + variation.id + '-' + variation.checksum + '.png'

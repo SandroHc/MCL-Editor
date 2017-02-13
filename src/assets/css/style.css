@@ -167,6 +167,12 @@
 ul {
   z-index: 100200; }
 
+.drag {
+  cursor: default; }
+  .drag:hover {
+    opacity: 0.85;
+    cursor: move; }
+
 .legal {
   font-size: smaller;
   text-align: right;
@@ -180,12 +186,6 @@ ul {
   padding: .5em 1em;
   text-decoration: none;
   border-radius: 5px; }
-
-.drag {
-  cursor: default; }
-  .drag:hover {
-    opacity: 0.85;
-    cursor: move; }
 
 @media (min-width: 1578px) {
   #container {

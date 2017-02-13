@@ -272,6 +272,7 @@ load_from_file = function(file_in, img_out, bg_out) {
         if (emotion.name === '[Nada]') {
           return;
         }
+        target.src = '';
         variation = emotion.variations[this.value];
         if (variation.checksum) {
           target.src = site + 'emotion/web/high/' + variation.id + '-' + variation.checksum + '.png';

@@ -172,6 +172,15 @@ ul {
 	z-index: $zindex-3;
 }
 
+.drag {
+	cursor: default;
+
+	&:hover {
+		opacity: 0.85;
+		cursor: move;
+	}
+}
+
 .legal {
 	font-size: smaller;
 	text-align: right;
@@ -187,15 +196,6 @@ ul {
 	text-decoration: none;
 	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
 	border-radius: 5px;
-}
-
-.drag {
-	cursor: default;
-
-	&:hover {
-		opacity: 0.85;
-		cursor: move;
-	}
 }
 
 @media(min-width: 1578px) {
