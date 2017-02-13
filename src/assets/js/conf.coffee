@@ -1,6 +1,5 @@
 CONFIG =
 	'use_sucrette': 'Usar Ficheiro'
-
 	'title': 'My Candy Love Editor'
 	'description': 'Amor Doce cenas editor.'
 	'welcome': 'Bem-vindo ao editor não oficial do Amor Doce! Uma ferramenta criada com Amor por <a href="https://tumblr.com/follow/lucasmciruzzi">Lucas</a> e <a href="https://tumblr.com/follow/myasaberhagen">Mya</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.'
