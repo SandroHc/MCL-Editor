@@ -333,12 +333,21 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 		querySelector('body').innerHTML = render
 
+		# Bind input events
 		((elements) ->
+			populate_scenes [ '#scene_edit' ], [ 'Class Room A' ]
+			populate_avatars [ '#avatar_edit' ], [ '[Docete]' ]
+			populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
+
+			# Pass all selects though Material's API
+			$('select').material_select()
+
 			for el_name of elements
-				if elements.hasOwnProperty(el_name)
+				if elements.hasOwnProperty el_name
 					for event of elements[el_name]
-						if elements[el_name].hasOwnProperty(event)
-							querySelector('#' + el_name).addEventListener event, elements[el_name][event]
+						if elements[el_name].hasOwnProperty event
+							# querySelector('#' + el_name).addEventListener event, elements[el_name][event]
+							$('#' + el_name).on event, elements[el_name][event]
 		)
 			actor1_edit:
 				change: update_actor
@@ -358,23 +367,21 @@ load_from_file = (file_in, img_out, bg_out) ->
 			scene_sub_edit:
 				change: update_scene_sub
 				keyup: update_scene_sub
-			lovelevel_edit: input: loveometer_level
-			lovelevel_visible: change: loveometer
-			bubble_edit: keyup: bubble
-			response_edit: keyup: update_response
-			username_submit: click: update_user
-			username_edit: keyup: update_user_name
+			lovelevel_edit:
+				input: loveometer_level
+			lovelevel_visible:
+				change: loveometer
+			bubble_edit:
+				keyup: bubble
+			response_edit:
+				keyup: update_response
+			username_submit:
+				click: update_user
+			username_edit:
+				keyup: update_user_name
 			avatar_edit:
 				change: update_avatar
 				keyup: update_avatar
-
-
-		populate_scenes [ '#scene_edit' ], [ 'Class Room A' ]
-		populate_avatars [ '#avatar_edit' ], [ '[Docete]' ]
-		populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
-
-		# Pass all selects though Material's API
-		$('select').material_select()
 
 		event = new Event('change')
 		querySelector('#scene_edit').dispatchEvent event

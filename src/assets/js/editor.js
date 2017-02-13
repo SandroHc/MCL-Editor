@@ -371,6 +371,10 @@ load_from_file = function(file_in, img_out, bg_out) {
     querySelector('body').innerHTML = render;
     (function(elements) {
       var el_name, event, results;
+      populate_scenes(['#scene_edit'], ['Class Room A']);
+      populate_avatars(['#avatar_edit'], ['[Docete]']);
+      populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
+      $('select').material_select();
       results = [];
       for (el_name in elements) {
         if (elements.hasOwnProperty(el_name)) {
@@ -379,7 +383,7 @@ load_from_file = function(file_in, img_out, bg_out) {
             results1 = [];
             for (event in elements[el_name]) {
               if (elements[el_name].hasOwnProperty(event)) {
-                results1.push(querySelector('#' + el_name).addEventListener(event, elements[el_name][event]));
+                results1.push($('#' + el_name).on(event, elements[el_name][event]));
               } else {
                 results1.push(void 0);
               }
@@ -439,10 +443,6 @@ load_from_file = function(file_in, img_out, bg_out) {
         keyup: update_avatar
       }
     });
-    populate_scenes(['#scene_edit'], ['Class Room A']);
-    populate_avatars(['#avatar_edit'], ['[Docete]']);
-    populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
-    $('select').material_select();
     event = new Event('change');
     querySelector('#scene_edit').dispatchEvent(event);
     querySelector('#actor1_edit').dispatchEvent(event);
