@@ -275,7 +275,7 @@ load_from_file = function(file_in, img_out, bg_out) {
         target.src = '';
         variation = emotion.variations[this.value];
         if (variation.checksum) {
-          target.src = site + 'emotion/web/high/' + variation.id + '-' + variation.checksum + '.png';
+          target.src = 'assets/img/emotion/' + variation.id + '-' + variation.checksum + '.png';
         } else {
           target.src = 'assets/img/emotion/' + variation.id + '.png';
         }
@@ -296,7 +296,7 @@ load_from_file = function(file_in, img_out, bg_out) {
       target = querySelector(this.dataset.target);
       variation = scene.variations[this.value];
       if (variation.checksum) {
-        return target.style.backgroundImage = 'url(' + site + 'place/web/high/' + variation.id + '-' + variation.checksum + '.jpg)';
+        return target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '-' + variation.checksum + '.jpg)';
       } else {
         return target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '.jpg)';
       }
@@ -376,7 +376,7 @@ load_from_file = function(file_in, img_out, bg_out) {
           return;
         }
         if (avatar.checksum) {
-          el.src = site + 'npc/web/thumbnail/' + avatar.id + '-' + avatar.checksum + '.png';
+          el.src = 'assets/img/avatar/' + avatar.id + '-' + avatar.checksum + '.png';
         } else {
           el.src = 'assets/img/avatar/' + avatar.id + '.png';
         }

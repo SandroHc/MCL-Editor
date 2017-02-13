@@ -203,8 +203,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 		render = Mustache.render(querySelector('body').innerHTML, CONFIG)
 		site = 'http://assets.amordoce.com/'
 		assets =
-			body: 'assets/img/unknown_body.png' # Original: http://avatars.amordoce.com/full/d.png
-			face: 'assets/img/unknown_face.png' # Original: http://avatars.amordoce.com/face/d.png
+			body: 'assets/img/unknown_body.png' # Web: http://avatars.amordoce.com/full/d.png
+			face: 'assets/img/unknown_face.png' # Web: http://avatars.amordoce.com/face/d.png
 		sites =
 			br: 'amordoce.com'
 			de: 'sweetamoris.de'
@@ -247,8 +247,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 				target.src = ''
 				variation = emotion.variations[@value]
 				if variation.checksum
-					target.src = site + 'emotion/web/high/' + variation.id + '-' + variation.checksum + '.png'
-				else # Local hosting
+					target.src = 'assets/img/emotion/' + variation.id + '-' + variation.checksum + '.png' # Web: site + 'emotion/web/high/id-checksum.png'
+				else
 					target.src = 'assets/img/emotion/' + variation.id + '.png'
 
 				target.style.height = '92.24138%'
@@ -267,8 +267,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 			target = querySelector(@dataset.target)
 			variation = scene.variations[@value]
 			if variation.checksum
-				target.style.backgroundImage = 'url(' + site + 'place/web/high/' + variation.id + '-' + variation.checksum + '.jpg)'
-			else # Local hosting
+				target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '-' + variation.checksum + '.jpg)' # Web: site + 'place/web/high/id-checksum.jpg'
+			else
 				target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '.jpg)'
 
 		loveometer_level = ->
@@ -339,8 +339,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 					return
 
 				if avatar.checksum
-					el.src = site + 'npc/web/thumbnail/' + avatar.id + '-' + avatar.checksum + '.png'
-				else # Local hosting
+					el.src = 'assets/img/avatar/' + avatar.id + '-' + avatar.checksum + '.png' # Web: http://assets.amordoce.com/npc/web/thumbnail/id-checksum.png
+				else
 					el.src = 'assets/img/avatar/' + avatar.id + '.png'
 				el.style.bottom = '0'
 			return

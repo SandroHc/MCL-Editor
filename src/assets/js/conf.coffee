@@ -3,7 +3,7 @@ CONFIG =
 	'use_sucrette': 'Usar Ficheiro'
 	'title': 'My Candy Love Editor'
 	'description': 'Amor Doce cenas editor.'
-	'welcome': 'Bem-vindo ao editor não oficial do Amor Doce! Uma ferramenta criada com Amor por <a href="https://tumblr.com/follow/lucasmciruzzi">Lucas</a> e <a href="https://tumblr.com/follow/myasaberhagen">Mya</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.'
+	'welcome': 'Bem-vindo ao editor não oficial do Amor Doce! Uma ferramenta criada com Amor por <a href="https://tumblr.com/follow/lucasmciruzzi" target="_blank">Lucas</a> e <a href="https://tumblr.com/follow/myasaberhagen" target="_blank">Mya</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.'
 	'account': 'Conta'
 	'region': 'Região'
 	'username': 'Nome'
@@ -18,7 +18,7 @@ CONFIG =
 	'characters': 'Personagens'
 	'avatar': 'Avatar'
 	'character': 'Caráter'
-	'legal': 'Todas as imagens pertencem a <a href="//beemoov.com">Beemoov</a> e <a href="//chinomiko.com">ChinoMiko</a>'
+	'legal': 'Todas as imagens pertencem a <a href="//beemoov.com" target="_blank">Beemoov</a> e <a href="//chinomiko.com" target="_blank">ChinoMiko</a>'
 	'view_result': 'Ver resultado'
 	'regions': [
 		{ 'id': 'br', 'name': 'Brazil — amordoce.com' }
@@ -1010,16 +1010,17 @@ CONFIG =
 		}
 	]
 	'avatars': [
-		{ 'name': 'Nathaniel',				'id': '1',  'checksum': '' }
+		{ 'name': 'Nathaniel',				'id': '1',  'checksum': 'bc54262faa435b63' }
 		{ 'name': 'Castiel',				'id': '2',  'checksum': '35d8889c06baa039' }
 		{ 'name': 'Ken',					'id': '6',  'checksum': '3b464ff64c2bd151' }
-		{ 'name': 'Diretora',				'id': '7',  'checksum': '' }
-		{ 'name': 'Amber',					'id': '10', 'checksum': '' }
-		{ 'name': 'Iris',					'id': '11', 'checksum': '' }
-		{ 'name': 'ChiNoMiko',				'id': '12', 'checksum': '' }
-		{ 'name': 'Boris',					'id': '15', 'checksum': '' }
+		{ 'name': 'Diretora',				'id': '7',  'checksum': 'fbb20faad27dc3d5' }
+		{ 'name': 'Agatha',					'id': '9', 'checksum': 'dffa3ff5431cea78' }
+		{ 'name': 'Amber',					'id': '10', 'checksum': 'dd6d56bc7686aeb6' }
+		{ 'name': 'Iris',					'id': '11', 'checksum': 'a693f1b1a7103d5f' }
+		{ 'name': 'ChiNoMiko',				'id': '12', 'checksum': '6627995d3090c8bd' }
+		{ 'name': 'Boris',					'id': '15', 'checksum': '9f48af96ebbecc3d' }
 		{ 'name': 'Jade',					'id': '18', 'checksum': '' }
-		{ 'name': 'Dajan',					'id': '19', 'checksum': '' }
+		{ 'name': 'Dajan',					'id': '19', 'checksum': '34981cea53f465d9' }
 		{ 'name': 'Prof. Faraize',			'id': '20', 'checksum': '' }
 		{ 'name': 'Rosalya',				'id': '22', 'checksum': '' }
 		{ 'name': 'Rosalya (Antiga)',		'id': '22_old', 'checksum': '' }
@@ -1055,8 +1056,8 @@ CONFIG =
 		{ 'name': 'Patrick',				'id': '58', 'checksum': '' }
 		{ 'name': 'Cupido',					'id': '59', 'checksum': '' }
 		{ 'name': 'Mãe de Docete',			'id': '60', 'checksum': '' }
-		{ 'name': 'Charlotte',				'id': '62', 'checksum': '' }
-		{ 'name': 'Li',						'id': '63', 'checksum': '' }
+		{ 'name': 'Charlotte',				'id': '62', 'checksum': '22cb1caff72c8df2' }
+		{ 'name': 'Li',						'id': '63', 'checksum': '6fe68c1ddabdb628' }
 		{ 'name': 'Pai de Nathaniel e Ambre','id': '64', 'checksum': '' }
 		{ 'name': 'Mãe de Nathaniel e Ambre','id': '65', 'checksum': '' }
 		{ 'name': 'Pai de Castiel',			'id': '66', 'checksum': '' }
