@@ -106,13 +106,147 @@ load_from_file = (file_in, img_out, bg_out) ->
 			console.log document.querySelector(bg_out)
 			console.log fr.result
 			document.querySelector(bg_out).style.backgroundImage = 'url(' + fr.result + ')'
-		console.log 'IMG LOADED'
 
 	fr.readAsDataURL file.files[0]
 
-
 ((window, document, querySelector) ->
 	scriptTag = document.createElement('script')
+
+	sites =
+		br: 'amordoce.com'
+		de: 'sweetamoris.de'
+		es: 'corazondemelon.es'
+		fi: 'flirttistoori.com'
+		fr: 'amoursucre.com'
+		hu: 'csabitasboljeles.hu'
+		it: 'dolceflirt.it'
+		mx: 'corazondebombon.com'
+		pl: 'slodkiflirt.pl'
+		ro: 'sweetflirt.ro'
+		ru: 'sladkiiflirt.ru'
+		tr: 'askito-m.com'
+		uk: 'sweetcrush.co.uk'
+		us: 'mycandylove.com'
+
+	conf_region   = 'br' # Default region
+	conf_username = ''
+
+	load_cookies = () ->
+		load_region()
+		load_username()
+
+	load_region = () ->
+		val = get_cookie('region')
+		if val
+			conf_region = val
+
+			console.log 'REGION | ' + conf_region
+			querySelector('#region_edit option[value="' + conf_region + '"]').selected = true
+
+	load_username = () ->
+		val = get_cookie('username')
+		if val
+			conf_username = val
+
+			console.log 'USERNAME | ' + conf_username
+			querySelector('#username_edit').value = conf_username
+			querySelector('#username_submit').dispatchEvent new Event('click')
+
+
+	player_info = null
+	player_id = null
+	player_avatar = null
+
+	get_player_info = (username, callback) ->
+		if !username
+			callback(null)
+
+		$.ajax
+			# API: http://api2.amordoce.com/v2/profile/find/username
+			url: "https://mcl.sandrohc.net/" + conf_region + "/v2/profile/find/" + username,
+			headers:
+				"X-Beemoov-Application": 'anonymous',
+# FIXME Credentials only accepted on the BR server. You don't have to be logged in to see profiles, so there must be a way to bypass this
+				"X-Beemoov-Signature": 'e33b9ed89eeee95172d6db8a8143d660c9568aa9',
+				"X-Beemoov-Timestamp": '1487082505641'
+			error: (jqXHR, textStatus, errorThrown) ->
+				console.log "Error while fetching player info"
+				console.log errorThrown
+				callback(null)
+			success: (data) ->
+				callback(data.data)
+		return
+
+
+	get_player_avatar = (id, callback) ->
+		$.ajax
+			# API: http://api2.amordoce.com/v2/avatar/id
+			url: "https://mcl.sandrohc.net/" + conf_region + "/v2/avatar/" + id,
+			error: (jqXHR, textStatus, errorThrown) ->
+				console.log "Error while fetching player avatar"
+				console.log errorThrown
+			success: (data) ->
+				callback(data.data)
+		return
+
+
+	draw_avatar_dest = null
+	draw_avatar_portrait = null
+
+	draw_avatar = (is_portrait, dest) ->
+		if !player_avatar
+			if !player_id
+				if !player_info
+					if conf_username
+						# If the player is set but there is no player info, try the outdated links
+						timestamp = (new Date).getTime()
+
+						dest.src = 'http://avatars.' + sites[conf_region] + '/' + (if is_portrait then 'face' else 'full') + '/' + conf_username + '.' + timestamp + '.png'
+					else
+						dest.src = 'assets/img/' + (if is_portrait then 'face' else 'body') + '_unknown.png'
+					return
+				player_id = player_info.player.id
+
+
+			draw_avatar_dest = dest
+			draw_avatar_portrait = is_portrait
+
+			get_player_avatar player_id, (data) ->
+				player_avatar = data
+				draw_avatar draw_avatar_portrait, draw_avatar_dest
+			# Wait until the callback is finished before processing the avatar
+			return
+
+
+		site = 'http://assets.' + sites[conf_region] + '/'
+		type = if is_portrait then 'portrait' else 'normal'
+		bg = ''
+
+		add_comma = false
+		add_clothes = (data, color, clothe_type) ->
+			if add_comma
+				bg += ','
+			add_comma = true
+
+			bg += 'url(' + site + clothe_type + '/web/' + type + '/' + data.id + '-' + data.security
+			if color
+				bg += '_' + color.id + '-' + color.security
+			bg += '.png)'
+
+		for i in [player_avatar.clothes.length-1 .. 0]
+			add_clothes(player_avatar.clothes[i], null, 'clothe')
+
+		add_clothes(player_avatar.avatar.headAccessory,	null, 'avatarpart')
+		add_clothes(player_avatar.avatar.mouthType,		null, 'avatarpart')
+		add_clothes(player_avatar.avatar.eyebrowsType,	player_avatar.avatar.hairColor, 'avatarpart')
+		add_clothes(player_avatar.avatar.eyeType,		player_avatar.avatar.eyeColor, 'avatarpart')
+		add_clothes(player_avatar.avatar.hairType,		player_avatar.avatar.hairColor, 'avatarpart')
+		add_clothes(player_avatar.avatar.bodyType,		null, 'avatarpart')
+
+		dest.src = 'assets/img/' + (if is_portrait then 'face' else 'body') + '_placeholder.png'
+		dest.style.backgroundImage = bg
+
+		return
 
 	sort_assets = () ->
 		comparator = (a, b) ->
@@ -142,8 +276,7 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 		scene = CONFIG.scenes[index]
 		scene.variations.forEach (e, i) ->
-			console.log 'VAR | ' + e.name
-
+			# console.log 'VAR | ' + e.name
 			el = document.createElement('option')
 			el.textContent = e.name
 			el.value = i
@@ -187,8 +320,7 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 		emotion = CONFIG.emotions[index]
 		emotion.variations.forEach (e, i) ->
-			#console.log("VAR | " + variation.name);
-
+			# console.log("VAR | " + variation.name);
 			el = document.createElement('option')
 			el.textContent = e.name
 			el.value = i
@@ -200,27 +332,8 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 
 	scriptTag.addEventListener 'load', ->
-		render = Mustache.render(querySelector('body').innerHTML, CONFIG)
-		site = 'http://assets.amordoce.com/'
-		assets =
-			body: 'assets/img/unknown_body.png' # Web: http://avatars.amordoce.com/full/d.png
-			face: 'assets/img/unknown_face.png' # Web: http://avatars.amordoce.com/face/d.png
-		sites =
-			br: 'amordoce.com'
-			de: 'sweetamoris.de'
-			es: 'corazondemelon.es'
-			fi: 'flirttistoori.com'
-			fr: 'amoursucre.com'
-			hu: 'csabitasboljeles.hu'
-			it: 'dolceflirt.it'
-			jp: 'mycandylove.jp'
-			mx: 'corazondebombon.com'
-			pl: 'slodkiflirt.pl'
-			ro: 'sweetflirt.ro'
-			ru: 'sladkiiflirt.ru'
-			tr: 'askito-m.com'
-			uk: 'sweetcrush.co.uk'
-			us: 'mycandylove.com'
+		document.body.innerHTML = Mustache.render(querySelector('body').innerHTML, CONFIG)
+
 
 		update_actor = ->
 			sub = querySelector(@dataset.sub)
@@ -233,24 +346,25 @@ load_from_file = (file_in, img_out, bg_out) ->
 			console.log 'EMOTION SELECTED | ' + emotion.name + ' (' + name + ')'
 
 			target = querySelector(@dataset.target)
-			target.style.display = emotion.name != '[Nada]' ? 'block' : 'none'
+			target.style.src = ''
+
+			if emotion.name == '[Nada]'
+				target.style.display = 'none'
+				return
+			else
+				target.style.display = 'block'
 
 			if emotion.name == '[Docete]'
-				target.src = assets.body
+				draw_avatar(false, target)
+				# target.src = assets.body
 
 				target.style.height = '150%'
 				target.style.bottom = '-300px'
 			else
-				if emotion.name == '[Nada]'
-					return
-
-				target.src = ''
 				variation = emotion.variations[@value]
-				if variation.checksum
-					target.src = 'assets/img/emotion/' + variation.id + '-' + variation.checksum + '.png' # Web: site + 'emotion/web/high/id-checksum.png'
-				else
-					target.src = 'assets/img/emotion/' + variation.id + '.png'
+				target.src = 'assets/img/emotion/' + variation.id + (if variation.checksum then '-' + variation.checksum else '') + '.png' # Web: site + 'emotion/web/high/id-checksum.png'
 
+				target.style.backgroundImage = ''
 				target.style.height = '92.24138%'
 				target.style.bottom = '0'
 			return
@@ -263,13 +377,10 @@ load_from_file = (file_in, img_out, bg_out) ->
 		update_scene_sub = ->
 			name = @options[@selectedIndex].textContent
 			scene = CONFIG.scenes[@options[@selectedIndex].dataset.scene]
-			console.log 'SCENE SELECTED | ' + scene.name + ' (#' + scene.variations[@value].id + ' - ' + name + ')'
+			console.log 'SCENE SELECTED | ' + scene.name + ' (' + name + ')'
 			target = querySelector(@dataset.target)
 			variation = scene.variations[@value]
-			if variation.checksum
-				target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '-' + variation.checksum + '.jpg)' # Web: site + 'place/web/high/id-checksum.jpg'
-			else
-				target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '.jpg)'
+			target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + (if variation.checksum then '-' + variation.checksum else '') + '.jpg)' # Web: site + 'place/web/high/id-checksum.jpg'
 
 		loveometer_level = ->
 			querySelector('#loveometer .gauge').style.height = @value / 2 + 50 + '%'
@@ -300,52 +411,59 @@ load_from_file = (file_in, img_out, bg_out) ->
 				querySelector('.responses-wrapper').style.display = 'none'
 				querySelector('.player').style.display = 'none'
 
-		update_user = ->
-			user = if querySelector('#username_edit').value != '' then querySelector('#username_edit').value else 'd'
-			region = sites[querySelector('#region_edit').value]
-			timestamp = (new Date).getTime()
-			assets.face = 'http://avatars.' + region + '/face/' + user + '.' + timestamp + '.png'
-			assets.body = 'http://avatars.' + region + '/full/' + user + '.' + timestamp + '.png'
+		update_username_btn = ->
+			conf_username = querySelector('#username_edit').value # else 'd'
+			conf_region = querySelector('#region_edit').value
 
-			query = querySelector('#actor1_edit')
-			if query.options[query.selectedIndex].text == '[Docete]'
-				querySelector('#actor1').src = assets.body
+			set_cookie 'username', conf_username
+			set_cookie 'region', conf_region
 
-			query = querySelector('#actor2_edit')
-			if query.options[query.selectedIndex].text == '[Docete]'
-				querySelector('#actor2').src = assets.body
+			get_player_info conf_username, (data) ->
+				player_info = data
 
-			query = querySelector('#avatar_edit')
-			if query.options[query.selectedIndex].text == '[Docete]'
-				querySelector('.player-avatar').src = assets.face
+				if player_info
+					player_id = player_info.player.id
 
-			set_cookie 'region', querySelector('#region_edit').value
-			set_cookie 'username', querySelector('#username_edit').value
+				query = querySelector('#actor1_edit')
+				if query.options[query.selectedIndex].text == '[Docete]'
+					query.dispatchEvent eventChange
 
-		update_user_name = (key) ->
+				query = querySelector('#actor2_edit')
+				if query.options[query.selectedIndex].text == '[Docete]'
+					query.dispatchEvent eventChange
+
+				query = querySelector('#avatar_edit')
+				if query.options[query.selectedIndex].text == '[Docete]'
+					query.dispatchEvent eventChange
+
+
+		update_username = (key) ->
 			if key.keyCode == 13 # Press ENTER
 				key.preventDefault()
-				return update_user()
+				return update_username_btn()
+
 
 		update_avatar = ->
 			avatar = CONFIG.avatars[@value]
 			el = querySelector('.player-avatar')
-			el.style.display = avatar.name != '[Nada]' ? 'block' : 'none'
-			if avatar.name == '[Docete]'
-				el.src = assets.face
-				el.style.bottom = '70px'
-			else
-				if avatar.name == '[Nada]'
-					return
+			el.src = ''
 
-				if avatar.checksum
-					el.src = 'assets/img/avatar/' + avatar.id + '-' + avatar.checksum + '.png' # Web: http://assets.amordoce.com/npc/web/thumbnail/id-checksum.png
-				else
-					el.src = 'assets/img/avatar/' + avatar.id + '.png'
+			if avatar.name == '[Nada]'
+				el.style.display = 'none'
+				return
+			else
+				el.style.display = 'block'
+
+			if avatar.name == '[Docete]'
+				el.style.bottom = '70px'
+
+				draw_avatar(true, el)
+			else
 				el.style.bottom = '0'
+				el.style.backgroundImage = ''
+				el.src = 'assets/img/avatar/' + avatar.id + (if avatar.checksum then '-' + avatar.checksum else '') + '.png' # Web: http://assets.amordoce.com/npc/web/thumbnail/id-checksum.png
 			return
 
-		querySelector('body').innerHTML = render
 
 		# Bind input events
 		((elements) ->
@@ -354,9 +472,6 @@ load_from_file = (file_in, img_out, bg_out) ->
 			populate_scenes [ '#scene_edit' ], [ 'Sala de Aula A' ]
 			populate_avatars [ '#avatar_edit' ], [ '[Docete]' ]
 			populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
-
-			# Pass all selects though Material's API
-			$('select').material_select()
 
 			for el_name of elements
 				if elements.hasOwnProperty el_name
@@ -392,30 +507,23 @@ load_from_file = (file_in, img_out, bg_out) ->
 			response_edit:
 				keyup: update_response
 			username_submit:
-				click: update_user
+				click: update_username_btn
 			username_edit:
-				keyup: update_user_name
+				keyup: update_username
 			avatar_edit:
 				change: update_avatar
 				keyup: update_avatar
 
-		event = new Event('change')
-		querySelector('#scene_edit').dispatchEvent event
-		querySelector('#actor1_edit').dispatchEvent event
-		querySelector('#actor2_edit').dispatchEvent event
+
+		load_cookies()
+
+		eventChange = new Event('change')
+		querySelector('#scene_edit').dispatchEvent eventChange
+		querySelector('#actor1_edit').dispatchEvent eventChange
+		querySelector('#actor2_edit').dispatchEvent eventChange
 
 		$('ul.tabs').tabs()
-
-		region = get_cookie('region')
-		if region
-			console.log 'REGION | ' + region
-			querySelector('#region_edit option[value="' + region + '"]').selected = true
-
-		username = get_cookie('username')
-		if username
-			console.log 'USERNAME | ' + username
-			querySelector('#username_edit').value = username
-			querySelector('#username_submit').dispatchEvent new Event('click')
+		$('select').material_select() # Pass all selects though Material's API
 
 		# document.querySelectorAll(".drag").forEach(function(el) {
 		# 	el.addEventListener("mousedown", drag_start, false);
@@ -426,6 +534,7 @@ load_from_file = (file_in, img_out, bg_out) ->
 		document.onmouseup = drag_stop
 		# querySelector("#pnj1").onmousedown = function() { alert("MOUSE DOWN!") };
 		# querySelector("#pnj1").onmouseup = function() { alert("MOUSE UP!") };
+
 
 	scriptTag.src = 'assets/js/conf.js'
 	document.head.appendChild scriptTag

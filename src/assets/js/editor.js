@@ -113,16 +113,144 @@ load_from_file = function(file_in, img_out, bg_out) {
     if (bg_out) {
       console.log(document.querySelector(bg_out));
       console.log(fr.result);
-      document.querySelector(bg_out).style.backgroundImage = 'url(' + fr.result + ')';
+      return document.querySelector(bg_out).style.backgroundImage = 'url(' + fr.result + ')';
     }
-    return console.log('IMG LOADED');
   };
   return fr.readAsDataURL(file.files[0]);
 };
 
 (function(window, document, querySelector) {
-  var populate_avatars, populate_emotions, populate_emotions_sub, populate_scenes, populate_scenes_sub, scriptTag, sort_assets;
+  var conf_region, conf_username, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_player_avatar, get_player_info, load_cookies, load_region, load_username, player_avatar, player_id, player_info, populate_avatars, populate_emotions, populate_emotions_sub, populate_scenes, populate_scenes_sub, scriptTag, sites, sort_assets;
   scriptTag = document.createElement('script');
+  sites = {
+    br: 'amordoce.com',
+    de: 'sweetamoris.de',
+    es: 'corazondemelon.es',
+    fi: 'flirttistoori.com',
+    fr: 'amoursucre.com',
+    hu: 'csabitasboljeles.hu',
+    it: 'dolceflirt.it',
+    mx: 'corazondebombon.com',
+    pl: 'slodkiflirt.pl',
+    ro: 'sweetflirt.ro',
+    ru: 'sladkiiflirt.ru',
+    tr: 'askito-m.com',
+    uk: 'sweetcrush.co.uk',
+    us: 'mycandylove.com'
+  };
+  conf_region = 'br';
+  conf_username = '';
+  load_cookies = function() {
+    load_region();
+    return load_username();
+  };
+  load_region = function() {
+    var val;
+    val = get_cookie('region');
+    if (val) {
+      conf_region = val;
+      console.log('REGION | ' + conf_region);
+      return querySelector('#region_edit option[value="' + conf_region + '"]').selected = true;
+    }
+  };
+  load_username = function() {
+    var val;
+    val = get_cookie('username');
+    if (val) {
+      conf_username = val;
+      console.log('USERNAME | ' + conf_username);
+      querySelector('#username_edit').value = conf_username;
+      return querySelector('#username_submit').dispatchEvent(new Event('click'));
+    }
+  };
+  player_info = null;
+  player_id = null;
+  player_avatar = null;
+  get_player_info = function(username, callback) {
+    if (!username) {
+      callback(null);
+    }
+    $.ajax({
+      url: "https://mcl.sandrohc.net/" + conf_region + "/v2/profile/find/" + username,
+      headers: {
+        "X-Beemoov-Application": 'anonymous',
+        "X-Beemoov-Signature": 'e33b9ed89eeee95172d6db8a8143d660c9568aa9',
+        "X-Beemoov-Timestamp": '1487082505641'
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log("Error while fetching player info");
+        console.log(errorThrown);
+        return callback(null);
+      },
+      success: function(data) {
+        return callback(data.data);
+      }
+    });
+  };
+  get_player_avatar = function(id, callback) {
+    $.ajax({
+      url: "https://mcl.sandrohc.net/" + conf_region + "/v2/avatar/" + id,
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log("Error while fetching player avatar");
+        return console.log(errorThrown);
+      },
+      success: function(data) {
+        return callback(data.data);
+      }
+    });
+  };
+  draw_avatar_dest = null;
+  draw_avatar_portrait = null;
+  draw_avatar = function(is_portrait, dest) {
+    var add_clothes, add_comma, bg, i, j, ref, site, timestamp, type;
+    if (!player_avatar) {
+      if (!player_id) {
+        if (!player_info) {
+          if (conf_username) {
+            timestamp = (new Date).getTime();
+            dest.src = 'http://avatars.' + sites[conf_region] + '/' + (is_portrait ? 'face' : 'full') + '/' + conf_username + '.' + timestamp + '.png';
+          } else {
+            dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_unknown.png';
+          }
+          return;
+        }
+        player_id = player_info.player.id;
+      }
+      draw_avatar_dest = dest;
+      draw_avatar_portrait = is_portrait;
+      get_player_avatar(player_id, function(data) {
+        player_avatar = data;
+        return draw_avatar(draw_avatar_portrait, draw_avatar_dest);
+      });
+      return;
+    }
+    site = 'http://assets.' + sites[conf_region] + '/';
+    type = is_portrait ? 'portrait' : 'normal';
+    bg = '';
+    add_comma = false;
+    add_clothes = function(data, color, clothe_type) {
+      if (add_comma) {
+        bg += ',';
+      }
+      add_comma = true;
+      bg += 'url(' + site + clothe_type + '/web/' + type + '/' + data.id + '-' + data.security;
+      if (color) {
+        bg += '_' + color.id + '-' + color.security;
+      }
+      return bg += '.png)';
+    };
+    for (i = j = ref = player_avatar.clothes.length - 1; ref <= 0 ? j <= 0 : j >= 0; i = ref <= 0 ? ++j : --j) {
+      add_clothes(player_avatar.clothes[i], null, 'clothe');
+    }
+    add_clothes(player_avatar.avatar.headAccessory, null, 'avatarpart');
+    add_clothes(player_avatar.avatar.mouthType, null, 'avatarpart');
+    add_clothes(player_avatar.avatar.eyebrowsType, player_avatar.avatar.hairColor, 'avatarpart');
+    add_clothes(player_avatar.avatar.eyeType, player_avatar.avatar.eyeColor, 'avatarpart');
+    add_clothes(player_avatar.avatar.hairType, player_avatar.avatar.hairColor, 'avatarpart');
+    add_clothes(player_avatar.avatar.bodyType, null, 'avatarpart');
+    dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_placeholder.png';
+    dest.style.backgroundImage = bg;
+  };
   sort_assets = function() {
     var comparator;
     comparator = function(a, b) {
@@ -163,7 +291,6 @@ load_from_file = function(file_in, img_out, bg_out) {
     scene = CONFIG.scenes[index];
     scene.variations.forEach(function(e, i) {
       var el;
-      console.log('VAR | ' + e.name);
       el = document.createElement('option');
       el.textContent = e.name;
       el.value = i;
@@ -226,59 +353,34 @@ load_from_file = function(file_in, img_out, bg_out) {
     return input.dispatchEvent(new Event('change'));
   };
   scriptTag.addEventListener('load', function() {
-    var assets, bubble, event, loveometer, loveometer_level, region, render, site, sites, update_actor, update_actor_sub, update_avatar, update_response, update_scene, update_scene_sub, update_user, update_user_name, username;
-    render = Mustache.render(querySelector('body').innerHTML, CONFIG);
-    site = 'http://assets.amordoce.com/';
-    assets = {
-      body: 'assets/img/unknown_body.png',
-      face: 'assets/img/unknown_face.png'
-    };
-    sites = {
-      br: 'amordoce.com',
-      de: 'sweetamoris.de',
-      es: 'corazondemelon.es',
-      fi: 'flirttistoori.com',
-      fr: 'amoursucre.com',
-      hu: 'csabitasboljeles.hu',
-      it: 'dolceflirt.it',
-      jp: 'mycandylove.jp',
-      mx: 'corazondebombon.com',
-      pl: 'slodkiflirt.pl',
-      ro: 'sweetflirt.ro',
-      ru: 'sladkiiflirt.ru',
-      tr: 'askito-m.com',
-      uk: 'sweetcrush.co.uk',
-      us: 'mycandylove.com'
-    };
+    var bubble, eventChange, loveometer, loveometer_level, update_actor, update_actor_sub, update_avatar, update_response, update_scene, update_scene_sub, update_username, update_username_btn;
+    document.body.innerHTML = Mustache.render(querySelector('body').innerHTML, CONFIG);
     update_actor = function() {
       var sub;
       sub = querySelector(this.dataset.sub);
       return populate_emotions_sub(this.value, sub);
     };
     update_actor_sub = function() {
-      var emotion, name, ref, target, variation;
+      var emotion, name, target, variation;
       name = this.options[this.selectedIndex].textContent;
       emotion = CONFIG.emotions[this.options[this.selectedIndex].dataset.emotion];
       console.log('EMOTION SELECTED | ' + emotion.name + ' (' + name + ')');
       target = querySelector(this.dataset.target);
-      target.style.display = (ref = emotion.name !== '[Nada]') != null ? ref : {
-        'block': 'none'
-      };
+      target.style.src = '';
+      if (emotion.name === '[Nada]') {
+        target.style.display = 'none';
+        return;
+      } else {
+        target.style.display = 'block';
+      }
       if (emotion.name === '[Docete]') {
-        target.src = assets.body;
+        draw_avatar(false, target);
         target.style.height = '150%';
         target.style.bottom = '-300px';
       } else {
-        if (emotion.name === '[Nada]') {
-          return;
-        }
-        target.src = '';
         variation = emotion.variations[this.value];
-        if (variation.checksum) {
-          target.src = 'assets/img/emotion/' + variation.id + '-' + variation.checksum + '.png';
-        } else {
-          target.src = 'assets/img/emotion/' + variation.id + '.png';
-        }
+        target.src = 'assets/img/emotion/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.png';
+        target.style.backgroundImage = '';
         target.style.height = '92.24138%';
         target.style.bottom = '0';
       }
@@ -292,14 +394,10 @@ load_from_file = function(file_in, img_out, bg_out) {
       var name, scene, target, variation;
       name = this.options[this.selectedIndex].textContent;
       scene = CONFIG.scenes[this.options[this.selectedIndex].dataset.scene];
-      console.log('SCENE SELECTED | ' + scene.name + ' (#' + scene.variations[this.value].id + ' - ' + name + ')');
+      console.log('SCENE SELECTED | ' + scene.name + ' (' + name + ')');
       target = querySelector(this.dataset.target);
       variation = scene.variations[this.value];
-      if (variation.checksum) {
-        return target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '-' + variation.checksum + '.jpg)';
-      } else {
-        return target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + '.jpg)';
-      }
+      return target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.jpg)';
     };
     loveometer_level = function() {
       querySelector('#loveometer .gauge').style.height = this.value / 2 + 50 + '%';
@@ -333,64 +431,63 @@ load_from_file = function(file_in, img_out, bg_out) {
         return querySelector('.player').style.display = 'none';
       }
     };
-    update_user = function() {
-      var query, region, timestamp, user;
-      user = querySelector('#username_edit').value !== '' ? querySelector('#username_edit').value : 'd';
-      region = sites[querySelector('#region_edit').value];
-      timestamp = (new Date).getTime();
-      assets.face = 'http://avatars.' + region + '/face/' + user + '.' + timestamp + '.png';
-      assets.body = 'http://avatars.' + region + '/full/' + user + '.' + timestamp + '.png';
-      query = querySelector('#actor1_edit');
-      if (query.options[query.selectedIndex].text === '[Docete]') {
-        querySelector('#actor1').src = assets.body;
-      }
-      query = querySelector('#actor2_edit');
-      if (query.options[query.selectedIndex].text === '[Docete]') {
-        querySelector('#actor2').src = assets.body;
-      }
-      query = querySelector('#avatar_edit');
-      if (query.options[query.selectedIndex].text === '[Docete]') {
-        querySelector('.player-avatar').src = assets.face;
-      }
-      set_cookie('region', querySelector('#region_edit').value);
-      return set_cookie('username', querySelector('#username_edit').value);
+    update_username_btn = function() {
+      conf_username = querySelector('#username_edit').value;
+      conf_region = querySelector('#region_edit').value;
+      set_cookie('username', conf_username);
+      set_cookie('region', conf_region);
+      return get_player_info(conf_username, function(data) {
+        var query;
+        player_info = data;
+        if (player_info) {
+          player_id = player_info.player.id;
+        }
+        query = querySelector('#actor1_edit');
+        if (query.options[query.selectedIndex].text === '[Docete]') {
+          query.dispatchEvent(eventChange);
+        }
+        query = querySelector('#actor2_edit');
+        if (query.options[query.selectedIndex].text === '[Docete]') {
+          query.dispatchEvent(eventChange);
+        }
+        query = querySelector('#avatar_edit');
+        if (query.options[query.selectedIndex].text === '[Docete]') {
+          return query.dispatchEvent(eventChange);
+        }
+      });
     };
-    update_user_name = function(key) {
+    update_username = function(key) {
       if (key.keyCode === 13) {
         key.preventDefault();
-        return update_user();
+        return update_username_btn();
       }
     };
     update_avatar = function() {
-      var avatar, el, ref;
+      var avatar, el;
       avatar = CONFIG.avatars[this.value];
       el = querySelector('.player-avatar');
-      el.style.display = (ref = avatar.name !== '[Nada]') != null ? ref : {
-        'block': 'none'
-      };
-      if (avatar.name === '[Docete]') {
-        el.src = assets.face;
-        el.style.bottom = '70px';
+      el.src = '';
+      if (avatar.name === '[Nada]') {
+        el.style.display = 'none';
+        return;
       } else {
-        if (avatar.name === '[Nada]') {
-          return;
-        }
-        if (avatar.checksum) {
-          el.src = 'assets/img/avatar/' + avatar.id + '-' + avatar.checksum + '.png';
-        } else {
-          el.src = 'assets/img/avatar/' + avatar.id + '.png';
-        }
+        el.style.display = 'block';
+      }
+      if (avatar.name === '[Docete]') {
+        el.style.bottom = '70px';
+        draw_avatar(true, el);
+      } else {
         el.style.bottom = '0';
+        el.style.backgroundImage = '';
+        el.src = 'assets/img/avatar/' + avatar.id + (avatar.checksum ? '-' + avatar.checksum : '') + '.png';
       }
     };
-    querySelector('body').innerHTML = render;
     (function(elements) {
       var el_name, event, results;
       sort_assets();
       populate_scenes(['#scene_edit'], ['Sala de Aula A']);
       populate_avatars(['#avatar_edit'], ['[Docete]']);
       populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
-      $('select').material_select();
       results = [];
       for (el_name in elements) {
         if (elements.hasOwnProperty(el_name)) {
@@ -449,32 +546,23 @@ load_from_file = function(file_in, img_out, bg_out) {
         keyup: update_response
       },
       username_submit: {
-        click: update_user
+        click: update_username_btn
       },
       username_edit: {
-        keyup: update_user_name
+        keyup: update_username
       },
       avatar_edit: {
         change: update_avatar,
         keyup: update_avatar
       }
     });
-    event = new Event('change');
-    querySelector('#scene_edit').dispatchEvent(event);
-    querySelector('#actor1_edit').dispatchEvent(event);
-    querySelector('#actor2_edit').dispatchEvent(event);
+    load_cookies();
+    eventChange = new Event('change');
+    querySelector('#scene_edit').dispatchEvent(eventChange);
+    querySelector('#actor1_edit').dispatchEvent(eventChange);
+    querySelector('#actor2_edit').dispatchEvent(eventChange);
     $('ul.tabs').tabs();
-    region = get_cookie('region');
-    if (region) {
-      console.log('REGION | ' + region);
-      querySelector('#region_edit option[value="' + region + '"]').selected = true;
-    }
-    username = get_cookie('username');
-    if (username) {
-      console.log('USERNAME | ' + username);
-      querySelector('#username_edit').value = username;
-      querySelector('#username_submit').dispatchEvent(new Event('click'));
-    }
+    $('select').material_select();
     document.ondblclick = double_click;
     document.onmousedown = drag_start;
     return document.onmouseup = drag_stop;

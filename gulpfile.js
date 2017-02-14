@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var coffee = require('gulp-coffee');
+var coffeeConcat = require('gulp-coffeescript-concat');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
@@ -9,7 +10,8 @@ gulp.task('default', [ 'coffee', 'sass' ]);
 // Compilers
 gulp.task('coffee', function() {
 	gulp.src('./src/assets/js/*.coffee', { sourcemaps: true })
-		.pipe(coffee({ bare: true }))
+		//.pipe(coffeeConcat('all.coffee'))
+		.pipe(coffee({ bare: true, sourcemaps: true }))
 		.pipe(gulp.dest('./src/assets/js'));
 });
 
