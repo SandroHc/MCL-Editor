@@ -30,6 +30,7 @@ load_lang = (lang) ->
 	el.onload = () ->
 		console.log "Loaded language '" + current_lang + "'!"
 		document.body.innerHTML = vegito(document.body.innerHTML, LANG)
+		init()
 
 	document.head.appendChild el
 

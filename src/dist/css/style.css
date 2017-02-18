@@ -76,7 +76,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: url("../img/gauge.png") no-repeat left bottom;
+    background: url("../../assets/img/gauge.png") no-repeat left bottom;
     transition: height 500ms; }
   #loveometer .heart {
     position: relative;
@@ -84,7 +84,7 @@
     width: 88px;
     height: 80px;
     margin-top: -40px;
-    background: url("../img/lom-heart.png") no-repeat;
+    background: url("../../assets/img/lom-heart.png") no-repeat;
     color: #ee3d73;
     font-size: 12px;
     font-weight: 900;
