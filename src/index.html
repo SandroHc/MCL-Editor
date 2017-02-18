@@ -7,8 +7,8 @@
 		<link rel="shortcut icon" href="favicon.ico">
 
 		<!-- CDN: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css -->
-		<link rel="stylesheet" href="assets/css/libs/materialize.min.css">
-		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="dist/css/libs/materialize.min.css">
+		<link rel="stylesheet" href="dist/css/style.css">
 
 		<!-- CDN: https://fonts.googleapis.com/icon?family=Material+Icons -->
 		<!--<link href="https://fonts.googleapis.com/icon?family=Roboto|Material+Icons" rel="stylesheet">-->
@@ -32,15 +32,11 @@
 				<div id="tab-account" class="col s12">
 					<div class="row">
 						<div class="col s12">
-							<p class="hide-on-med-and-down">{{{welcome}}}</p>
+							<p class="hide-on-med-and-down">{{welcome}}</p>
 						</div>
 
 						<div class="input-field col s12">
-							<select id="region_edit">
-								{{#regions}}
-									<option value="{{id}}">{{name}}</option>
-								{{/regions}}
-							</select>
+							<select id="region_edit"></select>
 							<label for="region_edit">{{region}}</label>
 						</div>
 
@@ -69,7 +65,7 @@
 					<div class="row">
 
 						<div class="col s12">
-							<p class="legal"><a href="https://github.com/SandroHc/MCL-Editor" target="_blank">Versão {{{version}}}</a> &bullet; {{{legal}}}</p>
+							<p class="legal"><a href="https://github.com/SandroHc/MCL-Editor" target="_blank">Versão {{version}}</a> &bullet; {{legal}}</p>
 						</div>
 					</div>
 				</div>
@@ -165,7 +161,7 @@
 			</div>
 		</div>
 
-		<div id="scene" style="background-image:url(http://assets.amordoce.com/place/web/high/1-938f8d285289b68b.jpg)">
+		<div id="scene">
 			<div class="bubble drag" style="left:65px; bottom:325px; display:none"></div>
 			<img id="actor1" class="actor drag" alt="Personagem 1" style="left:215px; bottom:0">
 			<img id="actor2" class="actor drag" alt="Personagem 2" style="left:525px; bottom:0">
@@ -189,12 +185,13 @@
 
 		<a href="#scene" id="go-to-scene" class="card">{{view_result}} &darr;</a>
 
-		<script src="assets/js/mustache.js"></script>
-		<!-- CDN: https://code.jquery.com/jquery-3.1.1.min.js -->
-		<script src="assets/js/libs/jquery.min.js"></script>
-		<!-- CDN: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js -->
-		<script src="assets/js/libs/materialize.min.js"></script>
+		<script src="dist/js/libs/vegito.min.js"></script>
 
-		<script src="assets/js/editor.js"></script>
+		<!-- CDN: https://code.jquery.com/jquery-3.1.1.min.js -->
+		<script src="dist/js/libs/jquery.min.js"></script>
+		<!-- CDN: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js -->
+		<script src="dist/js/libs/materialize.min.js"></script>
+
+		<script src="dist/js/bundle.min.js"></script>
 	</body>
 </html>

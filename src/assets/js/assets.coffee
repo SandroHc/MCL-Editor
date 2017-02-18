@@ -1,42 +1,4 @@
-CONFIG =
-	'version': '1.0.0'
-	'use_sucrette': 'Usar Ficheiro'
-	'title': 'My Candy Love Editor'
-	'description': 'Amor Doce cenas editor.'
-	'welcome': 'Bem-vindo ao editor não oficial do Amor Doce! Uma ferramenta criada com Amor por <a href="https://tumblr.com/follow/lucasmciruzzi" target="_blank">Lucas</a> e <a href="https://tumblr.com/follow/myasaberhagen" target="_blank">Mya</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.'
-	'account': 'Conta'
-	'region': 'Região'
-	'username': 'Nome'
-	'username_placeholder': 'Nome de usuário (NÃO o seu e-mail)'
-	'change_avatar': 'Carregar Avatar'
-	'love_level': 'Barra do Amor'
-	'chat': 'Diálogo'
-	'characters_bubble': 'Bolha de fala'
-	'position': 'Posição'
-	'answers': 'Respostas (ENTER para separar)'
-	'scene': 'Lugar'
-	'characters': 'Personagens'
-	'avatar': 'Avatar'
-	'character': 'Caráter'
-	'legal': 'Todas as imagens pertencem a <a href="//beemoov.com" target="_blank">Beemoov</a> e <a href="//chinomiko.com" target="_blank">ChinoMiko</a>'
-	'view_result': 'Ver resultado'
-	'regions': [
-		{ 'id': 'br', 'name': 'Brazil — amordoce.com' }
-		{ 'id': 'us', 'name': 'USA — mycandylove.com' }
-		{ 'id': 'de', 'name': 'Germany — sweetamoris.de' }
-		{ 'id': 'es', 'name': 'Spain — corazondemelon.es' }
-		{ 'id': 'fi', 'name': 'Finland — flirttistoori.com' }
-		{ 'id': 'fr', 'name': 'France — amoursucre.com' }
-		{ 'id': 'hu', 'name': 'Hungary — csabitasboljeles.hu' }
-		{ 'id': 'it', 'name': 'Italy — dolceflirt.it' }
-		{ 'id': 'jp', 'name': 'Japan — mycandylove.jp' }
-		{ 'id': 'mx', 'name': 'Mexico — corazondebombon.com' }
-		{ 'id': 'pl', 'name': 'Poland — slodkiflirt.pl' }
-		{ 'id': 'uk', 'name': 'United Kingdom — sweetcrush.co.uk' }
-		{ 'id': 'ro', 'name': 'Romania — sweetflirt.ro' }
-		{ 'id': 'ru', 'name': 'Russia — sladkiiflirt.ru' }
-		{ 'id': 'tr', 'name': 'Turkey — askito-m.com' }
-	]
+ASSETS =
 	'emotions': [
 		{
 			'name': 'Agatha'
