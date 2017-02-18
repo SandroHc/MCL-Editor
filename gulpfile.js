@@ -12,10 +12,11 @@ gulp.task('default', [ 'coffee', 'sass' ]);
 // Compilers
 gulp.task('coffee', function() {
 	var scripts = [
-			'./src/assets/js/lang.coffee',
+			'./src/assets/js/config.coffee',
 			'./src/assets/js/assets.coffee',
 			'./src/assets/js/functions.coffee',
 			'./src/assets/js/functions_events.coffee',
+			'./src/assets/js/i18n.coffee',
 			'./src/assets/js/main.coffee'
 		],
 		dest = './src/dist/js';
@@ -27,6 +28,13 @@ gulp.task('coffee', function() {
 		.pipe(rename('bundle.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest(dest));
+
+	// Compile language files
+	gulp.src('./src/assets/js/lang.*.coffee', { sourcemaps: true })
+		.pipe(coffee({ bare: true, sourcemaps: true }))
+		.pipe(gulp.dest(dest));
+		//.pipe(uglify())
+		//.pipe(gulp.dest(dest));
 });
 
 gulp.task('sass', function() {

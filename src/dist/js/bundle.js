@@ -1,28 +1,8 @@
-var LANG;
+var CONFIG;
 
-LANG = {
-  'version': '1.0.0',
-  'use_sucrette': 'Usar Ficheiro',
-  'title': 'My Candy Love Editor',
-  'description': 'Amor Doce cenas editor.',
-  'welcome': 'Bem-vindo ao editor não oficial do Amor Doce! Uma ferramenta criada com Amor por <a href="https://tumblr.com/follow/lucasmciruzzi" target="_blank">Lucas</a> e <a href="https://tumblr.com/follow/myasaberhagen" target="_blank">Mya</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.',
-  'account': 'Conta',
-  'region': 'Região',
-  'username': 'Nome',
-  'username_placeholder': 'Nome de usuário (NÃO o seu e-mail)',
-  'change_avatar': 'Carregar Avatar',
-  'love_level': 'Barra do Amor',
-  'chat': 'Diálogo',
-  'characters_bubble_label': 'Bolha de fala',
-  'characters_bubble': 'Bolha de fala',
-  'answers_label': 'Respostas',
-  'answers': 'Respostas (ENTER para separar)',
-  'scene': 'Lugar',
-  'characters': 'Personagens',
-  'avatar': 'Avatar',
-  'character': 'Caráter',
-  'legal': 'Todas as imagens pertencem a <a href="//beemoov.com" target="_blank">Beemoov</a> e <a href="//chinomiko.com" target="_blank">ChinoMiko</a>',
-  'view_result': 'Ver resultado'
+CONFIG = {
+  version: '1.0.0',
+  default_lang: 'pt'
 };
 
 var ASSETS;
@@ -6091,9 +6071,46 @@ update_avatar = function() {
   }
 };
 
-var eventChange;
+var current_lang, get_lang, languages, load_lang;
 
-document.body.innerHTML = vegito(document.body.innerHTML, LANG);
+languages = {};
+
+languages['pt'] = {
+  name: 'Português'
+};
+
+languages['en'] = {
+  name: 'English'
+};
+
+get_lang = function() {
+  var language;
+  language = get_cookie('lang') || navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage;
+  language = language.split('-');
+  if (languages[language] === void 0) {
+    language = CONFIG.default_lang;
+  }
+  return language;
+};
+
+current_lang = void 0;
+
+load_lang = function(lang) {
+  var el;
+  current_lang = lang;
+  set_cookie('lang', lang);
+  el = document.createElement('script');
+  el.setAttribute('src', 'dist/js/lang.' + lang + '.js');
+  el.onload = function() {
+    console.log("Loaded language '" + current_lang + "'!");
+    return document.body.innerHTML = vegito(document.body.innerHTML, LANG);
+  };
+  return document.head.appendChild(el);
+};
+
+load_lang(get_lang());
+
+var eventChange;
 
 (function(elements) {
   var el_name, event, results;

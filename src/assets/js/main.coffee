@@ -1,5 +1,3 @@
-document.body.innerHTML = vegito(document.body.innerHTML, LANG)
-
 # Bind input events
 ((elements) ->
 	sort_assets()

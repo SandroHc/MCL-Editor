@@ -168,11 +168,15 @@ $zindex-3: 100200;
 	}
 }
 
+.tab .material-icons {
+	line-height: inherit;
+}
+
 .file-field {
 	margin-top: 0;
 }
 
-ul {
+.input-field ul {
 	z-index: $zindex-3;
 }
 
