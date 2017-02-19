@@ -3,6 +3,7 @@ var LANG;
 LANG = {
   version: 'Version ' + CONFIG.version,
   welcome: 'Welcome to the unofficial scene editor of My Candy Love! A tool created with Love by <a href="https://tumblr.com/follow/lucasmciruzzi" target="_blank">Lucas</a> and <a href="https://tumblr.com/follow/myasaberhagen" target="_blank">Mya</a>. We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.',
+  legal: 'All images belong to <a href="http://beemoov.com" target="_blank">Beemoov</a>',
   account: 'Account',
   region: 'Region',
   username: 'Name',
@@ -18,7 +19,7 @@ LANG = {
   characters: 'Characters',
   avatar: 'Avatar',
   character: 'Character',
-  legal: 'All images belong to <a href="http://beemoov.com" target="_blank">Beemoov</a>',
+  language: 'Language',
   view_result: 'Ver Result',
   use_sucrette: 'Use File'
 };

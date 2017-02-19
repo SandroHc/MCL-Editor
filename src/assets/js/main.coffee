@@ -1,17 +1,20 @@
 init = () ->
+	load_cookies()
+
+	sort_assets()
+
+	populate_regions()
+	populate_scenes 'Sala de Aula A'
+	populate_avatars '[Docete]'
+	populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
+	populate_lang()
+
+	document.ondblclick = double_click
+	document.onmousedown = drag_start
+	document.onmouseup = drag_stop
+
 	# Bind input events
 	((elements) ->
-		sort_assets()
-
-		populate_regions()
-		populate_scenes 'Sala de Aula A'
-		populate_avatars '[Docete]'
-		populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
-
-		document.ondblclick = double_click
-		document.onmousedown = drag_start
-		document.onmouseup = drag_stop
-
 		for el_name of elements
 			if elements.hasOwnProperty el_name
 				for event of elements[el_name]
@@ -52,9 +55,10 @@ init = () ->
 		avatar_edit:
 			change: update_avatar
 			keyup: update_avatar
+		lang_edit:
+			change: update_lang
+			keyup: update_lang
 
-
-	load_cookies()
 
 	eventChange = new Event('change')
 	document.querySelector('#scene_edit').dispatchEvent eventChange

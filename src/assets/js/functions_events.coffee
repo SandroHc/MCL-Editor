@@ -75,17 +75,19 @@ update_response = ->
 		document.querySelector('.player').style.display = 'none'
 
 update_username_btn = ->
-	conf_username = document.querySelector('#username_edit').value # else 'd'
-	conf_region = document.querySelector('#region_edit').value
+	CONFIG.player.username = document.querySelector('#username_edit').value # else 'd'
+	CONFIG.region = document.querySelector('#region_edit').value
 
-	set_cookie 'username', conf_username
-	set_cookie 'region', conf_region
+	set_config 'username', CONFIG.player.username
+	set_config 'region', CONFIG.region
 
-	get_player_info conf_username, (data) ->
-		player_info = data
+	get_player_info CONFIG.player.username, (data) ->
+		CONFIG.player.info = data
 
-		if player_info
-			player_id = player_info.player.id
+		if CONFIG.player.info
+			CONFIG.player.id = CONFIG.player.info.player.id
+
+		eventChange = new Event 'change'
 
 		query = document.querySelector('#actor1_edit')
 		if query.options[query.selectedIndex].text == '[Docete]'

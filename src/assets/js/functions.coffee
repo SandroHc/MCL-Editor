@@ -15,9 +15,6 @@ regions = [
 	{ id: 'uk', link: 'sweetcrush.co.uk', name: 'United Kingdom' }
 ]
 
-conf_region   = 0 # Default region
-conf_username = ''
-
 
 drag = false
 offsetX = 0
@@ -26,16 +23,14 @@ startX = 0
 startY = 0
 highest_zIndex = 0
 
-set_cookie = (key, val) ->
-	date = new Date
-	date.setDate date.getDate() + 30
-	document.cookie = key + '=' + val + '; expires=' + date.toUTCString()
-	console.log 'SET COOKIE | ' + key + ' = ' + val
+
+set_config = (key, value) ->
+	localStorage.setItem(key, value);
+	# console.log 'SET CONFIG | ' + key + ' = ' + value
 
 
-get_cookie = (key) ->
-	re = new RegExp('(?:(?:^|.*;\\s*)' + key + '\\s*\\=\\s*([^;]*).*$)|^.*$')
-	document.cookie.replace re, '$1'
+get_config = (key, default_value = undefined) ->
+	return localStorage.getItem(key) || default_value
 
 
 drag_start = (e) ->
@@ -135,26 +130,18 @@ load_cookies = () ->
 	load_username()
 
 load_region = () ->
-	val = get_cookie('region')
-	if val
-		conf_region = val
+	CONFIG.region = get_config('region', CONFIG.default_region)
 
-		console.log 'REGION | ' + conf_region
-		document.querySelector('#region_edit option[value="' + conf_region + '"]').selected = true
+	console.log 'REGION | ' + CONFIG.region
+#	document.querySelector('#region_edit option[value="' + CONFIG.region + '"]').selected = true
 
 load_username = () ->
-	val = get_cookie('username')
-	if val
-		conf_username = val
+	CONFIG.player.username = get_config('username', '')
 
-		console.log 'USERNAME | ' + conf_username
-		document.querySelector('#username_edit').value = conf_username
-		document.querySelector('#username_submit').dispatchEvent new Event('click')
+	console.log 'USERNAME | ' + CONFIG.player.username
+	document.querySelector('#username_edit').value = CONFIG.player.username
+	document.querySelector('#username_submit').dispatchEvent new Event('click')
 
-
-player_info = null
-player_id = null
-player_avatar = null
 
 get_player_info = (username, callback) ->
 	if !username
@@ -162,7 +149,7 @@ get_player_info = (username, callback) ->
 
 	$.ajax
 # API: http://api2.amordoce.com/v2/profile/find/username
-		url: "https://mcl.sandrohc.net/" + regions[conf_region].id + "/v2/profile/find/" + username,
+		url: "https://mcl.sandrohc.net/" + regions[CONFIG.region].id + "/v2/profile/find/" + username,
 		headers:
 			"X-Beemoov-Application": 'anonymous',
 # FIXME Credentials only accepted on the BR server. You don't have to be logged in to see profiles, so there must be a way to bypass this
@@ -180,7 +167,7 @@ get_player_info = (username, callback) ->
 get_player_avatar = (id, callback) ->
 	$.ajax
 # API: http://api2.amordoce.com/v2/avatar/id
-		url: "https://mcl.sandrohc.net/" + regions[conf_region].id + "/v2/avatar/" + id,
+		url: "https://mcl.sandrohc.net/" + regions[CONFIG.region].id + "/v2/avatar/" + id,
 		error: (jqXHR, textStatus, errorThrown) ->
 			console.log "Error while fetching player avatar"
 			console.log errorThrown
@@ -193,31 +180,31 @@ draw_avatar_dest = null
 draw_avatar_portrait = null
 
 draw_avatar = (is_portrait, dest) ->
-	if !player_avatar
-		if !player_id
-			if !player_info
-				if conf_username
+	if !CONFIG.player.avatar
+		if !CONFIG.player.id
+			if !CONFIG.player.info
+				if CONFIG.player.username
 # If the player is set but there is no player info, try the outdated links
 					timestamp = (new Date).getTime()
 
-					dest.src = 'http://avatars.' + regions[conf_region].link + '/' + (if is_portrait then 'face' else 'full') + '/' + conf_username + '.' + timestamp + '.png'
+					dest.src = 'http://avatars.' + regions[CONFIG.region].link + '/' + (if is_portrait then 'face' else 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png'
 				else
 					dest.src = 'assets/img/' + (if is_portrait then 'face' else 'body') + '_unknown.png'
 				return
-			player_id = player_info.player.id
+			CONFIG.player.id = CONFIG.player.info.player.id
 
 
 		draw_avatar_dest = dest
 		draw_avatar_portrait = is_portrait
 
-		get_player_avatar player_id, (data) ->
-			player_avatar = data
+		get_player_avatar CONFIG.player.id, (data) ->
+			CONFIG.player.avatar = data
 			draw_avatar draw_avatar_portrait, draw_avatar_dest
 		# Wait until the callback is finished before processing the avatar
 		return
 
 
-	site = 'http://assets.' + regions[conf_region].link + '/'
+	site = 'http://assets.' + regions[CONFIG.region].link + '/'
 	type = if is_portrait then 'portrait' else 'normal'
 	bg = ''
 
@@ -232,15 +219,17 @@ draw_avatar = (is_portrait, dest) ->
 			bg += '_' + color.id + '-' + color.security
 		bg += '.png)'
 
-	for i in [player_avatar.clothes.length-1 .. 0]
-		add_clothes(player_avatar.clothes[i], null, 'clothe')
+	avatar = CONFIG.player.avatar
 
-	add_clothes(player_avatar.avatar.headAccessory,	null, 'avatarpart')
-	add_clothes(player_avatar.avatar.mouthType,		null, 'avatarpart')
-	add_clothes(player_avatar.avatar.eyebrowsType,	player_avatar.avatar.hairColor, 'avatarpart')
-	add_clothes(player_avatar.avatar.eyeType,		player_avatar.avatar.eyeColor, 'avatarpart')
-	add_clothes(player_avatar.avatar.hairType,		player_avatar.avatar.hairColor, 'avatarpart')
-	add_clothes(player_avatar.avatar.bodyType,		null, 'avatarpart')
+	for i in [avatar.clothes.length-1 .. 0]
+		add_clothes(avatar.clothes[i], null, 'clothe')
+
+	add_clothes(avatar.avatar.headAccessory,	null, 'avatarpart')
+	add_clothes(avatar.avatar.mouthType,		null, 'avatarpart')
+	add_clothes(avatar.avatar.eyebrowsType,		avatar.avatar.hairColor, 'avatarpart')
+	add_clothes(avatar.avatar.eyeType,			avatar.avatar.eyeColor, 'avatarpart')
+	add_clothes(avatar.avatar.hairType,			avatar.avatar.hairColor, 'avatarpart')
+	add_clothes(avatar.avatar.bodyType,			null, 'avatarpart')
 
 	dest.src = 'assets/img/' + (if is_portrait then 'face' else 'body') + '_placeholder.png'
 	dest.style.backgroundImage = bg
@@ -263,7 +252,7 @@ populate_regions = () ->
 		el = document.createElement('option')
 		el.textContent = e.name + ' — ' + e.link
 		el.value = i
-		el.selected = if i == conf_region then 'true' else undefined
+		el.selected = if i == parseInt(CONFIG.region, 10) then 'true' else undefined
 		select.appendChild el
 
 	$(select).material_select()

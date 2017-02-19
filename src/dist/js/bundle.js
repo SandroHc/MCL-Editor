@@ -2,7 +2,16 @@ var CONFIG;
 
 CONFIG = {
   version: '1.0.0',
-  default_lang: 'pt'
+  default_lang: 'pt',
+  lang: this.default_lang,
+  default_region: '0',
+  region: this.default_region,
+  player: {
+    username: '',
+    id: null,
+    info: null,
+    avatar: null
+  }
 };
 
 var ASSETS;
@@ -5512,7 +5521,7 @@ ASSETS = {
   ]
 };
 
-var conf_region, conf_username, double_click, drag, drag_move, drag_start, drag_stop, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_cookie, get_player_avatar, get_player_info, highest_zIndex, load_cookies, load_from_file, load_region, load_username, offsetX, offsetY, player_avatar, player_id, player_info, populate_avatars, populate_emotions, populate_emotions_sub, populate_regions, populate_scenes, populate_scenes_sub, regions, set_cookie, sort_assets, startX, startY;
+var double_click, drag, drag_move, drag_start, drag_stop, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, highest_zIndex, load_cookies, load_from_file, load_region, load_username, offsetX, offsetY, populate_avatars, populate_emotions, populate_emotions_sub, populate_regions, populate_scenes, populate_scenes_sub, regions, set_config, sort_assets, startX, startY;
 
 regions = [
   {
@@ -5574,10 +5583,6 @@ regions = [
   }
 ];
 
-conf_region = 0;
-
-conf_username = '';
-
 drag = false;
 
 offsetX = 0;
@@ -5590,18 +5595,15 @@ startY = 0;
 
 highest_zIndex = 0;
 
-set_cookie = function(key, val) {
-  var date;
-  date = new Date;
-  date.setDate(date.getDate() + 30);
-  document.cookie = key + '=' + val + '; expires=' + date.toUTCString();
-  return console.log('SET COOKIE | ' + key + ' = ' + val);
+set_config = function(key, value) {
+  return localStorage.setItem(key, value);
 };
 
-get_cookie = function(key) {
-  var re;
-  re = new RegExp('(?:(?:^|.*;\\s*)' + key + '\\s*\\=\\s*([^;]*).*$)|^.*$');
-  return document.cookie.replace(re, '$1');
+get_config = function(key, default_value) {
+  if (default_value == null) {
+    default_value = void 0;
+  }
+  return localStorage.getItem(key) || default_value;
 };
 
 drag_start = function(e) {
@@ -5703,38 +5705,23 @@ load_cookies = function() {
 };
 
 load_region = function() {
-  var val;
-  val = get_cookie('region');
-  if (val) {
-    conf_region = val;
-    console.log('REGION | ' + conf_region);
-    return document.querySelector('#region_edit option[value="' + conf_region + '"]').selected = true;
-  }
+  CONFIG.region = get_config('region', CONFIG.default_region);
+  return console.log('REGION | ' + CONFIG.region);
 };
 
 load_username = function() {
-  var val;
-  val = get_cookie('username');
-  if (val) {
-    conf_username = val;
-    console.log('USERNAME | ' + conf_username);
-    document.querySelector('#username_edit').value = conf_username;
-    return document.querySelector('#username_submit').dispatchEvent(new Event('click'));
-  }
+  CONFIG.player.username = get_config('username', '');
+  console.log('USERNAME | ' + CONFIG.player.username);
+  document.querySelector('#username_edit').value = CONFIG.player.username;
+  return document.querySelector('#username_submit').dispatchEvent(new Event('click'));
 };
-
-player_info = null;
-
-player_id = null;
-
-player_avatar = null;
 
 get_player_info = function(username, callback) {
   if (!username) {
     callback(null);
   }
   $.ajax({
-    url: "https://mcl.sandrohc.net/" + regions[conf_region].id + "/v2/profile/find/" + username,
+    url: "https://mcl.sandrohc.net/" + regions[CONFIG.region].id + "/v2/profile/find/" + username,
     headers: {
       "X-Beemoov-Application": 'anonymous',
       "X-Beemoov-Signature": 'e33b9ed89eeee95172d6db8a8143d660c9568aa9',
@@ -5753,7 +5740,7 @@ get_player_info = function(username, callback) {
 
 get_player_avatar = function(id, callback) {
   $.ajax({
-    url: "https://mcl.sandrohc.net/" + regions[conf_region].id + "/v2/avatar/" + id,
+    url: "https://mcl.sandrohc.net/" + regions[CONFIG.region].id + "/v2/avatar/" + id,
     error: function(jqXHR, textStatus, errorThrown) {
       console.log("Error while fetching player avatar");
       return console.log(errorThrown);
@@ -5769,29 +5756,29 @@ draw_avatar_dest = null;
 draw_avatar_portrait = null;
 
 draw_avatar = function(is_portrait, dest) {
-  var add_clothes, add_comma, bg, i, j, ref, site, timestamp, type;
-  if (!player_avatar) {
-    if (!player_id) {
-      if (!player_info) {
-        if (conf_username) {
+  var add_clothes, add_comma, avatar, bg, i, j, ref, site, timestamp, type;
+  if (!CONFIG.player.avatar) {
+    if (!CONFIG.player.id) {
+      if (!CONFIG.player.info) {
+        if (CONFIG.player.username) {
           timestamp = (new Date).getTime();
-          dest.src = 'http://avatars.' + regions[conf_region].link + '/' + (is_portrait ? 'face' : 'full') + '/' + conf_username + '.' + timestamp + '.png';
+          dest.src = 'http://avatars.' + regions[CONFIG.region].link + '/' + (is_portrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
         } else {
           dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_unknown.png';
         }
         return;
       }
-      player_id = player_info.player.id;
+      CONFIG.player.id = CONFIG.player.info.player.id;
     }
     draw_avatar_dest = dest;
     draw_avatar_portrait = is_portrait;
-    get_player_avatar(player_id, function(data) {
-      player_avatar = data;
+    get_player_avatar(CONFIG.player.id, function(data) {
+      CONFIG.player.avatar = data;
       return draw_avatar(draw_avatar_portrait, draw_avatar_dest);
     });
     return;
   }
-  site = 'http://assets.' + regions[conf_region].link + '/';
+  site = 'http://assets.' + regions[CONFIG.region].link + '/';
   type = is_portrait ? 'portrait' : 'normal';
   bg = '';
   add_comma = false;
@@ -5806,15 +5793,16 @@ draw_avatar = function(is_portrait, dest) {
     }
     return bg += '.png)';
   };
-  for (i = j = ref = player_avatar.clothes.length - 1; ref <= 0 ? j <= 0 : j >= 0; i = ref <= 0 ? ++j : --j) {
-    add_clothes(player_avatar.clothes[i], null, 'clothe');
+  avatar = CONFIG.player.avatar;
+  for (i = j = ref = avatar.clothes.length - 1; ref <= 0 ? j <= 0 : j >= 0; i = ref <= 0 ? ++j : --j) {
+    add_clothes(avatar.clothes[i], null, 'clothe');
   }
-  add_clothes(player_avatar.avatar.headAccessory, null, 'avatarpart');
-  add_clothes(player_avatar.avatar.mouthType, null, 'avatarpart');
-  add_clothes(player_avatar.avatar.eyebrowsType, player_avatar.avatar.hairColor, 'avatarpart');
-  add_clothes(player_avatar.avatar.eyeType, player_avatar.avatar.eyeColor, 'avatarpart');
-  add_clothes(player_avatar.avatar.hairType, player_avatar.avatar.hairColor, 'avatarpart');
-  add_clothes(player_avatar.avatar.bodyType, null, 'avatarpart');
+  add_clothes(avatar.avatar.headAccessory, null, 'avatarpart');
+  add_clothes(avatar.avatar.mouthType, null, 'avatarpart');
+  add_clothes(avatar.avatar.eyebrowsType, avatar.avatar.hairColor, 'avatarpart');
+  add_clothes(avatar.avatar.eyeType, avatar.avatar.eyeColor, 'avatarpart');
+  add_clothes(avatar.avatar.hairType, avatar.avatar.hairColor, 'avatarpart');
+  add_clothes(avatar.avatar.bodyType, null, 'avatarpart');
   dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_placeholder.png';
   dest.style.backgroundImage = bg;
 };
@@ -5843,7 +5831,7 @@ populate_regions = function() {
     el = document.createElement('option');
     el.textContent = e.name + ' — ' + e.link;
     el.value = i;
-    el.selected = i === conf_region ? 'true' : void 0;
+    el.selected = i === parseInt(CONFIG.region, 10) ? 'true' : void 0;
     return select.appendChild(el);
   });
   return $(select).material_select();
@@ -6017,17 +6005,17 @@ update_response = function() {
 };
 
 update_username_btn = function() {
-  var conf_region, conf_username;
-  conf_username = document.querySelector('#username_edit').value;
-  conf_region = document.querySelector('#region_edit').value;
-  set_cookie('username', conf_username);
-  set_cookie('region', conf_region);
-  return get_player_info(conf_username, function(data) {
-    var player_id, player_info, query;
-    player_info = data;
-    if (player_info) {
-      player_id = player_info.player.id;
+  CONFIG.player.username = document.querySelector('#username_edit').value;
+  CONFIG.region = document.querySelector('#region_edit').value;
+  set_config('username', CONFIG.player.username);
+  set_config('region', CONFIG.region);
+  return get_player_info(CONFIG.player.username, function(data) {
+    var eventChange, query;
+    CONFIG.player.info = data;
+    if (CONFIG.player.info) {
+      CONFIG.player.id = CONFIG.player.info.player.id;
     }
+    eventChange = new Event('change');
     query = document.querySelector('#actor1_edit');
     if (query.options[query.selectedIndex].text === '[Docete]') {
       query.dispatchEvent(eventChange);
@@ -6071,7 +6059,8 @@ update_avatar = function() {
   }
 };
 
-var current_lang, get_lang, languages, load_lang;
+var get_lang, languages, load_lang, populate_lang, update_lang,
+  hasProp = {}.hasOwnProperty;
 
 languages = {};
 
@@ -6085,28 +6074,49 @@ languages['en'] = {
 
 get_lang = function() {
   var language;
-  language = get_cookie('lang') || navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage;
-  language = language.split('-');
+  language = get_config('lang') || navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage;
+  language = language.split('-')[0];
   if (languages[language] === void 0) {
     language = CONFIG.default_lang;
   }
   return language;
 };
 
-current_lang = void 0;
-
 load_lang = function(lang) {
   var el;
-  current_lang = lang;
-  set_cookie('lang', lang);
+  set_config('lang', lang);
   el = document.createElement('script');
   el.setAttribute('src', 'dist/js/lang.' + lang + '.js');
   el.onload = function() {
-    console.log("Loaded language '" + current_lang + "'!");
+    console.log("Loaded language '" + get_lang() + "'!");
     document.body.innerHTML = vegito(document.body.innerHTML, LANG);
     return init();
   };
   return document.head.appendChild(el);
+};
+
+populate_lang = function() {
+  var el, lang, language, select;
+  language = get_lang();
+  select = document.querySelector('#lang_edit');
+  for (lang in languages) {
+    if (!hasProp.call(languages, lang)) continue;
+    el = document.createElement('option');
+    el.textContent = languages[lang].name;
+    el.value = lang;
+    el.selected = lang === language ? 'true' : void 0;
+    select.appendChild(el);
+  }
+  return $(select).material_select();
+};
+
+update_lang = function() {
+  var lang_selected;
+  lang_selected = document.querySelector('#lang_edit').value;
+  if (lang_selected !== get_lang()) {
+    set_config('lang', lang_selected);
+    return window.location.reload();
+  }
 };
 
 load_lang(get_lang());
@@ -6115,16 +6125,18 @@ var init;
 
 init = function() {
   var eventChange;
+  load_cookies();
+  sort_assets();
+  populate_regions();
+  populate_scenes('Sala de Aula A');
+  populate_avatars('[Docete]');
+  populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
+  populate_lang();
+  document.ondblclick = double_click;
+  document.onmousedown = drag_start;
+  document.onmouseup = drag_stop;
   (function(elements) {
     var el_name, event, results;
-    sort_assets();
-    populate_regions();
-    populate_scenes('Sala de Aula A');
-    populate_avatars('[Docete]');
-    populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
-    document.ondblclick = double_click;
-    document.onmousedown = drag_start;
-    document.onmouseup = drag_stop;
     results = [];
     for (el_name in elements) {
       if (elements.hasOwnProperty(el_name)) {
@@ -6191,9 +6203,12 @@ init = function() {
     avatar_edit: {
       change: update_avatar,
       keyup: update_avatar
+    },
+    lang_edit: {
+      change: update_lang,
+      keyup: update_lang
     }
   });
-  load_cookies();
   eventChange = new Event('change');
   document.querySelector('#scene_edit').dispatchEvent(eventChange);
   document.querySelector('#actor1_edit').dispatchEvent(eventChange);

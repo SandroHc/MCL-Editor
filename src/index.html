@@ -26,7 +26,7 @@
 						<li class="tab col s3"><a href="#tab-chat">{{chat}}</a></li>
 						<li class="tab col s3"><a href="#tab-scene">{{scene}}</a></li>
 						<li class="tab col s3"><a href="#tab-characters">{{characters}}</a></li>
-						<li class="tab col s1"><a href="#tab-settigs"><i class="material-icons">settings</i></a></li>
+						<li class="tab col s1"><a href="#tab-settings"><i class="material-icons">settings</i></a></li>
 					</ul>
 				</div>
 
@@ -159,13 +159,25 @@
 
 					</div>
 				</div>
+
+				<div id="tab-settings" class="col s12">
+					<div class="row">
+
+						<div class="input-field col s12">
+							<i class="material-icons prefix">account_circle</i>
+							<select id="lang_edit"></select>
+							<label for="lang_edit">{{language}}</label>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<div id="scene">
 			<div class="bubble drag" style="left:65px; bottom:325px; display:none"></div>
-			<img id="actor1" class="actor drag" alt="Personagem 1" style="left:215px; bottom:0">
-			<img id="actor2" class="actor drag" alt="Personagem 2" style="left:525px; bottom:0">
+			<img id="actor1" class="actor drag" alt="Personagem 1" style="left:200px; bottom:0">
+			<img id="actor2" class="actor drag" alt="Personagem 2" style="left:600px; bottom:0">
 			<div id="loveometer" style="display: none">
 				<div class="outer-gauge">
 					<div class="inner-gauge">

@@ -198,7 +198,7 @@
     float: left; }
   #scene {
     float: right; }
-  #tab-account, #tab-chat, #tab-scene, #tab-characters {
+  #tab-account, #tab-chat, #tab-scene, #tab-characters, #tab-settings {
     padding: 0 2em; }
   #go-to-scene {
     display: none; } }

@@ -3,6 +3,7 @@ var LANG;
 LANG = {
   version: 'Versão ' + CONFIG.version,
   welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Uma ferramenta criada com Amor por <a href="https://tumblr.com/follow/lucasmciruzzi" target="_blank">Lucas</a> e <a href="https://tumblr.com/follow/myasaberhagen" target="_blank">Mya</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.',
+  legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank">Beemoov</a>',
   account: 'Conta',
   region: 'Região',
   username: 'Nome',
@@ -18,7 +19,7 @@ LANG = {
   characters: 'Personagens',
   avatar: 'Avatar',
   character: 'Caráter',
-  legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank">Beemoov</a>',
+  language: 'Idioma',
   view_result: 'Ver Resultado',
   use_sucrette: 'Usar Ficheiro'
 };
