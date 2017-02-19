@@ -1,106 +1,10 @@
-regions = [
-	{ id: 'br', link: 'amordoce.com', name: 'Brazil' }
-	{ id: 'us', link: 'mycandylove.com', name: 'USA' }
-	{ id: 'de', link: 'sweetamoris.de', name: 'Germany' }
-	{ id: 'es', link: 'corazondemelon.es', name: 'Spain' }
-	{ id: 'fi', link: 'flirttistoori.com', name: 'Finland' }
-	{ id: 'fr', link: 'amoursucre.com', name: 'France' }
-	{ id: 'hu', link: 'csabitasboljeles.hu', name: 'Hungary' }
-	{ id: 'it', link: 'dolceflirt.it', name: 'Italy' }
-	{ id: 'mx', link: 'corazondebombon.com', name: 'Mexico' }
-	{ id: 'pl', link: 'slodkiflirt.pl', name: 'Poland' }
-	{ id: 'ro', link: 'sweetflirt.ro', name: 'Romania' }
-	{ id: 'ru', link: 'sladkiiflirt.ru', name: 'Russia' }
-	{ id: 'tr', link: 'askito-m.com', name: 'Turkey' }
-	{ id: 'uk', link: 'sweetcrush.co.uk', name: 'United Kingdom' }
-]
-
-
-drag = false
-offsetX = 0
-offsetY = 0
-startX = 0
-startY = 0
-highest_zIndex = 0
-
-
 set_config = (key, value) ->
-	localStorage.setItem(key, value);
 	# console.log 'SET CONFIG | ' + key + ' = ' + value
+	localStorage.setItem(key, value);
 
 
 get_config = (key, default_value = undefined) ->
 	return localStorage.getItem(key) || default_value
-
-
-drag_start = (e) ->
-	e = e or window.event
-	if e.target.className.indexOf('drag') == -1
-		return true
-
-	if !e.target
-		e.target = e.srcElement # IE uses srcElement, others use target
-		e.button--
-
-	if e.button != 0 # Only process left-click
-		return true
-
-	if e.preventDefault
-		e.preventDefault()
-
-	# Calculate event X, Y coordinates
-	offsetX = e.clientX
-	offsetY = e.clientY
-
-	drag = e.target
-	drag.onmousemove = drag_move
-
-	# Default positions
-	if !e.target.style.left
-		e.target.style.left = '0px'
-	if !e.target.style.bottom
-		e.target.style.bottom = '0px'
-
-	# Store initial position
-	startX = parseInt(e.target.style.left)
-	startY = parseInt(e.target.style.bottom)
-
-	highest_zIndex++
-	e.target.style.zIndex = highest_zIndex
-
-	false
-
-
-drag_move = (e) ->
-	e = e or window.event
-	if !e.target
-		e.target = e.srcElement # IE uses srcElement, others use target
-
-	if !drag
-		return
-	is_pnj = drag.className.indexOf('actor') != -1
-	e.target.style.left = startX + e.clientX - offsetX + 'px'
-	if !is_pnj or e.shiftKey
-		e.target.style.bottom = startY - (e.clientY) + offsetY + 'px'
-	false
-
-
-drag_stop = (e) ->
-	e = e or window.event
-	if !e.target
-		e.target = e.srcElement # IE uses srcElement, others use target
-
-	drag = null
-	document.onmousemove = null
-	return
-
-
-double_click = (e) ->
-	e = e or window.event
-	e.target = e.target or e.srcElement
-	if e.target.className.indexOf('actor') == -1
-		return true
-	e.target.classList.toggle 'flipX'
 
 
 load_from_file = (file_in, img_out, bg_out) ->
@@ -111,7 +15,7 @@ load_from_file = (file_in, img_out, bg_out) ->
 		return
 
 	if !FileReader
-		console.log 'No support for FileReader'
+		console.log 'FileReader not supported'
 		return
 
 	fr = new FileReader
@@ -125,7 +29,7 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 	fr.readAsDataURL file.files[0]
 
-load_cookies = () ->
+load_settings = () ->
 	load_region()
 	load_username()
 

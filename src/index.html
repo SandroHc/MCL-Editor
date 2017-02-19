@@ -175,9 +175,9 @@
 		</div>
 
 		<div id="scene">
-			<div class="bubble drag" style="left:65px; bottom:325px; display:none"></div>
-			<img id="actor1" class="actor drag" alt="Personagem 1" style="left:200px; bottom:0">
-			<img id="actor2" class="actor drag" alt="Personagem 2" style="left:600px; bottom:0">
+			<div class="bubble draggable" style="left:65px; bottom:325px; display:none"></div>
+			<img id="actor1" class="actor draggable" alt="Personagem 1" style="left:200px; bottom:0" data-flip="1">
+			<img id="actor2" class="actor draggable" alt="Personagem 2" style="left:600px; bottom:0" data-flip="1">
 			<div id="loveometer" style="display: none">
 				<div class="outer-gauge">
 					<div class="inner-gauge">
@@ -204,6 +204,8 @@
 		<script src="dist/js/libs/jquery.min.js"></script>
 		<!-- CDN: https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js -->
 		<script src="dist/js/libs/materialize.min.js"></script>
+		<!-- CDN: http://code.interactjs.io/v1.2.6/interact.min.js -->
+		<script src="dist/js/libs/interact.min.js" onload="init_drag()" async defer></script>
 
 		<script src="dist/js/bundle.min.js"></script>
 	</body>

@@ -1,4 +1,64 @@
-var CONFIG;
+var CONFIG, regions;
+
+regions = [
+  {
+    id: 'br',
+    link: 'amordoce.com',
+    name: 'Brazil'
+  }, {
+    id: 'us',
+    link: 'mycandylove.com',
+    name: 'USA'
+  }, {
+    id: 'de',
+    link: 'sweetamoris.de',
+    name: 'Germany'
+  }, {
+    id: 'es',
+    link: 'corazondemelon.es',
+    name: 'Spain'
+  }, {
+    id: 'fi',
+    link: 'flirttistoori.com',
+    name: 'Finland'
+  }, {
+    id: 'fr',
+    link: 'amoursucre.com',
+    name: 'France'
+  }, {
+    id: 'hu',
+    link: 'csabitasboljeles.hu',
+    name: 'Hungary'
+  }, {
+    id: 'it',
+    link: 'dolceflirt.it',
+    name: 'Italy'
+  }, {
+    id: 'mx',
+    link: 'corazondebombon.com',
+    name: 'Mexico'
+  }, {
+    id: 'pl',
+    link: 'slodkiflirt.pl',
+    name: 'Poland'
+  }, {
+    id: 'ro',
+    link: 'sweetflirt.ro',
+    name: 'Romania'
+  }, {
+    id: 'ru',
+    link: 'sladkiiflirt.ru',
+    name: 'Russia'
+  }, {
+    id: 'tr',
+    link: 'askito-m.com',
+    name: 'Turkey'
+  }, {
+    id: 'uk',
+    link: 'sweetcrush.co.uk',
+    name: 'United Kingdom'
+  }
+];
 
 CONFIG = {
   version: '1.0.0',
@@ -5521,79 +5581,7 @@ ASSETS = {
   ]
 };
 
-var double_click, drag, drag_move, drag_start, drag_stop, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, highest_zIndex, load_cookies, load_from_file, load_region, load_username, offsetX, offsetY, populate_avatars, populate_emotions, populate_emotions_sub, populate_regions, populate_scenes, populate_scenes_sub, regions, set_config, sort_assets, startX, startY;
-
-regions = [
-  {
-    id: 'br',
-    link: 'amordoce.com',
-    name: 'Brazil'
-  }, {
-    id: 'us',
-    link: 'mycandylove.com',
-    name: 'USA'
-  }, {
-    id: 'de',
-    link: 'sweetamoris.de',
-    name: 'Germany'
-  }, {
-    id: 'es',
-    link: 'corazondemelon.es',
-    name: 'Spain'
-  }, {
-    id: 'fi',
-    link: 'flirttistoori.com',
-    name: 'Finland'
-  }, {
-    id: 'fr',
-    link: 'amoursucre.com',
-    name: 'France'
-  }, {
-    id: 'hu',
-    link: 'csabitasboljeles.hu',
-    name: 'Hungary'
-  }, {
-    id: 'it',
-    link: 'dolceflirt.it',
-    name: 'Italy'
-  }, {
-    id: 'mx',
-    link: 'corazondebombon.com',
-    name: 'Mexico'
-  }, {
-    id: 'pl',
-    link: 'slodkiflirt.pl',
-    name: 'Poland'
-  }, {
-    id: 'ro',
-    link: 'sweetflirt.ro',
-    name: 'Romania'
-  }, {
-    id: 'ru',
-    link: 'sladkiiflirt.ru',
-    name: 'Russia'
-  }, {
-    id: 'tr',
-    link: 'askito-m.com',
-    name: 'Turkey'
-  }, {
-    id: 'uk',
-    link: 'sweetcrush.co.uk',
-    name: 'United Kingdom'
-  }
-];
-
-drag = false;
-
-offsetX = 0;
-
-offsetY = 0;
-
-startX = 0;
-
-startY = 0;
-
-highest_zIndex = 0;
+var draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_settings, load_username, populate_avatars, populate_emotions, populate_emotions_sub, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
 
 set_config = function(key, value) {
   return localStorage.setItem(key, value);
@@ -5606,73 +5594,6 @@ get_config = function(key, default_value) {
   return localStorage.getItem(key) || default_value;
 };
 
-drag_start = function(e) {
-  e = e || window.event;
-  if (e.target.className.indexOf('drag') === -1) {
-    return true;
-  }
-  if (!e.target) {
-    e.target = e.srcElement;
-    e.button--;
-  }
-  if (e.button !== 0) {
-    return true;
-  }
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  offsetX = e.clientX;
-  offsetY = e.clientY;
-  drag = e.target;
-  drag.onmousemove = drag_move;
-  if (!e.target.style.left) {
-    e.target.style.left = '0px';
-  }
-  if (!e.target.style.bottom) {
-    e.target.style.bottom = '0px';
-  }
-  startX = parseInt(e.target.style.left);
-  startY = parseInt(e.target.style.bottom);
-  highest_zIndex++;
-  e.target.style.zIndex = highest_zIndex;
-  return false;
-};
-
-drag_move = function(e) {
-  var is_pnj;
-  e = e || window.event;
-  if (!e.target) {
-    e.target = e.srcElement;
-  }
-  if (!drag) {
-    return;
-  }
-  is_pnj = drag.className.indexOf('actor') !== -1;
-  e.target.style.left = startX + e.clientX - offsetX + 'px';
-  if (!is_pnj || e.shiftKey) {
-    e.target.style.bottom = startY - e.clientY + offsetY + 'px';
-  }
-  return false;
-};
-
-drag_stop = function(e) {
-  e = e || window.event;
-  if (!e.target) {
-    e.target = e.srcElement;
-  }
-  drag = null;
-  document.onmousemove = null;
-};
-
-double_click = function(e) {
-  e = e || window.event;
-  e.target = e.target || e.srcElement;
-  if (e.target.className.indexOf('actor') === -1) {
-    return true;
-  }
-  return e.target.classList.toggle('flipX');
-};
-
 load_from_file = function(file_in, img_out, bg_out) {
   var file, fr;
   file = document.getElementById(file_in);
@@ -5682,7 +5603,7 @@ load_from_file = function(file_in, img_out, bg_out) {
     return;
   }
   if (!FileReader) {
-    console.log('No support for FileReader');
+    console.log('FileReader not supported');
     return;
   }
   fr = new FileReader;
@@ -5699,7 +5620,7 @@ load_from_file = function(file_in, img_out, bg_out) {
   return fr.readAsDataURL(file.files[0]);
 };
 
-load_cookies = function() {
+load_settings = function() {
   load_region();
   return load_username();
 };
@@ -6121,20 +6042,17 @@ update_lang = function() {
 
 load_lang(get_lang());
 
-var init;
+var dragUpdatePos, highest_z_index, init, init_drag, snap_options;
 
 init = function() {
   var eventChange;
-  load_cookies();
+  load_settings();
   sort_assets();
   populate_regions();
   populate_scenes('Sala de Aula A');
   populate_avatars('[Docete]');
   populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
   populate_lang();
-  document.ondblclick = double_click;
-  document.onmousedown = drag_start;
-  document.onmouseup = drag_stop;
   (function(elements) {
     var el_name, event, results;
     results = [];
@@ -6214,4 +6132,70 @@ init = function() {
   document.querySelector('#actor1_edit').dispatchEvent(eventChange);
   document.querySelector('#actor2_edit').dispatchEvent(eventChange);
   return $('ul.tabs').tabs();
+};
+
+highest_z_index = 0;
+
+snap_options = {
+  targets: [],
+  range: 2e308,
+  relativePoints: [
+    {
+      x: 0,
+      y: 0
+    }
+  ]
+};
+
+init_drag = function() {
+  var snap_enabled, snap_size;
+  snap_enabled = false;
+  snap_size = 50;
+  snap_options.targets[0] = interact.createSnapGrid({
+    x: snap_size,
+    y: snap_size
+  });
+  return interact('.draggable').draggable({
+    restrict: {
+      restriction: "parent",
+      endOnly: true,
+      elementRect: {
+        top: 0,
+        left: 0,
+        bottom: 1,
+        right: 1
+      }
+    },
+    inertia: !snap_enabled,
+    snap: snap_enabled ? snap_options : {},
+    onstart: function(event) {
+      return event.target.style.zIndex = ++highest_z_index;
+    },
+    onmove: function(event) {
+      var is_actor;
+      is_actor = event.target.className.indexOf('actor') !== -1;
+      if (is_actor && !event.shiftKey) {
+        event.dy = 0;
+      }
+      return dragUpdatePos(event, event.target);
+    }
+  }).on('doubletap', function(event) {
+    var is_actor;
+    is_actor = event.target.className.indexOf('actor') !== -1;
+    if (!is_actor) {
+      return;
+    }
+    event.currentTarget.dataset.flip *= -1;
+    return dragUpdatePos(event, event.currentTarget);
+  });
+};
+
+dragUpdatePos = function(event, target) {
+  var flip, x, y;
+  x = (parseFloat(target.dataset.x) || 0) + (event.dx || 0);
+  y = (parseFloat(target.dataset.y) || 0) + (event.dy || 0);
+  flip = target.dataset.flip || '1';
+  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + flip + ')';
+  target.setAttribute('data-x', x);
+  return target.setAttribute('data-y', y);
 };

@@ -160,12 +160,6 @@ $zindex-3: 100200;
 	position: absolute;
 	height: 92.24138%;
 	background-size: 100%;
-
-	&.flipX {
-		//Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-		transform: scaleX(-1);
-		filter: FlipH();
-	}
 }
 
 .tab .material-icons {
@@ -180,8 +174,9 @@ $zindex-3: 100200;
 	z-index: $zindex-3;
 }
 
-.drag {
+.draggable {
 	cursor: default;
+	transition: opacity 100ms ease-in;
 
 	&:hover {
 		opacity: 0.85;

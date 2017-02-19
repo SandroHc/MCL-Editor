@@ -159,9 +159,6 @@
   position: absolute;
   height: 92.24138%;
   background-size: 100%; }
-  .actor.flipX {
-    transform: scaleX(-1);
-    filter: FlipH(); }
 
 .tab .material-icons {
   line-height: inherit; }
@@ -172,9 +169,10 @@
 .input-field ul {
   z-index: 100200; }
 
-.drag {
-  cursor: default; }
-  .drag:hover {
+.draggable {
+  cursor: default;
+  transition: opacity 100ms ease-in; }
+  .draggable:hover {
     opacity: 0.85;
     cursor: move; }
 
