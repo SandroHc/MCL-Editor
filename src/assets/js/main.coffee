@@ -4,10 +4,11 @@ init = ->
 	sort_assets()
 
 	populate_regions()
+	populate_lang()
 	populate_scenes 'Sala de Aula A'
 	populate_avatars '[Docete]'
-	populate_emotions [ '#actor1_edit', '#actor2_edit' ], [ 'Nathaniel', 'Castiel' ]
-	populate_lang()
+
+	init_actors()
 
 	# Bind input events
 	((elements) ->
@@ -15,21 +16,9 @@ init = ->
 			if elements.hasOwnProperty el_name
 				for event of elements[el_name]
 					if elements[el_name].hasOwnProperty event
-						# document.querySelector('#' + el_name).addEventListener event, elements[el_name][event]
+						# document.getElementById(el_name).addEventListener event, elements[el_name][event]
 						$('#' + el_name).on event, elements[el_name][event]
 	)
-		actor1_edit:
-			change: update_actor
-			keyup: update_actor
-		actor1_sub_edit:
-			change: update_actor_sub
-			keyup: update_actor_sub
-		actor2_edit:
-			change: update_actor
-			keyup: update_actor
-		actor2_sub_edit:
-			change: update_actor_sub
-			keyup: update_actor_sub
 		scene_edit:
 			change: update_scene
 			keyup: update_scene
@@ -58,8 +47,6 @@ init = ->
 
 	eventChange = new Event('change')
 	document.querySelector('#scene_edit').dispatchEvent eventChange
-	document.querySelector('#actor1_edit').dispatchEvent eventChange
-	document.querySelector('#actor2_edit').dispatchEvent eventChange
 
 	$('ul.tabs').tabs()
 

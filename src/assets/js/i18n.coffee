@@ -25,7 +25,7 @@ load_lang = (lang) ->
 	el = document.createElement 'script'
 	el.setAttribute('src', 'dist/js/lang.' + lang + '.js')
 	el.onload = () ->
-		console.log "Loaded language '" + get_lang() + "'!"
+		console.log 'Loaded language: ' + get_lang()
 		document.body.innerHTML = vegito(document.body.innerHTML, LANG)
 		init()
 
@@ -35,7 +35,7 @@ load_lang = (lang) ->
 populate_lang = ->
 	language = get_lang()
 
-	select = document.querySelector('#lang_edit')
+	select = document.getElementById('lang_edit')
 	for own lang of languages
 		el = document.createElement('option')
 		el.textContent = languages[lang].name
@@ -47,7 +47,7 @@ populate_lang = ->
 
 
 update_lang = ->
-	lang_selected = document.querySelector('#lang_edit').value
+	lang_selected = document.getElementById('lang_edit').value
 
 	if lang_selected != get_lang()
 		set_config('lang', lang_selected)

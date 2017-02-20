@@ -71,7 +71,8 @@ CONFIG = {
     id: null,
     info: null,
     avatar: null
-  }
+  },
+  default_actor: 'Nathaniel'
 };
 
 var ASSETS;
@@ -5581,7 +5582,7 @@ ASSETS = {
   ]
 };
 
-var draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_settings, load_username, populate_avatars, populate_emotions, populate_emotions_sub, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
+var draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_settings, load_username, populate_avatars, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
 
 set_config = function(key, value) {
   return localStorage.setItem(key, value);
@@ -5633,8 +5634,8 @@ load_region = function() {
 load_username = function() {
   CONFIG.player.username = get_config('username', '');
   console.log('USERNAME | ' + CONFIG.player.username);
-  document.querySelector('#username_edit').value = CONFIG.player.username;
-  return document.querySelector('#username_submit').dispatchEvent(new Event('click'));
+  document.getElementById('username_edit').value = CONFIG.player.username;
+  return document.getElementById('username_submit').dispatchEvent(new Event('click'));
 };
 
 get_player_info = function(username, callback) {
@@ -5746,7 +5747,7 @@ sort_assets = function() {
 
 populate_regions = function() {
   var select;
-  select = document.querySelector('#region_edit');
+  select = document.getElementById('region_edit');
   regions.forEach(function(e, i) {
     var el;
     el = document.createElement('option');
@@ -5760,7 +5761,7 @@ populate_regions = function() {
 
 populate_scenes = function(selected) {
   var select;
-  select = document.querySelector('#scene_edit');
+  select = document.getElementById('scene_edit');
   ASSETS.scenes.forEach(function(e, i) {
     var el;
     el = document.createElement('option');
@@ -5792,7 +5793,7 @@ populate_scenes_sub = function(index, input) {
 
 populate_avatars = function(selected) {
   var select;
-  select = document.querySelector('#avatar_edit');
+  select = document.getElementById('avatar_edit');
   ASSETS.avatars.forEach(function(e, i) {
     var el;
     el = document.createElement('option');
@@ -5805,73 +5806,147 @@ populate_avatars = function(selected) {
   return $(select).material_select();
 };
 
-populate_emotions = function(inputs, defaults) {
-  return inputs.forEach(function(input_id, input_index) {
-    var input;
-    input = document.querySelector(input_id);
-    ASSETS.emotions.forEach(function(e, i) {
-      var el;
-      el = document.createElement('option');
-      el.textContent = e.name;
-      el.value = i;
-      el.selected = e.name === defaults[input_index] ? 'true' : void 0;
-      return input.appendChild(el);
-    });
-    return $(input).material_select();
-  });
-};
+var actors_size, add_actor, init_actors, populate_emotions, populate_emotions_sub, remove_actor, update_actor, update_actor_sub;
 
-populate_emotions_sub = function(index, input) {
-  var emotion;
-  while (input.options.length > 0) {
-    input.remove(0);
+actors_size = 0;
+
+add_actor = function(selected) {
+  var actors, div, id, img, label, remove_btn, remove_icon, select_actor, select_sub;
+  if (selected == null) {
+    selected = CONFIG.default_actor;
   }
-  emotion = ASSETS.emotions[index];
-  emotion.variations.forEach(function(e, i) {
-    var el;
-    el = document.createElement('option');
-    el.textContent = e.name;
-    el.value = i;
-    el.dataset.emotion = index;
-    return input.appendChild(el);
-  });
-  $(input).material_select();
-  return input.dispatchEvent(new Event('change'));
+  id = ++actors_size;
+  actors = document.getElementById('actors');
+  div = document.createElement('div');
+  div.classList.add('input-field', 'col', 's12', 'm5', 'actor_' + id);
+  select_actor = document.createElement('select');
+  select_actor.id = 'actor_' + id + '_edit';
+  select_actor.dataset.actor = id;
+  label = document.createElement('label');
+  label["for"] = 'actor_' + id + '_edit';
+  label.textContent = vegito('{{character}} ' + id, LANG);
+  div.appendChild(select_actor);
+  div.appendChild(label);
+  actors.appendChild(div);
+  $(select_actor).on('change', update_actor);
+  $(select_actor).on('keyup', update_actor);
+  div = document.createElement('div');
+  div.classList.add('input-field', 'col', 's12', 'm5', 'actor_' + id);
+  select_sub = document.createElement('select');
+  select_sub.id = 'actor_' + id + '_sub';
+  select_sub.dataset.actor = id;
+  div.appendChild(select_sub);
+  actors.appendChild(div);
+  $(select_sub).on('change', update_actor_sub);
+  $(select_sub).on('keyup', update_actor_sub);
+  div = document.createElement('div');
+  div.classList.add('input-field', 'col', 's6', 'm2', 'actor_' + id);
+  div.style.height = '66px';
+  remove_btn = document.createElement('a');
+  remove_btn.classList.add('btn-floating', 'waves-effect', 'waves-light', 'red');
+  remove_btn.onclick = function() {
+    return remove_actor(id);
+  };
+  remove_icon = document.createElement('i');
+  remove_icon.classList.add('material-icons');
+  remove_icon.textContent = 'remove_circle_outline';
+  remove_btn.appendChild(remove_icon);
+  div.appendChild(remove_btn);
+  actors.appendChild(div);
+  img = document.createElement('img');
+  img.id = 'actor_' + id;
+  img.classList.add('actor', 'draggable');
+  img.alt = vegito('{{character}} ' + id, LANG);
+  img.style.bottom = 0;
+  img.style.left = Math.min(id * 400 - 200, 750) + 'px';
+  img.dataset.flip = 1;
+  document.getElementById('scene').appendChild(img);
+  populate_emotions(select_actor, selected);
+  populate_emotions_sub(select_sub);
 };
 
-var bubble, loveometer, loveometer_level, update_actor, update_actor_sub, update_avatar, update_response, update_scene, update_scene_sub, update_username, update_username_btn;
+remove_actor = function(id) {
+  var el;
+  console.log('Removing ' + id);
+  $('.actor_' + id).remove();
+  el = document.getElementById('actor_' + id);
+  return el.parentNode.removeChild(el);
+};
+
+init_actors = function() {
+  add_actor('Nathaniel');
+  return add_actor('Castiel');
+};
+
+populate_emotions = function(select, selected) {
+  ASSETS.emotions.forEach(function(emotion, i) {
+    var option;
+    option = document.createElement('option');
+    option.textContent = emotion.name;
+    option.value = i;
+    option.selected = emotion.name === selected ? 'true' : void 0;
+    return select.appendChild(option);
+  });
+  return $(select).material_select();
+};
+
+populate_emotions_sub = function(select) {
+  var actor_el, emotion;
+  while (select.options.length > 0) {
+    select.remove(0);
+  }
+  actor_el = document.getElementById('actor_' + select.dataset.actor + '_edit');
+  if (!actor_el) {
+    console.log('Invalid actor for:');
+    console.log(select);
+    return;
+  }
+  emotion = ASSETS.emotions[actor_el.value];
+  emotion.variations.forEach(function(variation, i) {
+    var option;
+    option = document.createElement('option');
+    option.textContent = variation.name;
+    option.value = i;
+    option.dataset.emotion = actor_el.value;
+    option.dataset.actor = actor_el.dataset.actor;
+    return select.appendChild(option);
+  });
+  $(select).material_select();
+  return select.dispatchEvent(new Event('change'));
+};
 
 update_actor = function() {
-  var sub;
-  sub = document.querySelector(this.dataset.sub);
-  return populate_emotions_sub(this.value, sub);
+  console.log("CHAR SELECTED | " + ASSETS.emotions[this.value].name);
+  return populate_emotions_sub(document.getElementById('actor_' + this.dataset.actor + '_sub'));
 };
 
 update_actor_sub = function() {
-  var emotion, name, target, variation;
-  name = this.options[this.selectedIndex].textContent;
-  emotion = ASSETS.emotions[this.options[this.selectedIndex].dataset.emotion];
-  console.log('EMOTION SELECTED | ' + emotion.name + ' (' + name + ')');
-  target = document.querySelector(this.dataset.target);
+  var emotion, option_selected, target, variation;
+  option_selected = this.options[this.selectedIndex];
+  emotion = ASSETS.emotions[document.getElementById('actor_' + this.dataset.actor + '_edit').value];
+  console.log('EMOTION SELECTED | ' + emotion.name + ' (' + option_selected.textContent + ')');
+  target = document.getElementById('actor_' + this.dataset.actor);
   target.style.src = '';
   if (emotion.name === '[Nada]') {
     target.style.display = 'none';
     return;
   } else {
     target.style.display = 'block';
-  }
-  if (emotion.name === '[Docete]') {
-    draw_avatar(false, target);
-    target.style.height = '150%';
-    target.style.bottom = '-300px';
-  } else {
-    variation = emotion.variations[this.value];
-    target.src = 'assets/img/emotion/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.png';
-    target.style.backgroundImage = '';
-    target.style.height = '92.24138%';
-    target.style.bottom = '0';
+    if (emotion.name === '[Docete]') {
+      draw_avatar(false, target);
+      target.style.height = '150%';
+      target.style.bottom = '-300px';
+    } else {
+      variation = emotion.variations[this.value];
+      target.src = 'assets/img/emotion/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.png';
+      target.style.backgroundImage = '';
+      target.style.height = '92.24138%';
+      target.style.bottom = '0';
+    }
   }
 };
+
+var bubble, loveometer, loveometer_level, update_avatar, update_response, update_scene, update_scene_sub, update_username, update_username_btn;
 
 update_scene = function() {
   var sub;
@@ -5895,7 +5970,7 @@ loveometer_level = function() {
 };
 
 loveometer = function() {
-  return document.querySelector('#loveometer').style.display = this.checked ? 'block' : 'none';
+  return document.getElementById('#loveometer').style.display = this.checked ? 'block' : 'none';
 };
 
 bubble = function() {
@@ -5926,8 +6001,8 @@ update_response = function() {
 };
 
 update_username_btn = function() {
-  CONFIG.player.username = document.querySelector('#username_edit').value;
-  CONFIG.region = document.querySelector('#region_edit').value;
+  CONFIG.player.username = document.getElementById('username_edit').value || 'd';
+  CONFIG.region = document.getElementById('region_edit').value;
   set_config('username', CONFIG.player.username);
   set_config('region', CONFIG.region);
   return get_player_info(CONFIG.player.username, function(data) {
@@ -5937,15 +6012,15 @@ update_username_btn = function() {
       CONFIG.player.id = CONFIG.player.info.player.id;
     }
     eventChange = new Event('change');
-    query = document.querySelector('#actor1_edit');
+    query = document.getElementById('actor1_edit');
     if (query.options[query.selectedIndex].text === '[Docete]') {
       query.dispatchEvent(eventChange);
     }
-    query = document.querySelector('#actor2_edit');
+    query = document.getElementById('actor2_edit');
     if (query.options[query.selectedIndex].text === '[Docete]') {
       query.dispatchEvent(eventChange);
     }
-    query = document.querySelector('#avatar_edit');
+    query = document.getElementById('avatar_edit');
     if (query.options[query.selectedIndex].text === '[Docete]') {
       return query.dispatchEvent(eventChange);
     }
@@ -6009,7 +6084,7 @@ load_lang = function(lang) {
   el = document.createElement('script');
   el.setAttribute('src', 'dist/js/lang.' + lang + '.js');
   el.onload = function() {
-    console.log("Loaded language '" + get_lang() + "'!");
+    console.log('Loaded language: ' + get_lang());
     document.body.innerHTML = vegito(document.body.innerHTML, LANG);
     return init();
   };
@@ -6019,7 +6094,7 @@ load_lang = function(lang) {
 populate_lang = function() {
   var el, lang, language, select;
   language = get_lang();
-  select = document.querySelector('#lang_edit');
+  select = document.getElementById('lang_edit');
   for (lang in languages) {
     if (!hasProp.call(languages, lang)) continue;
     el = document.createElement('option');
@@ -6033,7 +6108,7 @@ populate_lang = function() {
 
 update_lang = function() {
   var lang_selected;
-  lang_selected = document.querySelector('#lang_edit').value;
+  lang_selected = document.getElementById('lang_edit').value;
   if (lang_selected !== get_lang()) {
     set_config('lang', lang_selected);
     return window.location.reload();
@@ -6049,10 +6124,10 @@ init = function() {
   load_settings();
   sort_assets();
   populate_regions();
+  populate_lang();
   populate_scenes('Sala de Aula A');
   populate_avatars('[Docete]');
-  populate_emotions(['#actor1_edit', '#actor2_edit'], ['Nathaniel', 'Castiel']);
-  populate_lang();
+  init_actors();
   (function(elements) {
     var el_name, event, results;
     results = [];
@@ -6076,22 +6151,6 @@ init = function() {
     }
     return results;
   })({
-    actor1_edit: {
-      change: update_actor,
-      keyup: update_actor
-    },
-    actor1_sub_edit: {
-      change: update_actor_sub,
-      keyup: update_actor_sub
-    },
-    actor2_edit: {
-      change: update_actor,
-      keyup: update_actor
-    },
-    actor2_sub_edit: {
-      change: update_actor_sub,
-      keyup: update_actor_sub
-    },
     scene_edit: {
       change: update_scene,
       keyup: update_scene
@@ -6129,8 +6188,6 @@ init = function() {
   });
   eventChange = new Event('change');
   document.querySelector('#scene_edit').dispatchEvent(eventChange);
-  document.querySelector('#actor1_edit').dispatchEvent(eventChange);
-  document.querySelector('#actor2_edit').dispatchEvent(eventChange);
   return $('ul.tabs').tabs();
 };
 

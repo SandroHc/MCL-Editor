@@ -1,37 +1,3 @@
-update_actor = ->
-	sub = document.querySelector(@dataset.sub)
-	# console.log("CHAR SELECTED | " + ASSETS.emotions[this.value].name);
-	populate_emotions_sub @value, sub
-
-update_actor_sub = ->
-	name = @options[@selectedIndex].textContent
-	emotion = ASSETS.emotions[@options[@selectedIndex].dataset.emotion]
-	console.log 'EMOTION SELECTED | ' + emotion.name + ' (' + name + ')'
-
-	target = document.querySelector(@dataset.target)
-	target.style.src = ''
-
-	if emotion.name == '[Nada]'
-		target.style.display = 'none'
-		return
-	else
-		target.style.display = 'block'
-
-	if emotion.name == '[Docete]'
-		draw_avatar(false, target)
-		# target.src = assets.body
-
-		target.style.height = '150%'
-		target.style.bottom = '-300px'
-	else
-		variation = emotion.variations[@value]
-		target.src = 'assets/img/emotion/' + variation.id + (if variation.checksum then '-' + variation.checksum else '') + '.png' # Web: site + 'emotion/web/high/id-checksum.png'
-
-		target.style.backgroundImage = ''
-		target.style.height = '92.24138%'
-		target.style.bottom = '0'
-	return
-
 update_scene = ->
 	sub = document.querySelector(@dataset.sub)
 	# console.log("SCENE SELECTED | " + ASSETS.scenes[this.value].name);
@@ -50,7 +16,7 @@ loveometer_level = ->
 	document.querySelector('#loveometer .heart-text').innerHTML = @value + '%'
 
 loveometer = ->
-	document.querySelector('#loveometer').style.display = if @checked then 'block' else 'none'
+	document.getElementById('#loveometer').style.display = if @checked then 'block' else 'none'
 
 bubble = ->
 	if @value != ''
@@ -75,8 +41,8 @@ update_response = ->
 		document.querySelector('.player').style.display = 'none'
 
 update_username_btn = ->
-	CONFIG.player.username = document.querySelector('#username_edit').value # else 'd'
-	CONFIG.region = document.querySelector('#region_edit').value
+	CONFIG.player.username = document.getElementById('username_edit').value || 'd'
+	CONFIG.region = document.getElementById('region_edit').value
 
 	set_config 'username', CONFIG.player.username
 	set_config 'region', CONFIG.region
@@ -89,15 +55,15 @@ update_username_btn = ->
 
 		eventChange = new Event 'change'
 
-		query = document.querySelector('#actor1_edit')
+		query = document.getElementById('actor1_edit')
 		if query.options[query.selectedIndex].text == '[Docete]'
 			query.dispatchEvent eventChange
 
-		query = document.querySelector('#actor2_edit')
+		query = document.getElementById('actor2_edit')
 		if query.options[query.selectedIndex].text == '[Docete]'
 			query.dispatchEvent eventChange
 
-		query = document.querySelector('#avatar_edit')
+		query = document.getElementById('avatar_edit')
 		if query.options[query.selectedIndex].text == '[Docete]'
 			query.dispatchEvent eventChange
 

@@ -43,8 +43,8 @@ load_username = () ->
 	CONFIG.player.username = get_config('username', '')
 
 	console.log 'USERNAME | ' + CONFIG.player.username
-	document.querySelector('#username_edit').value = CONFIG.player.username
-	document.querySelector('#username_submit').dispatchEvent new Event('click')
+	document.getElementById('username_edit').value = CONFIG.player.username
+	document.getElementById('username_submit').dispatchEvent new Event('click')
 
 
 get_player_info = (username, callback) ->
@@ -151,7 +151,7 @@ sort_assets = () ->
 	ASSETS.emotions.sort comparator
 
 populate_regions = () ->
-	select = document.querySelector('#region_edit')
+	select = document.getElementById('region_edit')
 	regions.forEach (e, i) ->
 		el = document.createElement('option')
 		el.textContent = e.name + ' — ' + e.link
@@ -162,7 +162,7 @@ populate_regions = () ->
 	$(select).material_select()
 
 populate_scenes = (selected) ->
-	select = document.querySelector('#scene_edit')
+	select = document.getElementById('scene_edit')
 	ASSETS.scenes.forEach (e, i) ->
 		el = document.createElement('option')
 		el.textContent = e.name
@@ -190,7 +190,7 @@ populate_scenes_sub = (index, input) ->
 
 
 populate_avatars = (selected) ->
-	select = document.querySelector('#avatar_edit')
+	select = document.getElementById('avatar_edit')
 	ASSETS.avatars.forEach (e, i) ->
 		el = document.createElement('option')
 		el.textContent = e.name
@@ -200,33 +200,3 @@ populate_avatars = (selected) ->
 		select.appendChild el
 
 	$(select).material_select()
-
-
-populate_emotions = (inputs, defaults) ->
-	inputs.forEach (input_id, input_index) ->
-		input = document.querySelector(input_id)
-		ASSETS.emotions.forEach (e, i) ->
-			el = document.createElement('option')
-			el.textContent = e.name
-			el.value = i
-			el.selected = if e.name == defaults[input_index] then 'true' else undefined
-			input.appendChild el
-
-		$(input).material_select()
-
-
-populate_emotions_sub = (index, input) ->
-	while input.options.length > 0 # Clear all options
-		input.remove 0
-
-	emotion = ASSETS.emotions[index]
-	emotion.variations.forEach (e, i) ->
-		# console.log("VAR | " + variation.name);
-		el = document.createElement('option')
-		el.textContent = e.name
-		el.value = i
-		el.dataset.emotion = index
-		input.appendChild el
-
-	$(input).material_select()
-	input.dispatchEvent new Event('change')

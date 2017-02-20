@@ -15,6 +15,7 @@ gulp.task('coffee', function() {
 			'./src/assets/js/config.coffee',
 			'./src/assets/js/assets.coffee',
 			'./src/assets/js/functions.coffee',
+			'./src/assets/js/actors.coffee',
 			'./src/assets/js/functions_events.coffee',
 			'./src/assets/js/i18n.coffee',
 			'./src/assets/js/main.coffee'

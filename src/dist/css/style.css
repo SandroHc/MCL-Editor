@@ -163,6 +163,10 @@
 .tab .material-icons {
   line-height: inherit; }
 
+#tab-actors .btn-floating {
+  display: block;
+  margin: 0 auto; }
+
 .file-field {
   margin-top: 0; }
 
@@ -196,7 +200,7 @@
     float: left; }
   #scene {
     float: right; }
-  #tab-account, #tab-chat, #tab-scene, #tab-characters, #tab-settings {
+  #tab-account, #tab-chat, #tab-scene, #tab-actors, #tab-settings {
     padding: 0 2em; }
   #go-to-scene {
     display: none; } }

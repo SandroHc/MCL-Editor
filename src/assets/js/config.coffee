@@ -27,3 +27,4 @@ CONFIG =
 		info: null
 		avatar: null
 	}
+	default_actor: 'Nathaniel'

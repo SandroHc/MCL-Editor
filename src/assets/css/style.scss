@@ -166,6 +166,11 @@ $zindex-3: 100200;
 	line-height: inherit;
 }
 
+#tab-actors .btn-floating {
+	display: block;
+	margin: 0 auto;
+}
+
 .file-field {
 	margin-top: 0;
 }
@@ -211,7 +216,7 @@ $zindex-3: 100200;
 		float: right;
 	}
 
-	#tab-account, #tab-chat, #tab-scene, #tab-characters, #tab-settings {
+	#tab-account, #tab-chat, #tab-scene, #tab-actors, #tab-settings {
 		padding: 0 2em;
 	}
 

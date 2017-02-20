@@ -25,7 +25,7 @@
 						<li class="tab col s2"><a href="#tab-account">{{account}}</a></li>
 						<li class="tab col s3"><a href="#tab-chat">{{chat}}</a></li>
 						<li class="tab col s3"><a href="#tab-scene">{{scene}}</a></li>
-						<li class="tab col s3"><a href="#tab-characters">{{characters}}</a></li>
+						<li class="tab col s3"><a href="#tab-actors">{{characters}}</a></li>
 						<li class="tab col s1"><a href="#tab-settings"><i class="material-icons">settings</i></a></li>
 					</ul>
 				</div>
@@ -37,6 +37,7 @@
 						</div>
 
 						<div class="input-field col s12">
+							<i class="material-icons prefix">language</i>
 							<select id="region_edit"></select>
 							<label for="region_edit">{{region}}</label>
 						</div>
@@ -117,7 +118,7 @@
 
 				</div>
 
-				<div id="tab-characters" class="col s12">
+				<div id="tab-actors" class="col s12">
 					<div class="row">
 
 						<!--<div class="input-field col s12 m12">-->
@@ -135,28 +136,10 @@
 							<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
 						</div>
 
-						<div class="input-field col s12 m6">
-							<select id="actor1_edit" data-sub="#actor1_sub_edit"></select>
-							<label for="actor1_edit">{{character}} 1</label>
-						</div>
-						<div class="input-field col s12 m6">
-							<select id="actor1_sub_edit" data-parent="#actor1_edit" data-target="#actor1"></select>
-						</div>
-						<!--<div class="input-field col s12">-->
-							<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor1', null)">{{use_sucrette}}</button>-->
-						<!--</div>-->
+						<div id="actors"></div>
 
-						<div class="input-field col s12 m6">
-							<select id="actor2_edit" data-sub="#actor2_sub_edit"></select>
-							<label for="actor2_edit">{{character}} 2</label>
-						</div>
-						<div class="input-field col s12 m6">
-							<select id="actor2_sub_edit" data-parent="#actor2_edit" data-target="#actor2"></select>
-						</div>
-						<!--<div class="input-field col s12">-->
-							<!--<button class="file_submit waves-effect waves-light btn" onclick="load_from_file('file_char_edit', '#actor2', null)">{{use_sucrette}}</button>-->
-						<!--</div>-->
-
+						<br><br><br>
+						<a class="btn-floating btn-large waves-effect waves-light red" onclick="add_actor()"><i class="material-icons">add</i></a>
 					</div>
 				</div>
 
@@ -164,7 +147,7 @@
 					<div class="row">
 
 						<div class="input-field col s12">
-							<i class="material-icons prefix">account_circle</i>
+							<i class="material-icons prefix">language</i>
 							<select id="lang_edit"></select>
 							<label for="lang_edit">{{language}}</label>
 						</div>
@@ -176,8 +159,6 @@
 
 		<div id="scene">
 			<div class="bubble draggable" style="left:65px; bottom:325px; display:none"></div>
-			<img id="actor1" class="actor draggable" alt="Personagem 1" style="left:200px; bottom:0" data-flip="1">
-			<img id="actor2" class="actor draggable" alt="Personagem 2" style="left:600px; bottom:0" data-flip="1">
 			<div id="loveometer" style="display: none">
 				<div class="outer-gauge">
 					<div class="inner-gauge">
@@ -207,6 +188,6 @@
 		<!-- CDN: http://code.interactjs.io/v1.2.6/interact.min.js -->
 		<script src="dist/js/libs/interact.min.js" onload="init_drag()" async defer></script>
 
-		<script src="dist/js/bundle.min.js"></script>
+		<script src="dist/js/bundle.js"></script>
 	</body>
 </html>
