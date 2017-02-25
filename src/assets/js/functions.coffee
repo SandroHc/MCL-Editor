@@ -144,7 +144,7 @@ sort_assets = () ->
 	comparator = (a, b) ->
 		a = a.name.toUpperCase()
 		b = b.name.toUpperCase()
-		return a < b ? 1 : a > b ? -1 : 0
+		return if a < b then -1 else if a > b then 1 else 0
 
 	# ASSETS.scenes.sort comparator
 	ASSETS.avatars.sort comparator

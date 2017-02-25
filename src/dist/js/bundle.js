@@ -61,7 +61,7 @@ regions = [
 ];
 
 CONFIG = {
-  version: '1.1.0',
+  version: '1.1.1',
   default_lang: 'pt',
   lang: this.default_lang,
   default_region: '0',
@@ -5732,14 +5732,15 @@ draw_avatar = function(is_portrait, dest) {
 sort_assets = function() {
   var comparator;
   comparator = function(a, b) {
-    var ref, ref1;
     a = a.name.toUpperCase();
     b = b.name.toUpperCase();
-    return (ref = a < b) != null ? ref : {
-      1: (ref1 = a > b) != null ? ref1 : -{
-        1: 0
-      }
-    };
+    if (a < b) {
+      return -1;
+    } else if (a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
   };
   ASSETS.avatars.sort(comparator);
   return ASSETS.emotions.sort(comparator);
