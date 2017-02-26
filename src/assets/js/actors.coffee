@@ -121,12 +121,14 @@ remove_actor = (id) ->
 		console.warn 'Actor with ID ' + id + ' not found. Can\'t remove'
 		return
 
-	actor.root.parentNode.removeChild actor.root
+	actor.config.parentNode.removeChild actor.config
 	actor.scene.parentNode.removeChild actor.scene
 
 	# Clear references to this actor
-	actors[id-1] = undefined
-	actors_DOM[id-1] = undefined
+	actors[id-1] = null
+	actors_DOM[id-1] = null
+
+	save_actors_to_cache()
 
 
 remove_all_actors = ->
@@ -136,6 +138,7 @@ remove_all_actors = ->
 
 init_actors = ->
 	actor_cache = localStorage.getObject('actors') || []
+	actor_cache.clean null # Remove empty references (left when removing an actor)
 
 	if actor_cache.length == 0
 		actor_cache.push {

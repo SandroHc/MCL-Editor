@@ -5593,6 +5593,19 @@ Storage.prototype.getObject = function(key) {
   return (value = this.getItem(key)) && JSON.parse(value);
 };
 
+Array.prototype.clean = function(deleteValue) {
+  var index, j, len, ref, value;
+  ref = this;
+  for (index = j = 0, len = ref.length; j < len; index = ++j) {
+    value = ref[index];
+    if (value === deleteValue) {
+      this.splice(index, 1);
+      index--;
+    }
+  }
+  return this;
+};
+
 set_config = function(key, value) {
   return localStorage.setItem(key, value);
 };
@@ -5935,10 +5948,11 @@ remove_actor = function(id) {
     console.warn('Actor with ID ' + id + ' not found. Can\'t remove');
     return;
   }
-  actor.root.parentNode.removeChild(actor.root);
+  actor.config.parentNode.removeChild(actor.config);
   actor.scene.parentNode.removeChild(actor.scene);
-  actors[id - 1] = void 0;
-  return actors_DOM[id - 1] = void 0;
+  actors[id - 1] = null;
+  actors_DOM[id - 1] = null;
+  return save_actors_to_cache();
 };
 
 remove_all_actors = function() {
@@ -5954,6 +5968,7 @@ remove_all_actors = function() {
 init_actors = function() {
   var actor, actor_cache, j, len;
   actor_cache = localStorage.getObject('actors') || [];
+  actor_cache.clean(null);
   if (actor_cache.length === 0) {
     actor_cache.push({
       name: 'Nathaniel',

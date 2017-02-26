@@ -4,6 +4,12 @@ Storage.prototype.setObject = (key, value) ->
 Storage.prototype.getObject = (key) ->
 	return (value = this.getItem(key)) && JSON.parse(value)
 
+Array.prototype.clean = (deleteValue) ->
+	for value, index in this
+		if value == deleteValue
+			this.splice(index, 1)
+			index--
+	return this
 
 set_config = (key, value) ->
 	# console.log 'SET CONFIG | ' + key + ' = ' + value
