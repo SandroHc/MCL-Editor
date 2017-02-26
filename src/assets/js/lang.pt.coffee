@@ -20,3 +20,6 @@ LANG =
 	language: 'Idioma'
 	view_result: 'Ver Resultado'
 	use_sucrette: 'Usar Ficheiro'
+	cache: 'Cache'
+	clear_actors: 'Limpar Personagens & Lugar'
+	clear_cache: 'Limpar Tudo'

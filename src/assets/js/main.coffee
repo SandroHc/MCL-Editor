@@ -1,15 +1,6 @@
 init = ->
 	load_settings()
 
-	sort_assets()
-
-	populate_regions()
-	populate_lang()
-	populate_scenes 'Sala de Aula A'
-	populate_avatars '[Docete]'
-
-	init_actors()
-
 	# Bind input events
 	((elements) ->
 		for el_name of elements
@@ -43,10 +34,19 @@ init = ->
 		lang_edit:
 			change: update_lang
 			keyup: update_lang
+		clear_actors:
+			click: remove_all_actors
+		clear_cache:
+			click: clear_configs
 
+	sort_assets()
 
-	eventChange = new Event('change')
-	document.querySelector('#scene_edit').dispatchEvent eventChange
+	populate_regions()
+	populate_lang()
+	populate_scenes 'Sala de Aula A'
+	populate_avatars '[Docete]'
+
+	init_actors()
 
 	$('ul.tabs').tabs()
 
@@ -82,25 +82,31 @@ init_drag = ->
 
 			dragUpdatePos(event, event.target)
 
+		onend: (event) ->
+			save_actors_to_cache()
+
 	.on 'doubletap', (event) ->
 		is_actor = event.target.className.indexOf('actor') != -1
 		if !is_actor
 			return
 
-		event.currentTarget.dataset.flip *= -1 # Flip the value
+		actor =	get_actor event.target.dataset.actor
+		actor.flipped = !actor.flipped
+		save_actors_to_cache()
+
 		dragUpdatePos(event, event.currentTarget)
 
 
 dragUpdatePos = (event, target) ->
-	# Keep the dragged position in the data-x/data-y attributes
-	x = (parseFloat(target.dataset.x) || 0) + (event.dx || 0)
-	y = (parseFloat(target.dataset.y) || 0) + (event.dy || 0)
-	flip = target.dataset.flip || '1'
+	info = get_actor(event.target.dataset.actor) || empty_actor
+
+	x = info.pos.x + (event.dx || 0)
+	y = info.pos.y + (event.dy || 0)
 
 	# Translate the element
 	target.style.webkitTransform =
-		target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + flip + ')';
+	target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (if info.flipped then -1 else 1) + ')';
 
 	# Update the position attributes
-	target.setAttribute('data-x', x)
-	target.setAttribute('data-y', y)
+	info.pos.x = x
+	info.pos.y = y

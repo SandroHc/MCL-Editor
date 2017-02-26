@@ -25,7 +25,7 @@ load_lang = (lang) ->
 	el = document.createElement 'script'
 	el.setAttribute('src', 'dist/js/lang.' + lang + '.js')
 	el.onload = () ->
-		console.log 'Loaded language: ' + get_lang()
+		console.info 'Loaded LANG: ' + get_lang()
 		document.body.innerHTML = vegito(document.body.innerHTML, LANG)
 		init()
 

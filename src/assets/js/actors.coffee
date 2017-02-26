@@ -1,16 +1,20 @@
-# <div class="input-field col s12 m6">
-#	<select id="actor1_edit" data-sub="#actor1_sub_edit"></select>
-#	<label for="actor1_edit">{{character}} 1</label>
-# </div>
-# <div class="input-field col s12 m6">
-#	<select id="actor1_sub_edit" data-parent="#actor1_edit" data-target="#actor1"></select>
-# </div>
+actors = []
+# Separate the DOM elements, so we can cache the actors easily
+actors_DOM = []
 
-actors_size = 0
+empty_actor = {
+	name: CONFIG.default_actor
+	pos: {
+		x: 0
+		y: 0
+	}
+	flipped: false
+}
 
-add_actor = (selected = CONFIG.default_actor) ->
-	id = ++actors_size
-	actors = document.getElementById 'actors'
+add_actor = (info = empty_actor) ->
+	id = actors.length + 1
+
+	root = document.createElement 'div'
 
 	# Main
 	div = document.createElement 'div'
@@ -28,7 +32,7 @@ add_actor = (selected = CONFIG.default_actor) ->
 	div.appendChild select_actor
 	div.appendChild label
 
-	actors.appendChild div
+	root.appendChild div
 	# select.addEventListener 'change', _update_actor
 	$(select_actor).on 'change', update_actor
 	$(select_actor).on 'keyup', update_actor
@@ -44,7 +48,7 @@ add_actor = (selected = CONFIG.default_actor) ->
 
 	div.appendChild select_sub
 
-	actors.appendChild div
+	root.appendChild div
 	$(select_sub).on 'change', update_actor_sub
 	$(select_sub).on 'keyup', update_actor_sub
 
@@ -68,7 +72,9 @@ add_actor = (selected = CONFIG.default_actor) ->
 
 	remove_btn.appendChild remove_icon
 	div.appendChild remove_btn
-	actors.appendChild div
+	root.appendChild div
+
+	document.getElementById('actors').appendChild root
 
 
 	# Scene image
@@ -78,26 +84,82 @@ add_actor = (selected = CONFIG.default_actor) ->
 	img.alt = vegito('{{character}} ' + id, LANG)
 	img.style.bottom = 0
 	img.style.left = Math.min(id * 400 - 200, 750) + 'px'
-	img.dataset.flip = 1
+	img.dataset.actor = id
+
+	img.style.webkitTransform =
+	img.style.transform = 'translate(' + info.pos.x + 'px, ' + info.pos.y + 'px) scaleX(' + (if info.flipped then -1 else 1) + ')';
 
 	document.getElementById('scene').appendChild(img)
 
-	populate_emotions select_actor, selected
+	# Add this actor's info to the actors list
+	actors.push info
+	actors_DOM.push {
+		config: root
+		select: select_actor
+		select_sub: select_sub
+		scene: img
+	}
+	save_actors_to_cache()
+
+
+	populate_emotions select_actor, info.name
 	populate_emotions_sub select_sub
+
 	return
 
+
+get_actor = (id) ->
+	return actors[id-1]
+
+
 remove_actor = (id) ->
-	console.log 'Removing ' + id
+	console.debug 'Removing ' + id
 
-	$('.actor_' + id).remove()
+	actor = actors_DOM[id-1]
 
-	el = document.getElementById('actor_' + id)
-	el.parentNode.removeChild el
+	if !actor
+		console.warn 'Actor with ID ' + id + ' not found. Can\'t remove'
+		return
+
+	actor.root.parentNode.removeChild actor.root
+	actor.scene.parentNode.removeChild actor.scene
+
+	# Clear references to this actor
+	actors[id-1] = undefined
+	actors_DOM[id-1] = undefined
+
+
+remove_all_actors = ->
+	for actor in actors
+		remove_actor actor.id
 
 
 init_actors = ->
-	add_actor 'Nathaniel'
-	add_actor 'Castiel'
+	actor_cache = localStorage.getObject('actors') || []
+
+	if actor_cache.length == 0
+		actor_cache.push {
+			name: 'Nathaniel'
+			pos: {
+				x: -16
+				y: 0
+			}
+			flipped: false
+		}
+		actor_cache.push {
+			name: 'Castiel'
+			pos: {
+				x: -26
+				y: 0
+			}
+			flipped: false
+		}
+		console.debug 'No actors in cache. Loading defaults'
+
+	for actor in actor_cache
+		add_actor actor
+
+	console.debug 'Loaded ' + actor_cache.length + ' actors'
 
 
 populate_emotions = (select, selected) ->
@@ -123,7 +185,6 @@ populate_emotions_sub = (select) ->
 
 	emotion = ASSETS.emotions[actor_el.value]
 	emotion.variations.forEach (variation, i) ->
-		#console.log("VAR | " + variation.name + ' | ' + i);
 		option = document.createElement('option')
 		option.textContent = variation.name
 		option.value = i
@@ -136,7 +197,7 @@ populate_emotions_sub = (select) ->
 
 
 update_actor = ->
-	console.log("CHAR SELECTED | " + ASSETS.emotions[@value].name);
+	#console.log("CHAR SELECTED | " + ASSETS.emotions[@value].name);
 	populate_emotions_sub document.getElementById('actor_' + @dataset.actor + '_sub')
 
 
@@ -144,7 +205,11 @@ update_actor_sub = ->
 	option_selected = @options[@selectedIndex]
 	emotion = ASSETS.emotions[document.getElementById('actor_' + @dataset.actor + '_edit').value]
 
-	console.log 'EMOTION SELECTED | ' + emotion.name + ' (' + option_selected.textContent + ')'
+	console.debug 'Selected ACTOR: ' + emotion.name + ' (' + option_selected.textContent + ')'
+
+	# Update actor info
+	actors[@dataset.actor-1].name = emotion.name
+	save_actors_to_cache()
 
 	target = document.getElementById('actor_' + @dataset.actor)
 	target.style.src = ''
@@ -169,3 +234,7 @@ update_actor_sub = ->
 			target.style.height = '92.24138%'
 			target.style.bottom = '0'
 	return
+
+
+save_actors_to_cache = ->
+	localStorage.setObject 'actors', actors

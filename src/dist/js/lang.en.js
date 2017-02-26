@@ -20,6 +20,9 @@ LANG = {
   avatar: 'Avatar',
   character: 'Character',
   language: 'Language',
-  view_result: 'Ver Result',
-  use_sucrette: 'Use File'
+  view_result: 'View Result',
+  use_sucrette: 'Use File',
+  cache: 'Cache',
+  clear_actors: 'Clear Actors & Scene',
+  clear_cache: 'Clear Everything'
 };

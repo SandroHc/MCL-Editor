@@ -5582,7 +5582,16 @@ ASSETS = {
   ]
 };
 
-var draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_settings, load_username, populate_avatars, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
+var clear_configs, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_settings, load_username, populate_avatars, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
+
+Storage.prototype.setObject = function(key, value) {
+  return this.setItem(key, JSON.stringify(value));
+};
+
+Storage.prototype.getObject = function(key) {
+  var value;
+  return (value = this.getItem(key)) && JSON.parse(value);
+};
 
 set_config = function(key, value) {
   return localStorage.setItem(key, value);
@@ -5593,6 +5602,11 @@ get_config = function(key, default_value) {
     default_value = void 0;
   }
   return localStorage.getItem(key) || default_value;
+};
+
+clear_configs = function() {
+  localStorage.clear();
+  return window.location.reload();
 };
 
 load_from_file = function(file_in, img_out, bg_out) {
@@ -5628,12 +5642,12 @@ load_settings = function() {
 
 load_region = function() {
   CONFIG.region = get_config('region', CONFIG.default_region);
-  return console.log('REGION | ' + CONFIG.region);
+  return console.info('Loaded REGION: ' + regions[CONFIG.region].id + ' - ' + regions[CONFIG.region].link);
 };
 
 load_username = function() {
   CONFIG.player.username = get_config('username', '');
-  console.log('USERNAME | ' + CONFIG.player.username);
+  console.info('Loaded USERNAME: ' + CONFIG.player.username);
   document.getElementById('username_edit').value = CONFIG.player.username;
   return document.getElementById('username_submit').dispatchEvent(new Event('click'));
 };
@@ -5791,7 +5805,8 @@ populate_scenes = function(selected) {
     el.selected = e.name === selected ? 'true' : void 0;
     return select.appendChild(el);
   });
-  return $(select).material_select();
+  $(select).material_select();
+  return select.dispatchEvent(new Event('change'));
 };
 
 populate_scenes_sub = function(index, input) {
@@ -5827,17 +5842,28 @@ populate_avatars = function(selected) {
   return $(select).material_select();
 };
 
-var actors_size, add_actor, init_actors, populate_emotions, populate_emotions_sub, remove_actor, update_actor, update_actor_sub;
+var actors, actors_DOM, add_actor, empty_actor, get_actor, init_actors, populate_emotions, populate_emotions_sub, remove_actor, remove_all_actors, save_actors_to_cache, update_actor, update_actor_sub;
 
-actors_size = 0;
+actors = [];
 
-add_actor = function(selected) {
-  var actors, div, id, img, label, remove_btn, remove_icon, select_actor, select_sub;
-  if (selected == null) {
-    selected = CONFIG.default_actor;
+actors_DOM = [];
+
+empty_actor = {
+  name: CONFIG.default_actor,
+  pos: {
+    x: 0,
+    y: 0
+  },
+  flipped: false
+};
+
+add_actor = function(info) {
+  var div, id, img, label, remove_btn, remove_icon, root, select_actor, select_sub;
+  if (info == null) {
+    info = empty_actor;
   }
-  id = ++actors_size;
-  actors = document.getElementById('actors');
+  id = actors.length + 1;
+  root = document.createElement('div');
   div = document.createElement('div');
   div.classList.add('input-field', 'col', 's12', 'm5', 'actor_' + id);
   select_actor = document.createElement('select');
@@ -5849,7 +5875,7 @@ add_actor = function(selected) {
   label.textContent = vegito('{{character}} ' + id, LANG);
   div.appendChild(select_actor);
   div.appendChild(label);
-  actors.appendChild(div);
+  root.appendChild(div);
   $(select_actor).on('change', update_actor);
   $(select_actor).on('keyup', update_actor);
   div = document.createElement('div');
@@ -5858,7 +5884,7 @@ add_actor = function(selected) {
   select_sub.id = 'actor_' + id + '_sub';
   select_sub.dataset.actor = id;
   div.appendChild(select_sub);
-  actors.appendChild(div);
+  root.appendChild(div);
   $(select_sub).on('change', update_actor_sub);
   $(select_sub).on('keyup', update_actor_sub);
   div = document.createElement('div');
@@ -5874,30 +5900,84 @@ add_actor = function(selected) {
   remove_icon.textContent = 'remove_circle_outline';
   remove_btn.appendChild(remove_icon);
   div.appendChild(remove_btn);
-  actors.appendChild(div);
+  root.appendChild(div);
+  document.getElementById('actors').appendChild(root);
   img = document.createElement('img');
   img.id = 'actor_' + id;
   img.classList.add('actor', 'draggable');
   img.alt = vegito('{{character}} ' + id, LANG);
   img.style.bottom = 0;
   img.style.left = Math.min(id * 400 - 200, 750) + 'px';
-  img.dataset.flip = 1;
+  img.dataset.actor = id;
+  img.style.webkitTransform = img.style.transform = 'translate(' + info.pos.x + 'px, ' + info.pos.y + 'px) scaleX(' + (info.flipped ? -1 : 1) + ')';
   document.getElementById('scene').appendChild(img);
-  populate_emotions(select_actor, selected);
+  actors.push(info);
+  actors_DOM.push({
+    config: root,
+    select: select_actor,
+    select_sub: select_sub,
+    scene: img
+  });
+  save_actors_to_cache();
+  populate_emotions(select_actor, info.name);
   populate_emotions_sub(select_sub);
 };
 
+get_actor = function(id) {
+  return actors[id - 1];
+};
+
 remove_actor = function(id) {
-  var el;
-  console.log('Removing ' + id);
-  $('.actor_' + id).remove();
-  el = document.getElementById('actor_' + id);
-  return el.parentNode.removeChild(el);
+  var actor;
+  console.debug('Removing ' + id);
+  actor = actors_DOM[id - 1];
+  if (!actor) {
+    console.warn('Actor with ID ' + id + ' not found. Can\'t remove');
+    return;
+  }
+  actor.root.parentNode.removeChild(actor.root);
+  actor.scene.parentNode.removeChild(actor.scene);
+  actors[id - 1] = void 0;
+  return actors_DOM[id - 1] = void 0;
+};
+
+remove_all_actors = function() {
+  var actor, j, len, results;
+  results = [];
+  for (j = 0, len = actors.length; j < len; j++) {
+    actor = actors[j];
+    results.push(remove_actor(actor.id));
+  }
+  return results;
 };
 
 init_actors = function() {
-  add_actor('Nathaniel');
-  return add_actor('Castiel');
+  var actor, actor_cache, j, len;
+  actor_cache = localStorage.getObject('actors') || [];
+  if (actor_cache.length === 0) {
+    actor_cache.push({
+      name: 'Nathaniel',
+      pos: {
+        x: -16,
+        y: 0
+      },
+      flipped: false
+    });
+    actor_cache.push({
+      name: 'Castiel',
+      pos: {
+        x: -26,
+        y: 0
+      },
+      flipped: false
+    });
+    console.debug('No actors in cache. Loading defaults');
+  }
+  for (j = 0, len = actor_cache.length; j < len; j++) {
+    actor = actor_cache[j];
+    add_actor(actor);
+  }
+  return console.debug('Loaded ' + actor_cache.length + ' actors');
 };
 
 populate_emotions = function(select, selected) {
@@ -5938,7 +6018,6 @@ populate_emotions_sub = function(select) {
 };
 
 update_actor = function() {
-  console.log("CHAR SELECTED | " + ASSETS.emotions[this.value].name);
   return populate_emotions_sub(document.getElementById('actor_' + this.dataset.actor + '_sub'));
 };
 
@@ -5946,7 +6025,9 @@ update_actor_sub = function() {
   var emotion, option_selected, target, variation;
   option_selected = this.options[this.selectedIndex];
   emotion = ASSETS.emotions[document.getElementById('actor_' + this.dataset.actor + '_edit').value];
-  console.log('EMOTION SELECTED | ' + emotion.name + ' (' + option_selected.textContent + ')');
+  console.debug('Selected ACTOR: ' + emotion.name + ' (' + option_selected.textContent + ')');
+  actors[this.dataset.actor - 1].name = emotion.name;
+  save_actors_to_cache();
   target = document.getElementById('actor_' + this.dataset.actor);
   target.style.src = '';
   if (emotion.name === '[Nada]') {
@@ -5968,6 +6049,10 @@ update_actor_sub = function() {
   }
 };
 
+save_actors_to_cache = function() {
+  return localStorage.setObject('actors', actors);
+};
+
 var bubble, loveometer, loveometer_level, update_avatar, update_response, update_scene, update_scene_sub, update_username, update_username_btn;
 
 update_scene = function() {
@@ -5977,22 +6062,25 @@ update_scene = function() {
 };
 
 update_scene_sub = function() {
-  var name, scene, target, variation;
-  name = this.options[this.selectedIndex].textContent;
+  var scene, target, variation;
   scene = ASSETS.scenes[this.options[this.selectedIndex].dataset.scene];
-  console.log('SCENE SELECTED | ' + scene.name + ' (' + name + ')');
+  console.debug('Selected SCENE: ' + scene.name + ' (' + this.options[this.selectedIndex].textContent + ')');
   target = document.querySelector(this.dataset.target);
   variation = scene.variations[this.value];
   return target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.jpg)';
 };
 
 loveometer_level = function() {
+  var lovelevel_visible;
+  lovelevel_visible = document.getElementById('lovelevel_visible');
+  lovelevel_visible.checked = true;
+  lovelevel_visible.dispatchEvent(new Event('change'));
   document.querySelector('#loveometer .gauge').style.height = this.value / 2 + 50 + '%';
   return document.querySelector('#loveometer .heart-text').innerHTML = this.value + '%';
 };
 
 loveometer = function() {
-  return document.getElementById('#loveometer').style.display = this.checked ? 'block' : 'none';
+  return document.getElementById('loveometer').style.display = this.checked ? 'block' : 'none';
 };
 
 bubble = function() {
@@ -6105,7 +6193,7 @@ load_lang = function(lang) {
   el = document.createElement('script');
   el.setAttribute('src', 'dist/js/lang.' + lang + '.js');
   el.onload = function() {
-    console.log('Loaded language: ' + get_lang());
+    console.info('Loaded LANG: ' + get_lang());
     document.body.innerHTML = vegito(document.body.innerHTML, LANG);
     return init();
   };
@@ -6141,14 +6229,7 @@ load_lang(get_lang());
 var dragUpdatePos, highest_z_index, init, init_drag, snap_options;
 
 init = function() {
-  var eventChange;
   load_settings();
-  sort_assets();
-  populate_regions();
-  populate_lang();
-  populate_scenes('Sala de Aula A');
-  populate_avatars('[Docete]');
-  init_actors();
   (function(elements) {
     var el_name, event, results;
     results = [];
@@ -6205,10 +6286,20 @@ init = function() {
     lang_edit: {
       change: update_lang,
       keyup: update_lang
+    },
+    clear_actors: {
+      click: remove_all_actors
+    },
+    clear_cache: {
+      click: clear_configs
     }
   });
-  eventChange = new Event('change');
-  document.querySelector('#scene_edit').dispatchEvent(eventChange);
+  sort_assets();
+  populate_regions();
+  populate_lang();
+  populate_scenes('Sala de Aula A');
+  populate_avatars('[Docete]');
+  init_actors();
   return $('ul.tabs').tabs();
 };
 
@@ -6256,24 +6347,29 @@ init_drag = function() {
         event.dy = 0;
       }
       return dragUpdatePos(event, event.target);
+    },
+    onend: function(event) {
+      return save_actors_to_cache();
     }
   }).on('doubletap', function(event) {
-    var is_actor;
+    var actor, is_actor;
     is_actor = event.target.className.indexOf('actor') !== -1;
     if (!is_actor) {
       return;
     }
-    event.currentTarget.dataset.flip *= -1;
+    actor = get_actor(event.target.dataset.actor);
+    actor.flipped = !actor.flipped;
+    save_actors_to_cache();
     return dragUpdatePos(event, event.currentTarget);
   });
 };
 
 dragUpdatePos = function(event, target) {
-  var flip, x, y;
-  x = (parseFloat(target.dataset.x) || 0) + (event.dx || 0);
-  y = (parseFloat(target.dataset.y) || 0) + (event.dy || 0);
-  flip = target.dataset.flip || '1';
-  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + flip + ')';
-  target.setAttribute('data-x', x);
-  return target.setAttribute('data-y', y);
+  var info, x, y;
+  info = get_actor(event.target.dataset.actor) || empty_actor;
+  x = info.pos.x + (event.dx || 0);
+  y = info.pos.y + (event.dy || 0);
+  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (info.flipped ? -1 : 1) + ')';
+  info.pos.x = x;
+  return info.pos.y = y;
 };

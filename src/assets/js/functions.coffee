@@ -1,3 +1,10 @@
+Storage.prototype.setObject = (key, value) ->
+	this.setItem(key, JSON.stringify(value))
+
+Storage.prototype.getObject = (key) ->
+	return (value = this.getItem(key)) && JSON.parse(value)
+
+
 set_config = (key, value) ->
 	# console.log 'SET CONFIG | ' + key + ' = ' + value
 	localStorage.setItem(key, value);
@@ -5,6 +12,11 @@ set_config = (key, value) ->
 
 get_config = (key, default_value = undefined) ->
 	return localStorage.getItem(key) || default_value
+
+
+clear_configs = ->
+	localStorage.clear()
+	window.location.reload()
 
 
 load_from_file = (file_in, img_out, bg_out) ->
@@ -36,13 +48,12 @@ load_settings = () ->
 load_region = () ->
 	CONFIG.region = get_config('region', CONFIG.default_region)
 
-	console.log 'REGION | ' + CONFIG.region
-#	document.querySelector('#region_edit option[value="' + CONFIG.region + '"]').selected = true
+	console.info 'Loaded REGION: ' + regions[CONFIG.region].id + ' - ' + regions[CONFIG.region].link
 
 load_username = () ->
 	CONFIG.player.username = get_config('username', '')
 
-	console.log 'USERNAME | ' + CONFIG.player.username
+	console.info 'Loaded USERNAME: ' + CONFIG.player.username
 	document.getElementById('username_edit').value = CONFIG.player.username
 	document.getElementById('username_submit').dispatchEvent new Event('click')
 
@@ -195,6 +206,7 @@ populate_scenes = (selected) ->
 		select.appendChild el
 
 	$(select).material_select()
+	select.dispatchEvent new Event('change')
 
 populate_scenes_sub = (index, input) ->
 	while input.options.length > 0 # Clear all options
@@ -202,7 +214,6 @@ populate_scenes_sub = (index, input) ->
 
 	scene = ASSETS.scenes[index]
 	scene.variations.forEach (e, i) ->
-		# console.log 'VAR | ' + e.name
 		el = document.createElement('option')
 		el.textContent = e.name
 		el.value = i

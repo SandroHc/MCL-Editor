@@ -1,22 +1,24 @@
 update_scene = ->
 	sub = document.querySelector(@dataset.sub)
-	# console.log("SCENE SELECTED | " + ASSETS.scenes[this.value].name);
 	populate_scenes_sub @value, sub
 
 update_scene_sub = ->
-	name = @options[@selectedIndex].textContent
 	scene = ASSETS.scenes[@options[@selectedIndex].dataset.scene]
-	console.log 'SCENE SELECTED | ' + scene.name + ' (' + name + ')'
+	console.debug 'Selected SCENE: ' + scene.name + ' (' + @options[@selectedIndex].textContent + ')'
 	target = document.querySelector(@dataset.target)
 	variation = scene.variations[@value]
 	target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + (if variation.checksum then '-' + variation.checksum else '') + '.jpg)' # Web: site + 'place/web/high/id-checksum.jpg'
 
 loveometer_level = ->
+	lovelevel_visible = document.getElementById('lovelevel_visible')
+	lovelevel_visible.checked = true
+	lovelevel_visible.dispatchEvent new Event('change')
+
 	document.querySelector('#loveometer .gauge').style.height = @value / 2 + 50 + '%'
 	document.querySelector('#loveometer .heart-text').innerHTML = @value + '%'
 
 loveometer = ->
-	document.getElementById('#loveometer').style.display = if @checked then 'block' else 'none'
+	document.getElementById('loveometer').style.display = if @checked then 'block' else 'none'
 
 bubble = ->
 	if @value != ''
