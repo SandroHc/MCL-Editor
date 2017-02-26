@@ -1,4 +1,4 @@
-var CONFIG, regions;
+var CONFIG, clear_configs, get_config, regions, set_config;
 
 regions = [
   {
@@ -61,7 +61,7 @@ regions = [
 ];
 
 CONFIG = {
-  version: '1.1.2',
+  version: '1.1.3',
   default_lang: 'pt',
   lang: this.default_lang,
   default_region: '0',
@@ -73,6 +73,44 @@ CONFIG = {
     avatar: null
   },
   default_actor: 'Nathaniel'
+};
+
+Storage.prototype.setObject = function(key, value) {
+  return this.setItem(key, JSON.stringify(value));
+};
+
+Storage.prototype.getObject = function(key) {
+  var value;
+  return (value = this.getItem(key)) && JSON.parse(value);
+};
+
+Array.prototype.clean = function(deleteValue) {
+  var i, index, len, ref, value;
+  ref = this;
+  for (index = i = 0, len = ref.length; i < len; index = ++i) {
+    value = ref[index];
+    if (value === deleteValue) {
+      this.splice(index, 1);
+      index--;
+    }
+  }
+  return this;
+};
+
+set_config = function(key, value) {
+  return localStorage.setItem(key, value);
+};
+
+get_config = function(key, default_value) {
+  if (default_value == null) {
+    default_value = void 0;
+  }
+  return localStorage.getItem(key) || default_value;
+};
+
+clear_configs = function() {
+  localStorage.clear();
+  return window.location.reload();
 };
 
 var ASSETS;
@@ -5582,45 +5620,7 @@ ASSETS = {
   ]
 };
 
-var clear_configs, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_username, populate_avatars, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
-
-Storage.prototype.setObject = function(key, value) {
-  return this.setItem(key, JSON.stringify(value));
-};
-
-Storage.prototype.getObject = function(key) {
-  var value;
-  return (value = this.getItem(key)) && JSON.parse(value);
-};
-
-Array.prototype.clean = function(deleteValue) {
-  var index, j, len, ref, value;
-  ref = this;
-  for (index = j = 0, len = ref.length; j < len; index = ++j) {
-    value = ref[index];
-    if (value === deleteValue) {
-      this.splice(index, 1);
-      index--;
-    }
-  }
-  return this;
-};
-
-set_config = function(key, value) {
-  return localStorage.setItem(key, value);
-};
-
-get_config = function(key, default_value) {
-  if (default_value == null) {
-    default_value = void 0;
-  }
-  return localStorage.getItem(key) || default_value;
-};
-
-clear_configs = function() {
-  localStorage.clear();
-  return window.location.reload();
-};
+var draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_player_avatar, get_player_info, load_from_file, load_region, load_username, sort_assets;
 
 load_from_file = function(file_in, img_out, bg_out) {
   var file, fr;
@@ -5708,8 +5708,7 @@ draw_avatar = function(is_portrait, dest) {
     if (!CONFIG.player.id) {
       if (!CONFIG.player.info) {
         if (CONFIG.player.username) {
-          timestamp = (new Date).getTime();
-          console.log('Region ' + CONFIG.region);
+          timestamp = Date.now().toString();
           dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (is_portrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
         } else {
           dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_unknown.png';
@@ -5787,71 +5786,6 @@ sort_assets = function() {
   };
   ASSETS.avatars.sort(comparator);
   return ASSETS.emotions.sort(comparator);
-};
-
-populate_regions = function() {
-  var select;
-  select = document.getElementById('region_edit');
-  regions.forEach(function(e, i) {
-    var el;
-    el = document.createElement('option');
-    el.textContent = e.name + ' — ' + e.link;
-    el.value = i;
-    el.selected = i === parseInt(CONFIG.region, 10) ? 'true' : void 0;
-    return select.appendChild(el);
-  });
-  return $(select).material_select();
-};
-
-populate_scenes = function() {
-  var select, selected;
-  selected = get_config('scene') || 'Sala de Aula A';
-  select = document.getElementById('scene_edit');
-  ASSETS.scenes.forEach(function(e, i) {
-    var el;
-    el = document.createElement('option');
-    el.textContent = e.name;
-    el.value = i;
-    el.selected = e.name === selected ? 'true' : void 0;
-    return select.appendChild(el);
-  });
-  $(select).material_select();
-  return select.dispatchEvent(new Event('change'));
-};
-
-populate_scenes_sub = function(index, input) {
-  var scene;
-  while (input.options.length > 0) {
-    input.remove(0);
-  }
-  scene = ASSETS.scenes[index];
-  scene.variations.forEach(function(e, i) {
-    var el;
-    el = document.createElement('option');
-    el.textContent = e.name;
-    el.value = i;
-    el.dataset.scene = index;
-    return input.appendChild(el);
-  });
-  $(input).material_select();
-  return input.dispatchEvent(new Event('change'));
-};
-
-populate_avatars = function() {
-  var select, selected;
-  selected = get_config('avatar') || '[Docete]';
-  select = document.getElementById('avatar_edit');
-  ASSETS.avatars.forEach(function(e, i) {
-    var el;
-    el = document.createElement('option');
-    el.textContent = e.name;
-    el.value = i;
-    el.dataset.checksum = e.checksum;
-    el.selected = e.name === selected ? 'true' : void 0;
-    return select.appendChild(el);
-  });
-  $(select).material_select();
-  return select.dispatchEvent(new Event('change'));
 };
 
 var actors, actors_DOM, add_actor, empty_actor, get_actor, init_actors, populate_emotions, populate_emotions_sub, remove_actor, remove_all_actors, save_actors_to_cache, update_actor, update_actor_sub;
@@ -6065,6 +5999,73 @@ update_actor_sub = function() {
 
 save_actors_to_cache = function() {
   return localStorage.setObject('actors', actors);
+};
+
+var populate_avatars, populate_regions, populate_scenes, populate_scenes_sub;
+
+populate_regions = function() {
+  var select;
+  select = document.getElementById('region_edit');
+  regions.forEach(function(e, i) {
+    var el;
+    el = document.createElement('option');
+    el.textContent = e.name + ' — ' + e.link;
+    el.value = i;
+    el.selected = i === parseInt(CONFIG.region, 10) ? 'true' : void 0;
+    return select.appendChild(el);
+  });
+  return $(select).material_select();
+};
+
+populate_scenes = function() {
+  var select, selected;
+  selected = get_config('scene') || 'Sala de Aula A';
+  select = document.getElementById('scene_edit');
+  ASSETS.scenes.forEach(function(e, i) {
+    var el;
+    el = document.createElement('option');
+    el.textContent = e.name;
+    el.value = i;
+    el.selected = e.name === selected ? 'true' : void 0;
+    return select.appendChild(el);
+  });
+  $(select).material_select();
+  return select.dispatchEvent(new Event('change'));
+};
+
+populate_scenes_sub = function(index, input) {
+  var scene;
+  while (input.options.length > 0) {
+    input.remove(0);
+  }
+  scene = ASSETS.scenes[index];
+  scene.variations.forEach(function(e, i) {
+    var el;
+    el = document.createElement('option');
+    el.textContent = e.name;
+    el.value = i;
+    el.dataset.scene = index;
+    return input.appendChild(el);
+  });
+  $(input).material_select();
+  return input.dispatchEvent(new Event('change'));
+};
+
+populate_avatars = function() {
+  var select, selected;
+  selected = get_config('avatar') || '[Docete]';
+  select = document.getElementById('avatar_edit');
+  ASSETS.avatars.forEach(function(e, i) {
+    var el;
+    el = document.createElement('option');
+    el.textContent = e.name;
+    el.value = i;
+    el.dataset.checksum = e.checksum;
+    el.selected = e.name === selected ? 'true' : void 0;
+    return select.appendChild(el);
+  });
+  $(select).material_select();
+  return select.dispatchEvent(new Event('change'));
 };
 
 var bubble, init_answers, init_bubble, loveometer, loveometer_level, update_answers, update_avatar, update_bubble, update_scene, update_scene_sub, update_username, update_username_btn;

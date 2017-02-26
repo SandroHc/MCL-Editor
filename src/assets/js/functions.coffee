@@ -1,30 +1,3 @@
-Storage.prototype.setObject = (key, value) ->
-	this.setItem(key, JSON.stringify(value))
-
-Storage.prototype.getObject = (key) ->
-	return (value = this.getItem(key)) && JSON.parse(value)
-
-Array.prototype.clean = (deleteValue) ->
-	for value, index in this
-		if value == deleteValue
-			this.splice(index, 1)
-			index--
-	return this
-
-set_config = (key, value) ->
-	# console.log 'SET CONFIG | ' + key + ' = ' + value
-	localStorage.setItem(key, value);
-
-
-get_config = (key, default_value = undefined) ->
-	return localStorage.getItem(key) || default_value
-
-
-clear_configs = ->
-	localStorage.clear()
-	window.location.reload()
-
-
 load_from_file = (file_in, img_out, bg_out) ->
 	file = document.getElementById(file_in)
 	if !file.files or !file.files.length
@@ -110,9 +83,7 @@ draw_avatar = (is_portrait, dest) ->
 			if !CONFIG.player.info
 				if CONFIG.player.username
 					# If the player is set but there is no player info, try the outdated links
-					timestamp = (new Date).getTime()
-
-					console.log 'Region ' + CONFIG.region
+					timestamp = Date.now().toString()
 
 					dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (if is_portrait then 'face' else 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png'
 				else
@@ -189,62 +160,3 @@ sort_assets = () ->
 	# ASSETS.scenes.sort comparator
 	ASSETS.avatars.sort comparator
 	ASSETS.emotions.sort comparator
-
-
-populate_regions = () ->
-	select = document.getElementById('region_edit')
-	regions.forEach (e, i) ->
-		el = document.createElement('option')
-		el.textContent = e.name + ' — ' + e.link
-		el.value = i
-		el.selected = if i == parseInt(CONFIG.region, 10) then 'true' else undefined
-		select.appendChild el
-
-	$(select).material_select()
-
-
-populate_scenes = ->
-	selected = get_config('scene') || 'Sala de Aula A'
-
-	select = document.getElementById('scene_edit')
-	ASSETS.scenes.forEach (e, i) ->
-		el = document.createElement('option')
-		el.textContent = e.name
-		el.value = i
-		el.selected = if e.name == selected then 'true' else undefined
-		select.appendChild el
-
-	$(select).material_select()
-	select.dispatchEvent new Event('change')
-
-
-populate_scenes_sub = (index, input) ->
-	while input.options.length > 0 # Clear all options
-		input.remove 0
-
-	scene = ASSETS.scenes[index]
-	scene.variations.forEach (e, i) ->
-		el = document.createElement('option')
-		el.textContent = e.name
-		el.value = i
-		el.dataset.scene = index
-		input.appendChild el
-
-	$(input).material_select()
-	input.dispatchEvent new Event('change')
-
-
-populate_avatars = ->
-	selected = get_config('avatar') || '[Docete]'
-
-	select = document.getElementById('avatar_edit')
-	ASSETS.avatars.forEach (e, i) ->
-		el = document.createElement('option')
-		el.textContent = e.name
-		el.value = i
-		el.dataset.checksum = e.checksum
-		el.selected = if e.name == selected then 'true' else undefined
-		select.appendChild el
-
-	$(select).material_select()
-	select.dispatchEvent new Event('change')
