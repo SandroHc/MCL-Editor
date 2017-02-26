@@ -18,6 +18,7 @@ add_actor = (selected = CONFIG.default_actor) ->
 
 	select_actor = document.createElement 'select'
 	select_actor.id = 'actor_' + id + '_edit'
+	select_actor.className = 'actor_select'
 	select_actor.dataset.actor = id
 
 	label = document.createElement 'label'

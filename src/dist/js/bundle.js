@@ -61,7 +61,7 @@ regions = [
 ];
 
 CONFIG = {
-  version: '1.1.1',
+  version: '1.1.2',
   default_lang: 'pt',
   lang: this.default_lang,
   default_region: '0',
@@ -5639,19 +5639,22 @@ load_username = function() {
 };
 
 get_player_info = function(username, callback) {
+  var hash, message, timestamp;
   if (!username) {
     callback(null);
   }
+  timestamp = Date.now().toString();
+  message = ['anonymous', 'GET', 'http://api2.' + regions[CONFIG.region].link + '/v2/profile/find/' + username, timestamp];
+  hash = CryptoJS.HmacSHA1(message.join('+'), 'anonymous');
   $.ajax({
     url: "https://mcl.sandrohc.net/" + regions[CONFIG.region].id + "/v2/profile/find/" + username,
     headers: {
       "X-Beemoov-Application": 'anonymous',
-      "X-Beemoov-Signature": 'e33b9ed89eeee95172d6db8a8143d660c9568aa9',
-      "X-Beemoov-Timestamp": '1487082505641'
+      "X-Beemoov-Signature": hash,
+      "X-Beemoov-Timestamp": timestamp
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Error while fetching player info");
-      console.log(errorThrown);
+      console.warn("Unable to fetch player info");
       return callback(null);
     },
     success: function(data) {
@@ -5703,8 +5706,17 @@ draw_avatar = function(is_portrait, dest) {
   site = 'http://assets.' + regions[CONFIG.region].link + '/';
   type = is_portrait ? 'portrait' : 'normal';
   bg = '';
+  avatar = CONFIG.player.avatar;
   add_comma = false;
   add_clothes = function(data, color, clothe_type) {
+    if (data.category === 'Skin') {
+      avatar.avatar.bodyType = data;
+      avatar.avatar.bodyType.category = 'CUSTOM';
+      return;
+    }
+    if (data.category === 'Wig') {
+      avatar.avatar.hairType.category = 'CUSTOM';
+    }
     if (add_comma) {
       bg += ',';
     }
@@ -5715,7 +5727,6 @@ draw_avatar = function(is_portrait, dest) {
     }
     return bg += '.png)';
   };
-  avatar = CONFIG.player.avatar;
   for (i = j = ref = avatar.clothes.length - 1; ref <= 0 ? j <= 0 : j >= 0; i = ref <= 0 ? ++j : --j) {
     add_clothes(avatar.clothes[i], null, 'clothe');
   }
@@ -5723,8 +5734,17 @@ draw_avatar = function(is_portrait, dest) {
   add_clothes(avatar.avatar.mouthType, null, 'avatarpart');
   add_clothes(avatar.avatar.eyebrowsType, avatar.avatar.hairColor, 'avatarpart');
   add_clothes(avatar.avatar.eyeType, avatar.avatar.eyeColor, 'avatarpart');
-  add_clothes(avatar.avatar.hairType, avatar.avatar.hairColor, 'avatarpart');
-  add_clothes(avatar.avatar.bodyType, null, 'avatarpart');
+  if (avatar.avatar.hairType.category === 'CUSTOM') {
+    console.debug('Custom hair');
+  } else {
+    add_clothes(avatar.avatar.hairType, avatar.avatar.hairColor, 'avatarpart');
+  }
+  if (avatar.avatar.bodyType.category === 'CUSTOM') {
+    console.debug('Custom body');
+    add_clothes(avatar.avatar.bodyType, null, 'clothe');
+  } else {
+    add_clothes(avatar.avatar.bodyType, null, 'avatarpart');
+  }
   dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_placeholder.png';
   dest.style.backgroundImage = bg;
 };
@@ -5822,6 +5842,7 @@ add_actor = function(selected) {
   div.classList.add('input-field', 'col', 's12', 'm5', 'actor_' + id);
   select_actor = document.createElement('select');
   select_actor.id = 'actor_' + id + '_edit';
+  select_actor.className = 'actor_select';
   select_actor.dataset.actor = id;
   label = document.createElement('label');
   label["for"] = 'actor_' + id + '_edit';
@@ -6007,19 +6028,18 @@ update_username_btn = function() {
   set_config('username', CONFIG.player.username);
   set_config('region', CONFIG.region);
   return get_player_info(CONFIG.player.username, function(data) {
-    var eventChange, query;
+    var el, eventChange, i, len, query, ref;
     CONFIG.player.info = data;
     if (CONFIG.player.info) {
       CONFIG.player.id = CONFIG.player.info.player.id;
     }
     eventChange = new Event('change');
-    query = document.getElementById('actor1_edit');
-    if (query.options[query.selectedIndex].text === '[Docete]') {
-      query.dispatchEvent(eventChange);
-    }
-    query = document.getElementById('actor2_edit');
-    if (query.options[query.selectedIndex].text === '[Docete]') {
-      query.dispatchEvent(eventChange);
+    ref = document.getElementsByClassName('actor_select');
+    for (i = 0, len = ref.length; i < len; i++) {
+      el = ref[i];
+      if (el.options && el.options[el.selectedIndex].text === '[Docete]') {
+        el.dispatchEvent(eventChange);
+      }
     }
     query = document.getElementById('avatar_edit');
     if (query.options[query.selectedIndex].text === '[Docete]') {

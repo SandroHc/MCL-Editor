@@ -51,17 +51,24 @@ get_player_info = (username, callback) ->
 	if !username
 		callback(null)
 
+	timestamp = Date.now().toString()
+	message = [
+		'anonymous' # Private key
+		'GET' # HTTP method
+		'http://api2.' + regions[CONFIG.region].link + '/v2/profile/find/' + username
+		timestamp
+	]
+	hash = CryptoJS.HmacSHA1(message.join('+'), 'anonymous')
+
 	$.ajax
-# API: http://api2.amordoce.com/v2/profile/find/username
+		# API: http://api2.amordoce.com/v2/profile/find/username
 		url: "https://mcl.sandrohc.net/" + regions[CONFIG.region].id + "/v2/profile/find/" + username,
 		headers:
 			"X-Beemoov-Application": 'anonymous',
-# FIXME Credentials only accepted on the BR server. You don't have to be logged in to see profiles, so there must be a way to bypass this
-			"X-Beemoov-Signature": 'e33b9ed89eeee95172d6db8a8143d660c9568aa9',
-			"X-Beemoov-Timestamp": '1487082505641'
+			"X-Beemoov-Signature": hash,
+			"X-Beemoov-Timestamp": timestamp
 		error: (jqXHR, textStatus, errorThrown) ->
-			console.log "Error while fetching player info"
-			console.log errorThrown
+			console.warn "Unable to fetch player info"
 			callback(null)
 		success: (data) ->
 			callback(data.data)
@@ -111,9 +118,17 @@ draw_avatar = (is_portrait, dest) ->
 	site = 'http://assets.' + regions[CONFIG.region].link + '/'
 	type = if is_portrait then 'portrait' else 'normal'
 	bg = ''
+	avatar = CONFIG.player.avatar
 
 	add_comma = false
 	add_clothes = (data, color, clothe_type) ->
+		if data.category == 'Skin'
+			avatar.avatar.bodyType = data
+			avatar.avatar.bodyType.category = 'CUSTOM'
+			return
+		if data.category == 'Wig'
+			avatar.avatar.hairType.category = 'CUSTOM'
+
 		if add_comma
 			bg += ','
 		add_comma = true
@@ -123,8 +138,7 @@ draw_avatar = (is_portrait, dest) ->
 			bg += '_' + color.id + '-' + color.security
 		bg += '.png)'
 
-	avatar = CONFIG.player.avatar
-
+	# TODO Better handle special cases, like Skin and Wig
 	for i in [avatar.clothes.length-1 .. 0]
 		add_clothes(avatar.clothes[i], null, 'clothe')
 
@@ -132,8 +146,18 @@ draw_avatar = (is_portrait, dest) ->
 	add_clothes(avatar.avatar.mouthType,		null, 'avatarpart')
 	add_clothes(avatar.avatar.eyebrowsType,		avatar.avatar.hairColor, 'avatarpart')
 	add_clothes(avatar.avatar.eyeType,			avatar.avatar.eyeColor, 'avatarpart')
-	add_clothes(avatar.avatar.hairType,			avatar.avatar.hairColor, 'avatarpart')
-	add_clothes(avatar.avatar.bodyType,			null, 'avatarpart')
+
+	if avatar.avatar.hairType.category == 'CUSTOM'
+		console.debug 'Custom hair'
+	else
+		add_clothes(avatar.avatar.hairType,		avatar.avatar.hairColor, 'avatarpart')
+
+	if avatar.avatar.bodyType.category == 'CUSTOM'
+		console.debug 'Custom body'
+		add_clothes(avatar.avatar.bodyType,		null, 'clothe')
+	else
+		add_clothes(avatar.avatar.bodyType,		null, 'avatarpart')
+
 
 	dest.src = 'assets/img/' + (if is_portrait then 'face' else 'body') + '_placeholder.png'
 	dest.style.backgroundImage = bg

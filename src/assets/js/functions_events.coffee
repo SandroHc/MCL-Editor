@@ -55,13 +55,9 @@ update_username_btn = ->
 
 		eventChange = new Event 'change'
 
-		query = document.getElementById('actor1_edit')
-		if query.options[query.selectedIndex].text == '[Docete]'
-			query.dispatchEvent eventChange
-
-		query = document.getElementById('actor2_edit')
-		if query.options[query.selectedIndex].text == '[Docete]'
-			query.dispatchEvent eventChange
+		for el in document.getElementsByClassName('actor_select')
+			if el.options && el.options[el.selectedIndex].text == '[Docete]'
+				el.dispatchEvent eventChange
 
 		query = document.getElementById('avatar_edit')
 		if query.options[query.selectedIndex].text == '[Docete]'
