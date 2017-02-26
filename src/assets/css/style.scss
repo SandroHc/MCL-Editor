@@ -74,17 +74,16 @@ $zindex-3: 100200;
 		text-align: center;
 	}
 }
-.responses-wrapper {
+#answers {
 	position: absolute;
-	width: 75%;
-	bottom: -4px;
+	width: calc(75% + 100px);
+	bottom: -19px; // border (4px) + margin (15px)
 	right: -4px;
-	padding: 15px 0 10px;
+	padding: 15px 0 10px 100px;
 	background-color: $color_bubble_bg;
 	border: solid $color_response_border 4px;
 	z-index: $zindex-1;
-}
-.responses {
+
 	list-style: none outside none;
 
 	.response {
@@ -141,7 +140,7 @@ $zindex-3: 100200;
 	}
 }
 
-.bubble {
+#bubble {
 	position: absolute;
 	overflow: hidden;
 	font-family: $font;

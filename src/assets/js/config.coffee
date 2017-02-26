@@ -16,7 +16,7 @@ regions = [
 ]
 
 CONFIG =
-	version: '1.1.2'
+	version: '1.1.3'
 	default_lang: 'pt'
 	lang: this.default_lang
 	default_region: '0' # Brazil

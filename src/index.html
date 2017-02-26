@@ -83,8 +83,8 @@
 
 						<div class="input-field col s12">
 							<i class="material-icons prefix">mode_edit</i>
-							<textarea placeholder="{{answers}}" id="response_edit" class="materialize-textarea"></textarea>
-							<label for="bubble_edit">{{answers_label}}</label>
+							<textarea placeholder="{{answers}}" id="answers_edit" class="materialize-textarea"></textarea>
+							<label for="answers_edit">{{answers_label}}</label>
 						</div>
 
 					</div>
@@ -172,7 +172,7 @@
 		</div>
 
 		<div id="scene">
-			<div class="bubble draggable" style="left:65px; bottom:325px; display:none"></div>
+			<div id="bubble" class="draggable" style="left:65px; bottom:325px; display:none"></div>
 			<div id="loveometer" style="display: none">
 				<div class="outer-gauge">
 					<div class="inner-gauge">
@@ -183,9 +183,7 @@
 					<span class="heart-text">0%</span>
 				</div>
 			</div>
-			<div class="responses-wrapper" style="display:none">
-				<ul class="responses"></ul>
-			</div>
+			<ul id="answers" style="display:none"></ul>
 			<div class="player" style="display:none">
 				<img class="player-avatar" src="assets/img/face_unknown.png" alt="Avatar do personagem">
 			</div>

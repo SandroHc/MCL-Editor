@@ -5582,7 +5582,7 @@ ASSETS = {
   ]
 };
 
-var clear_configs, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_settings, load_username, populate_avatars, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
+var clear_configs, draw_avatar, draw_avatar_dest, draw_avatar_portrait, get_config, get_player_avatar, get_player_info, load_from_file, load_region, load_username, populate_avatars, populate_regions, populate_scenes, populate_scenes_sub, set_config, sort_assets;
 
 Storage.prototype.setObject = function(key, value) {
   return this.setItem(key, JSON.stringify(value));
@@ -5648,18 +5648,13 @@ load_from_file = function(file_in, img_out, bg_out) {
   return fr.readAsDataURL(file.files[0]);
 };
 
-load_settings = function() {
-  load_region();
-  return load_username();
-};
-
 load_region = function() {
-  CONFIG.region = get_config('region', CONFIG.default_region);
+  CONFIG.region = get_config('region') || CONFIG.default_region;
   return console.info('Loaded REGION: ' + regions[CONFIG.region].id + ' - ' + regions[CONFIG.region].link);
 };
 
 load_username = function() {
-  CONFIG.player.username = get_config('username', '');
+  CONFIG.player.username = get_config('username') || '';
   console.info('Loaded USERNAME: ' + CONFIG.player.username);
   document.getElementById('username_edit').value = CONFIG.player.username;
   return document.getElementById('username_submit').dispatchEvent(new Event('click'));
@@ -5714,7 +5709,8 @@ draw_avatar = function(is_portrait, dest) {
       if (!CONFIG.player.info) {
         if (CONFIG.player.username) {
           timestamp = (new Date).getTime();
-          dest.src = 'http://avatars.' + regions[CONFIG.region].link + '/' + (is_portrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
+          console.log('Region ' + CONFIG.region);
+          dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (is_portrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
         } else {
           dest.src = 'assets/img/' + (is_portrait ? 'face' : 'body') + '_unknown.png';
         }
@@ -5807,8 +5803,9 @@ populate_regions = function() {
   return $(select).material_select();
 };
 
-populate_scenes = function(selected) {
-  var select;
+populate_scenes = function() {
+  var select, selected;
+  selected = get_config('scene') || 'Sala de Aula A';
   select = document.getElementById('scene_edit');
   ASSETS.scenes.forEach(function(e, i) {
     var el;
@@ -5840,8 +5837,9 @@ populate_scenes_sub = function(index, input) {
   return input.dispatchEvent(new Event('change'));
 };
 
-populate_avatars = function(selected) {
-  var select;
+populate_avatars = function() {
+  var select, selected;
+  selected = get_config('avatar') || '[Docete]';
   select = document.getElementById('avatar_edit');
   ASSETS.avatars.forEach(function(e, i) {
     var el;
@@ -5852,7 +5850,8 @@ populate_avatars = function(selected) {
     el.selected = e.name === selected ? 'true' : void 0;
     return select.appendChild(el);
   });
-  return $(select).material_select();
+  $(select).material_select();
+  return select.dispatchEvent(new Event('change'));
 };
 
 var actors, actors_DOM, add_actor, empty_actor, get_actor, init_actors, populate_emotions, populate_emotions_sub, remove_actor, remove_all_actors, save_actors_to_cache, update_actor, update_actor_sub;
@@ -6068,12 +6067,13 @@ save_actors_to_cache = function() {
   return localStorage.setObject('actors', actors);
 };
 
-var bubble, loveometer, loveometer_level, update_avatar, update_response, update_scene, update_scene_sub, update_username, update_username_btn;
+var bubble, init_answers, init_bubble, loveometer, loveometer_level, update_answers, update_avatar, update_bubble, update_scene, update_scene_sub, update_username, update_username_btn;
 
 update_scene = function() {
   var sub;
   sub = document.querySelector(this.dataset.sub);
-  return populate_scenes_sub(this.value, sub);
+  populate_scenes_sub(this.value, sub);
+  return set_config('scene', ASSETS.scenes[this.value].name);
 };
 
 update_scene_sub = function() {
@@ -6098,21 +6098,56 @@ loveometer = function() {
   return document.getElementById('loveometer').style.display = this.checked ? 'block' : 'none';
 };
 
-bubble = function() {
+bubble = void 0;
+
+init_bubble = function() {
+  var el;
+  bubble = localStorage.getObject('bubble');
+  if (!bubble) {
+    bubble = {
+      text: '',
+      pos: {
+        x: 0,
+        y: 0
+      }
+    };
+  }
+  el = document.getElementById('bubble_edit');
+  el.value = bubble.text;
+  el.dispatchEvent(new Event('keyup'));
+  el = document.getElementById('bubble');
+  return el.style.webkitTransform = el.style.transform = 'translate(' + bubble.pos.x + 'px, ' + bubble.pos.y + 'px)';
+};
+
+update_bubble = function() {
+  var el;
+  el = document.getElementById('bubble');
+  el.style.display = this.value !== '' ? 'block' : 'none';
   if (this.value !== '') {
-    document.querySelector('.bubble').style.display = 'block';
-    return document.querySelector('.bubble').innerHTML = this.value.replace(/\n/g, '<br>');
-  } else {
-    return document.querySelector('.bubble').style.display = 'none';
+    el.innerHTML = this.value.replace(/\n/g, '<br>');
+  }
+  bubble.text = this.value;
+  return localStorage.setObject('bubble', bubble);
+};
+
+init_answers = function() {
+  var answers, el;
+  answers = localStorage.getItem('answers');
+  if (answers) {
+    el = document.getElementById('answers_edit');
+    el.textContent = answers;
+    return el.dispatchEvent(new Event('keyup'));
   }
 };
 
-update_response = function() {
+update_answers = function() {
+  var el;
+  el = document.getElementById('answers');
   if (this.value !== '') {
-    document.querySelector('.responses-wrapper').style.display = 'block';
     document.querySelector('.player').style.display = 'block';
-    document.querySelector('.responses').innerHTML = '<li class="response"><span class="text">' + this.value.replace(/\n/gi, '</span></li><li class="response"><span class="text">') + '</span></li>';
-    return document.querySelectorAll('.response').forEach(function(el) {
+    el.style.display = 'block';
+    el.innerHTML = '<li class="response"><span class="text">' + this.value.replace(/\n/gi, '</span></li><li class="response"><span class="text">') + '</span></li>';
+    document.querySelectorAll('.response').forEach(function(el) {
       return el.addEventListener('click', (function(e) {
         e = e || window.event;
         e.target = e.target || e.srcElement;
@@ -6120,9 +6155,10 @@ update_response = function() {
       }), false);
     });
   } else {
-    document.querySelector('.responses-wrapper').style.display = 'none';
-    return document.querySelector('.player').style.display = 'none';
+    document.querySelector('.player').style.display = 'none';
+    document.getElementById('answers').style.display = 'none';
   }
+  return set_config('answers', this.value);
 };
 
 update_username_btn = function() {
@@ -6163,6 +6199,7 @@ update_avatar = function() {
   avatar = ASSETS.avatars[this.value];
   el = document.querySelector('.player-avatar');
   el.src = '';
+  set_config('avatar', avatar.name);
   if (avatar.name === '[Nada]') {
     el.style.display = 'none';
     return;
@@ -6244,7 +6281,7 @@ load_lang(get_lang());
 var dragUpdatePos, highest_z_index, init, init_drag, snap_options;
 
 init = function() {
-  load_settings();
+  load_region();
   (function(elements) {
     var el_name, event, results;
     results = [];
@@ -6283,10 +6320,10 @@ init = function() {
       change: loveometer
     },
     bubble_edit: {
-      keyup: bubble
+      keyup: update_bubble
     },
-    response_edit: {
-      keyup: update_response
+    answers_edit: {
+      keyup: update_answers
     },
     username_submit: {
       click: update_username_btn
@@ -6312,9 +6349,12 @@ init = function() {
   sort_assets();
   populate_regions();
   populate_lang();
-  populate_scenes('Sala de Aula A');
-  populate_avatars('[Docete]');
+  populate_scenes();
+  populate_avatars();
   init_actors();
+  init_bubble();
+  init_answers();
+  load_username();
   return $('ul.tabs').tabs();
 };
 
@@ -6364,7 +6404,13 @@ init_drag = function() {
       return dragUpdatePos(event, event.target);
     },
     onend: function(event) {
-      return save_actors_to_cache();
+      var is_actor;
+      is_actor = event.target.className.indexOf('actor') !== -1;
+      if (is_actor) {
+        return save_actors_to_cache();
+      } else {
+        return localStorage.setObject('bubble', bubble);
+      }
     }
   }).on('doubletap', function(event) {
     var actor, is_actor;
@@ -6380,11 +6426,12 @@ init_drag = function() {
 };
 
 dragUpdatePos = function(event, target) {
-  var info, x, y;
-  info = get_actor(event.target.dataset.actor) || empty_actor;
+  var info, is_actor, x, y;
+  is_actor = target.className.indexOf('actor') !== -1;
+  info = is_actor ? get_actor(event.target.dataset.actor) || empty_actor : bubble;
   x = info.pos.x + (event.dx || 0);
   y = info.pos.y + (event.dy || 0);
-  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (info.flipped ? -1 : 1) + ')';
+  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (info.flipped || false ? -1 : 1) + ')';
   info.pos.x = x;
   return info.pos.y = y;
 };

@@ -2,6 +2,8 @@ update_scene = ->
 	sub = document.querySelector(@dataset.sub)
 	populate_scenes_sub @value, sub
 
+	set_config 'scene', ASSETS.scenes[@value].name
+
 update_scene_sub = ->
 	scene = ASSETS.scenes[@options[@selectedIndex].dataset.scene]
 	console.debug 'Selected SCENE: ' + scene.name + ' (' + @options[@selectedIndex].textContent + ')'
@@ -20,18 +22,57 @@ loveometer_level = ->
 loveometer = ->
 	document.getElementById('loveometer').style.display = if @checked then 'block' else 'none'
 
-bubble = ->
-	if @value != ''
-		document.querySelector('.bubble').style.display = 'block'
-		document.querySelector('.bubble').innerHTML = @value.replace(/\n/g, '<br>')
-	else
-		document.querySelector('.bubble').style.display = 'none'
 
-update_response = ->
+bubble = undefined
+
+init_bubble = ->
+	bubble = localStorage.getObject 'bubble'
+
+	if !bubble
+		bubble = {
+			text: ''
+			pos: {
+				x: 0
+				y: 0
+			}
+		}
+
+	el = document.getElementById('bubble_edit')
+	el.value = bubble.text
+	el.dispatchEvent new Event('keyup')
+
+	el = document.getElementById('bubble')
+	el.style.webkitTransform =
+	el.style.transform = 'translate(' + bubble.pos.x + 'px, ' + bubble.pos.y + 'px)';
+
+
+update_bubble = ->
+	el = document.getElementById('bubble')
+	el.style.display = if @value != '' then 'block' else 'none'
+
 	if @value != ''
-		document.querySelector('.responses-wrapper').style.display = 'block'
+		el.innerHTML = @value.replace(/\n/g, '<br>')
+
+	bubble.text = @value
+	localStorage.setObject 'bubble', bubble
+
+
+init_answers = ->
+	answers = localStorage.getItem 'answers'
+	if answers
+		el = document.getElementById('answers_edit')
+		el.textContent = answers
+		el.dispatchEvent new Event('keyup')
+
+
+update_answers = ->
+	el = document.getElementById('answers')
+
+	if @value != ''
 		document.querySelector('.player').style.display = 'block'
-		document.querySelector('.responses').innerHTML = '<li class="response"><span class="text">' + @value.replace(/\n/gi, '</span></li><li class="response"><span class="text">') + '</span></li>'
+
+		el.style.display = 'block'
+		el.innerHTML = '<li class="response"><span class="text">' + @value.replace(/\n/gi, '</span></li><li class="response"><span class="text">') + '</span></li>'
 		document.querySelectorAll('.response').forEach (el) ->
 			el.addEventListener 'click', ((e) ->
 				e = e or window.event
@@ -39,8 +80,11 @@ update_response = ->
 				e.target.classList.toggle 'checked'
 			), false
 	else
-		document.querySelector('.responses-wrapper').style.display = 'none'
 		document.querySelector('.player').style.display = 'none'
+		document.getElementById('answers').style.display = 'none'
+
+	set_config 'answers', @value
+
 
 update_username_btn = ->
 	CONFIG.player.username = document.getElementById('username_edit').value || 'd'
@@ -76,6 +120,8 @@ update_avatar = ->
 	avatar = ASSETS.avatars[@value]
 	el = document.querySelector('.player-avatar')
 	el.src = ''
+
+	set_config 'avatar', avatar.name
 
 	if avatar.name == '[Nada]'
 		el.style.display = 'none'

@@ -47,17 +47,14 @@ load_from_file = (file_in, img_out, bg_out) ->
 
 	fr.readAsDataURL file.files[0]
 
-load_settings = () ->
-	load_region()
-	load_username()
 
 load_region = () ->
-	CONFIG.region = get_config('region', CONFIG.default_region)
+	CONFIG.region = get_config('region') || CONFIG.default_region
 
 	console.info 'Loaded REGION: ' + regions[CONFIG.region].id + ' - ' + regions[CONFIG.region].link
 
 load_username = () ->
-	CONFIG.player.username = get_config('username', '')
+	CONFIG.player.username = get_config('username') || ''
 
 	console.info 'Loaded USERNAME: ' + CONFIG.player.username
 	document.getElementById('username_edit').value = CONFIG.player.username
@@ -112,10 +109,12 @@ draw_avatar = (is_portrait, dest) ->
 		if !CONFIG.player.id
 			if !CONFIG.player.info
 				if CONFIG.player.username
-# If the player is set but there is no player info, try the outdated links
+					# If the player is set but there is no player info, try the outdated links
 					timestamp = (new Date).getTime()
 
-					dest.src = 'http://avatars.' + regions[CONFIG.region].link + '/' + (if is_portrait then 'face' else 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png'
+					console.log 'Region ' + CONFIG.region
+
+					dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (if is_portrait then 'face' else 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png'
 				else
 					dest.src = 'assets/img/' + (if is_portrait then 'face' else 'body') + '_unknown.png'
 				return
@@ -191,6 +190,7 @@ sort_assets = () ->
 	ASSETS.avatars.sort comparator
 	ASSETS.emotions.sort comparator
 
+
 populate_regions = () ->
 	select = document.getElementById('region_edit')
 	regions.forEach (e, i) ->
@@ -202,7 +202,10 @@ populate_regions = () ->
 
 	$(select).material_select()
 
-populate_scenes = (selected) ->
+
+populate_scenes = ->
+	selected = get_config('scene') || 'Sala de Aula A'
+
 	select = document.getElementById('scene_edit')
 	ASSETS.scenes.forEach (e, i) ->
 		el = document.createElement('option')
@@ -213,6 +216,7 @@ populate_scenes = (selected) ->
 
 	$(select).material_select()
 	select.dispatchEvent new Event('change')
+
 
 populate_scenes_sub = (index, input) ->
 	while input.options.length > 0 # Clear all options
@@ -230,7 +234,9 @@ populate_scenes_sub = (index, input) ->
 	input.dispatchEvent new Event('change')
 
 
-populate_avatars = (selected) ->
+populate_avatars = ->
+	selected = get_config('avatar') || '[Docete]'
+
 	select = document.getElementById('avatar_edit')
 	ASSETS.avatars.forEach (e, i) ->
 		el = document.createElement('option')
@@ -241,3 +247,4 @@ populate_avatars = (selected) ->
 		select.appendChild el
 
 	$(select).material_select()
+	select.dispatchEvent new Event('change')

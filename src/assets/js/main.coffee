@@ -1,5 +1,5 @@
 init = ->
-	load_settings()
+	load_region()
 
 	# Bind input events
 	((elements) ->
@@ -21,9 +21,9 @@ init = ->
 		lovelevel_visible:
 			change: loveometer
 		bubble_edit:
-			keyup: bubble
-		response_edit:
-			keyup: update_response
+			keyup: update_bubble
+		answers_edit:
+			keyup: update_answers
 		username_submit:
 			click: update_username_btn
 		username_edit:
@@ -39,14 +39,20 @@ init = ->
 		clear_cache:
 			click: clear_configs
 
+
 	sort_assets()
 
 	populate_regions()
 	populate_lang()
-	populate_scenes 'Sala de Aula A'
-	populate_avatars '[Docete]'
+	populate_scenes()
+	populate_avatars()
 
+	# Load persistent state
 	init_actors()
+	init_bubble()
+	init_answers()
+
+	load_username()
 
 	$('ul.tabs').tabs()
 
@@ -83,7 +89,11 @@ init_drag = ->
 			dragUpdatePos(event, event.target)
 
 		onend: (event) ->
-			save_actors_to_cache()
+			is_actor = event.target.className.indexOf('actor') != -1
+			if is_actor
+				save_actors_to_cache()
+			else # Assume we're moving the bubble
+				localStorage.setObject('bubble', bubble)
 
 	.on 'doubletap', (event) ->
 		is_actor = event.target.className.indexOf('actor') != -1
@@ -98,14 +108,15 @@ init_drag = ->
 
 
 dragUpdatePos = (event, target) ->
-	info = get_actor(event.target.dataset.actor) || empty_actor
+	is_actor = target.className.indexOf('actor') != -1
+	info = if is_actor then get_actor(event.target.dataset.actor) || empty_actor else bubble
 
 	x = info.pos.x + (event.dx || 0)
 	y = info.pos.y + (event.dy || 0)
 
 	# Translate the element
 	target.style.webkitTransform =
-	target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (if info.flipped then -1 else 1) + ')';
+	target.style.transform = 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (if info.flipped || false then -1 else 1) + ')';
 
 	# Update the position attributes
 	info.pos.x = x

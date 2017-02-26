@@ -91,19 +91,17 @@
     padding-top: 29px;
     text-align: center; }
 
-.responses-wrapper {
+#answers {
   position: absolute;
-  width: 75%;
-  bottom: -4px;
+  width: calc(75% + 100px);
+  bottom: -19px;
   right: -4px;
-  padding: 15px 0 10px;
+  padding: 15px 0 10px 100px;
   background-color: rgba(255, 255, 255, 0.85);
   border: solid #ee3d73 4px;
-  z-index: 100000; }
-
-.responses {
+  z-index: 100000;
   list-style: none outside none; }
-  .responses .response {
+  #answers .response {
     position: relative;
     font-weight: bold;
     list-style-type: upper-alpha;
@@ -113,14 +111,14 @@
     line-height: 24px;
     font-size: 18px;
     padding: 3px 40px; }
-    .responses .response .text {
+    #answers .response .text {
       font-family: "Trebuchet MS", "Arial", sans-serif;
       color: #000; }
-    .responses .response:hover, .responses .response.checked {
+    #answers .response:hover, #answers .response.checked {
       color: #fff;
       cursor: pointer;
       background: linear-gradient(0deg, #64a625 0, #8cc503 100%); }
-      .responses .response:hover .text, .responses .response.checked .text {
+      #answers .response:hover .text, #answers .response.checked .text {
         color: #fff; }
 
 .player {
@@ -141,7 +139,7 @@
     bottom: 70px;
     background-size: 100%; }
 
-.bubble {
+#bubble {
   position: absolute;
   overflow: hidden;
   font-family: "Trebuchet MS", "Arial", sans-serif;
