@@ -1,18 +1,14 @@
 import { CONFIG, getConfig, setConfig } from '@/config'
+import { messages } from "@/lang/lang.en";
 import { init } from '@/index';
-import { LANG } from "@/lang.en";
 
-export let loaded = LANG;
+export let loadedLang = 'en';
+export let loaded = messages;
 
 const languages = {
 	pt: { name: 'Português' },
 	en: { name: 'English' },
 };
-
-// TODO: execute in index.js
-loadLang(getLang());
-
-
 
 export function getLang() {
 	let language = getConfig('lang')
@@ -35,15 +31,16 @@ export function getLang() {
 export function loadLang(lang) {
 	setConfig('lang', lang);
 
-	console.warn("LOADING LANG " + lang);
-
-	import(`./lang.${lang}.js`).then(module => {
-		console.warn("LOADED LANG " + lang, module.LANG);
-		loaded = module.LANG;
+	if (lang !== loadedLang) {
+		import(`./lang/${lang}.js`).then(module => {
+			loaded = module.messages;
+			document.body.innerHTML = vegito(document.body.innerHTML, loaded);
+			init();
+		});
+	} else {
 		document.body.innerHTML = vegito(document.body.innerHTML, loaded);
-	});
-
-	init();
+		init();
+	}
 }
 
 export function populateLang() {

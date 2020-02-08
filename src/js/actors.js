@@ -15,8 +15,6 @@ export let emptyActor = {
 function addActor(info = emptyActor) {
 	let id = actors.length + 1;
 
-	// var div, id, img, label, remove_btn, remove_icon, root, select_actor, select_sub;
-
 	let root = document.createElement('div');
 
 	// Main
@@ -30,13 +28,7 @@ function addActor(info = emptyActor) {
 
 	let label = document.createElement('label');
 	label["for"] = 'actor_' + id + '_edit';
-	let labelText = '{{character}} ' + id;
-	if (loaded) {
-		label.textContent = vegito(labelText, loaded);
-	} else {
-		label.textContent = labelText;
-	}
-
+	label.textContent = vegito('{{character}} ' + id, loaded);
 
 	div.appendChild(select_actor);
 	div.appendChild(label);
@@ -70,7 +62,7 @@ function addActor(info = emptyActor) {
 
 	let remove_btn = document.createElement('a');
 	remove_btn.classList.add('btn-floating', 'waves-effect', 'waves-light', 'red');
-	remove_btn.onclick = () => remove_actor(id);
+	remove_btn.onclick = () => removeActor(id);
 
 	let remove_icon = document.createElement('i');
 	remove_icon.classList.add('material-icons');
@@ -93,7 +85,8 @@ function addActor(info = emptyActor) {
 	img.dataset.actor = id;
 	img.style.webkitTransform
 		= img.style.transform
-		= 'translate(' + info.pos.x + 'px, ' + info.pos.y + 'px) scaleX(' + (info.flipped ? -1 : 1) + ')';
+		= `translate(${info.pos.x}px, ${info.pos.y}px) scaleX(${info.flipped ? -1 : 1})`;
+	img.title = img.alt + ' - name\nPress SHIFT to move up and down';
 
 	document.getElementById('scene').appendChild(img);
 
@@ -112,11 +105,11 @@ function addActor(info = emptyActor) {
 	populateEmotionsSub(select_sub);
 }
 
-function getActor(id) {
+export function getActor(id) {
 	return actors[id - 1];
 }
 
-function remove_actor(id) {
+function removeActor(id) {
 	console.debug('Removing ' + id);
 
 	let actor = actors_DOM[id - 1];
@@ -137,7 +130,7 @@ function remove_actor(id) {
 }
 
 export function removeAllActors() {
-	actors.forEach(actor => remove_actor(actor.id));
+	actors.forEach(actor => removeActor(actor.id));
 }
 
 export function initActors() {
@@ -178,9 +171,6 @@ function populateEmotions(select, selected) {
 		option.selected = emotion.name === selected ? 'true' : void 0;
 		return select.appendChild(option);
 	});
-
-	// TODO: check if it's necessary
-	// $(select).material_select();
 }
 
 function populateEmotionsSub(select) {
@@ -204,9 +194,7 @@ function populateEmotionsSub(select) {
 		select.appendChild(option);
 	});
 
-	// TODO: check if it's necessary
-	// $(select).material_select();
-	// select.dispatchEvent(new Event('change'));
+	select.dispatchEvent(new Event('change'));
 }
 
 function updateActor() {
@@ -240,7 +228,7 @@ function updateActorSub() {
 			target.style.bottom = '-300px';
 		} else {
 			let variation = emotion.variations[this.value];
-			target.src = 'assets/img/emotion/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.png';
+			target.src = 'img/emotion/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.png';
 			target.style.backgroundImage = '';
 			target.style.height = '92.24138%';
 			target.style.bottom = '0';
@@ -248,6 +236,6 @@ function updateActorSub() {
 	}
 }
 
-function persistActors() {
+export function persistActors() {
 	return localStorage.setObject('actors', actors);
 }

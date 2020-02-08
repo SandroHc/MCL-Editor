@@ -25,8 +25,7 @@ export function populateScenes() {
 		select.appendChild(el);
 	});
 
-	// TODO: needed?
-	// select.dispatchEvent(new Event('change'));
+	select.dispatchEvent(new Event('change'));
 }
 
 export function populateScenesSub(index, input) {
@@ -44,9 +43,7 @@ export function populateScenesSub(index, input) {
 		input.appendChild(el);
 	});
 
-	// TODO: check if it's necessary
-	// $(input).material_select();
-	// input.dispatchEvent(new Event('change'));
+	input.dispatchEvent(new Event('change'));
 }
 
 export function populateAvatars() {
@@ -63,6 +60,5 @@ export function populateAvatars() {
 		select.appendChild(el);
 	});
 
-	// TODO: needed?
-	// select.dispatchEvent(new Event('change'));
+	select.dispatchEvent(new Event('change'));
 }

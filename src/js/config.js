@@ -16,7 +16,6 @@ export const regions = [
 ];
 
 export const CONFIG = {
-	version: '1.1.3',
 	default_lang: 'pt',
 	lang: 'pt',
 	default_region: '0',

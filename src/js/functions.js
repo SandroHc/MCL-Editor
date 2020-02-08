@@ -7,9 +7,11 @@ import { ASSETS } from './assets';
 let draw_avatar_dest = null;
 let draw_avatar_portrait = null;
 
-export function loadFromFile(file_in, img_out, bg_out) {
-	let file = document.getElementById(file_in);
-	if (!file.files || !file.files.length) {
+export function loadFromFile(e, bg_out = '#scene', img_out = undefined) {
+	console.log("Loading file");
+
+	const file = e.target.files[0];
+	if (!file) {
 		console.log('No file selected');
 		alert('Seleciona primeiro o ficheiro, baka!');
 		return;
@@ -30,7 +32,7 @@ export function loadFromFile(file_in, img_out, bg_out) {
 		}
 	};
 
-	fr.readAsDataURL(file.files[0]);
+	fr.readAsDataURL(file);
 }
 
 export function loadRegion() {
@@ -115,7 +117,7 @@ export function drawAvatar(isPortrait, dest) {
 					let timestamp = Date.now().toString();
 					dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (isPortrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
 				} else {
-					dest.src = 'assets/img/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
+					dest.src = 'img/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
 				}
 				return;
 			}
@@ -182,7 +184,7 @@ export function drawAvatar(isPortrait, dest) {
 		addClothe(avatar.avatar.bodyType, null, 'avatarpart');
 	}
 
-	dest.src = 'assets/img/' + (isPortrait ? 'face' : 'body') + '_placeholder.png';
+	dest.src = 'img/' + (isPortrait ? 'face' : 'body') + '_placeholder.png';
 	dest.style.backgroundImage = bg;
 }
 
@@ -190,7 +192,11 @@ export function sortAssets() {
 	let comparator = (a, b) => {
 		a = a.name.toUpperCase();
 		b = b.name.toUpperCase();
-		if (a < b) {
+
+		if (a.indexOf('[') > b.indexOf('[')) {
+			// Display '[val]' at the top
+			return -1;
+		} else  if (a < b) {
 			return -1;
 		} else if (a > b) {
 			return 1;

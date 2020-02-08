@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
@@ -27,7 +28,10 @@ module.exports = {
 				from: 'static',
 				// ignore: [ 'img/**/*' ],
 			}
-		])
+		]),
+		new DefinePlugin({
+			VERSION: JSON.stringify(require('./package.json').version)
+		})
 	],
 	output: {
 		filename: '[name].bundle.js', // [contenthash] [hash]

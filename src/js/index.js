@@ -3,14 +3,10 @@ import interact from 'interactjs'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 
-import { populateLang} from './i18n'
-import { loadUsername, sortAssets } from './functions';
-import { populateAvatars, populateRegions, populateScenes } from './functions_populate';
-import {
-	bubble,
-	initAnswers,
-	initBubble
-} from './functions_events';
+import { getLang, loadLang } from '@/i18n'
+import { loadFromFile } from '@/functions';
+import { emptyActor, getActor, persistActors } from "@/actors";
+import { bubble } from '@/functions_events';
 
 import '@css/style.scss'
 
@@ -41,14 +37,13 @@ let snapOptions = {
 };
 
 export function init() {
-	// loadRegion();
+	require('./functions').loadRegion();
 
 	// Bind input events
 	(function (elements) {
 		for (let el_name in elements) {
 			for (let event in elements[el_name]) {
 				document.getElementById(el_name).addEventListener(event, elements[el_name][event]);
-				// $('#' + el_name).on(event, elements[el_name][event]);
 			}
 		}
 	})({
@@ -94,6 +89,8 @@ export function init() {
 		}
 	});
 
+	document.getElementById('file_scene_edit').addEventListener('change', e => loadFromFile(e));
+
 	require('./functions').sortAssets();
 
 	require('./i18n').populateLang();
@@ -105,45 +102,64 @@ export function init() {
 	require('./functions_events').initBubble();
 	require('./functions_events').initAnswers();
 
+	initDrag();
+
 	require('./functions').loadUsername();
 }
 
 function initDrag() {
 	let snapEnabled = false;
-	let snapSize = 50;
-	snapOptions.targets[0] = interact.createSnapGrid({
-		x: snapSize,
-		y: snapSize
-	});
+	// let snapSize = 50;
+	// snapOptions.targets[0] = interact.createSnapGrid({
+	// 	x: snapSize,
+	// 	y: snapSize
+	// });
 
 	interact('.draggable').draggable({
-		restrict: {
-			restriction: "parent",
-			endOnly: true,
-			elementRect: {
-				top: 0,
-				left: 0,
-				bottom: 1,
-				right: 1
-			}
-		},
+		modifiers: [
+		// 	interact.modifiers.snap({
+		// 		// snap to the corners of a grid
+		// 		targets: [
+		// 			interact.snappers.grid({ x: snapSize, y: snapSize }),
+		// 		],
+		// 	})
+			interact.modifiers.restrict({
+				restriction: 'parent',
+				endOnly: true,
+				elementRect: {
+					top: 0.5,
+					left: 0.5,
+					bottom: 0.5,
+					right: 1
+				}
+			}),
+		],
 		inertia: !snapEnabled,
-		snap: snapEnabled ? snapOptions : {},
+		// snap: snapEnabled ? snapOptions : {},
 
-		onstart: event => event.target.style.zIndex = ++zIndexCurrent,
-		onmove: event => {
-			let isActor = event.target.className.indexOf('actor') !== -1;
-			if (isActor && !event.shiftKey)
-				event.dy = 0; // Reset y-pos if the SHIFT key is not being pressed
-			return dragUpdatePos(event, event.target);
-		},
-		onend: event => {
-			let isActor = event.target.className.indexOf('actor') !== -1;
-			if (isActor) {
-				return persistActors();
-			} else {
-				// Assume we're moving the bubble
-				return localStorage.setObject('bubble', bubble);
+		// startAxis: 'xy',
+		// lockAxis: 'start',
+
+		listeners: {
+			start (event) {
+				event.target.style.zIndex = ++zIndexCurrent
+			},
+
+			move (event) {
+				let isActor = event.target.className.indexOf('actor') !== -1;
+				if (isActor && !event.shiftKey)
+					event.dy = 0; // Reset y-pos if the SHIFT key is not being pressed
+				return dragUpdatePos(event, event.target);
+			},
+
+			end (event) {
+				let isActor = event.target.className.indexOf('actor') !== -1;
+				if (isActor) {
+					return persistActors();
+				} else {
+					// Assume we're moving the bubble
+					return localStorage.setObject('bubble', bubble);
+				}
 			}
 		}
 	}).on('doubletap', event => {
@@ -151,7 +167,7 @@ function initDrag() {
 		if (!isActor)
 			return;
 
-		let actor = get_actor(event.target.dataset.actor);
+		let actor = getActor(event.target.dataset.actor);
 		actor.flipped = !actor.flipped;
 		persistActors();
 
@@ -175,3 +191,7 @@ function dragUpdatePos(event, target) {
 	info.pos.x = x;
 	info.pos.y = y;
 }
+
+
+loadLang(getLang());
+// init(); // FIXME needs to be called after the language is loaded, because the action listeners are overriden

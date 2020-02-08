@@ -19,7 +19,7 @@ export function updateSceneSub() {
 
 	let variation = scene.variations[this.value];
 	let target = document.querySelector(this.dataset.target);
-	target.style.backgroundImage = 'url(assets/img/scene/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.jpg)';
+	target.style.backgroundImage = 'url(img/scene/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.jpg)';
 }
 
 export function loveometerLevel() {
@@ -38,10 +38,7 @@ export function loveometer() {
 export function initBubble() {
 	bubble = localStorage.getObject('bubble') || {
 		text: '',
-		pos: {
-			x: 0,
-			y: 0
-		}
+		pos: { x: 0, y: 0 }
 	};
 
 	let el = document.getElementById('bubble_edit');
@@ -51,7 +48,7 @@ export function initBubble() {
 	el = document.getElementById('bubble');
 	el.style.webkitTransform
 		= el.style.transform
-		= 'translate(' + bubble.pos.x + 'px, ' + bubble.pos.y + 'px)';
+		= `translate(${bubble.pos.x}px, ${bubble.pos.y}px)`;
 }
 
 export function updateBubble() {
@@ -156,6 +153,6 @@ export function updateAvatar() {
 	} else {
 		el.style.bottom = '0';
 		el.style.backgroundImage = '';
-		el.src = 'assets/img/avatar/' + avatar.id + (avatar.checksum ? '-' + avatar.checksum : '') + '.png';
+		el.src = 'img/avatar/' + avatar.id + (avatar.checksum ? '-' + avatar.checksum : '') + '.png';
 	}
 }
