@@ -86,7 +86,7 @@ function addActor(info = emptyActor) {
 	img.style.webkitTransform
 		= img.style.transform
 		= `translate(${info.pos.x}px, ${info.pos.y}px) scaleX(${info.flipped ? -1 : 1})`;
-	img.title = img.alt + ' - name\nPress SHIFT to move up and down';
+	img.title = `${img.alt} - ${info.name}\n\nPress SHIFT to move up and down\nDouble-click to flip`;
 
 	document.getElementById('scene').appendChild(img);
 

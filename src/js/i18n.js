@@ -1,14 +1,11 @@
 import { CONFIG, getConfig, setConfig } from '@/config'
-import { messages } from "@/lang/lang.en";
-import { init } from '@/index';
-
-export let loadedLang = 'en';
-export let loaded = messages;
 
 const languages = {
 	pt: { name: 'Português' },
 	en: { name: 'English' },
 };
+
+export let loaded = require(`./lang/${getLang()}.js`).messages;
 
 export function getLang() {
 	let language = getConfig('lang')
@@ -28,19 +25,8 @@ export function getLang() {
 	return language;
 }
 
-export function loadLang(lang) {
-	setConfig('lang', lang);
-
-	if (lang !== loadedLang) {
-		import(`./lang/${lang}.js`).then(module => {
-			loaded = module.messages;
-			document.body.innerHTML = vegito(document.body.innerHTML, loaded);
-			init();
-		});
-	} else {
-		document.body.innerHTML = vegito(document.body.innerHTML, loaded);
-		init();
-	}
+export function loadLang() {
+	document.body.innerHTML = vegito(document.body.innerHTML, loaded);
 }
 
 export function populateLang() {

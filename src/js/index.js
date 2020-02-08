@@ -3,27 +3,12 @@ import interact from 'interactjs'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 
-import { getLang, loadLang } from '@/i18n'
+import { loadLang } from '@/i18n'
 import { loadFromFile } from '@/functions';
 import { emptyActor, getActor, persistActors } from "@/actors";
 import { bubble } from '@/functions_events';
 
 import '@css/style.scss'
-
-
-document.addEventListener('DOMContentLoaded', function() {
-	// TODO: why not use Dropdown?
-	let elems = document.querySelectorAll('select');
-	M.FormSelect.init(elems, {
-		// https://materializecss.com/select.html#options
-	});
-
-	let tabs = document.querySelector('ul.tabs');
-	M.Tabs.init(tabs, {
-		// https://materializecss.com/tabs.html#options
-	});
-});
-
 
 
 let zIndexCurrent = 0;
@@ -37,6 +22,23 @@ let snapOptions = {
 };
 
 export function init() {
+	console.info("[MCL] Starting up version " + VERSION);
+
+	loadLang();
+
+	ready(() => {
+		// TODO: why not use Dropdown?
+		let elems = document.querySelectorAll('select');
+		M.FormSelect.init(elems, {
+			// https://materializecss.com/select.html#options
+		});
+
+		let tabs = document.querySelector('ul.tabs');
+		M.Tabs.init(tabs, {
+			// https://materializecss.com/tabs.html#options
+		});
+	});
+
 	require('./functions').loadRegion();
 
 	// Bind input events
@@ -192,6 +194,13 @@ function dragUpdatePos(event, target) {
 	info.pos.y = y;
 }
 
+function ready(fn) {
+	if (document.readyState !== 'loading') {
+		fn();
+	} else {
+		document.addEventListener('DOMContentLoaded', fn);
+	}
+}
 
-loadLang(getLang());
-// init(); // FIXME needs to be called after the language is loaded, because the action listeners are overriden
+
+init();
