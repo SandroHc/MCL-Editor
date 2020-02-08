@@ -25,10 +25,6 @@ export function getLang() {
 	return language;
 }
 
-export function loadLang() {
-	document.body.innerHTML = vegito(document.body.innerHTML, loaded);
-}
-
 export function populateLang() {
 	let language = getLang();
 	let select = document.getElementById('lang_edit');

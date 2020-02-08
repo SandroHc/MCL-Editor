@@ -6,15 +6,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
-	mode: 'development',
 	entry: {
 		app: './src/js/index.js',
-		assets: './src/js/assets.js',
-	},
-	devtool: 'inline-source-map',
-	devServer: {
-		contentBase: './dist',
-		hot: true,
+		assets: [ './src/js/assets/avatars.js', './src/js/assets/emotions.js', './src/js/assets/scenes.js' ],
 	},
 	plugins: [
 		new HardSourceWebpackPlugin(),
@@ -33,16 +27,6 @@ module.exports = {
 			VERSION: JSON.stringify(require('./package.json').version)
 		})
 	],
-	output: {
-		filename: '[name].bundle.js', // [contenthash] [hash]
-		path: path.resolve(__dirname, 'dist'),
-	},
-	optimization: {
-		splitChunks: {
-			chunks: 'all',
-		},
-		runtimeChunk: true,
-	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src/js/'),
@@ -63,42 +47,11 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.css$/,
-				use: [ 'style-loader', 'css-loader' ]
-			},
-			// {
-			// 	test: /\.s[ac]ss$/,
-			// 	use: [
-			// 		'css-loader',
-			// 		{
-			// 			loader: 'fast-sass-loader',
-			// 			options: {
-			// 				includePaths: [
-			// 					path.resolve(__dirname, 'src/styles'),
-			// 				]
-			// 			}
-			// 		}
-			// 	]
-			// },
-			{
-				test: /\.s[ac]ss$/,
-				loader: [
-					'style-loader',
-					'css-loader',
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true
-						}
-					}
-				]
-			},
-			{
 				test: /\.(png|svg|jpe?g|gif)$/,
 				loader: 'file-loader',
 				options: {
 					outputPath: 'img',
-					name: '[name].[hash].[ext]',
+					name: '[name].[hash:8].[ext]',
 				},
 			},
 			{
@@ -106,7 +59,7 @@ module.exports = {
 				loader: 'file-loader',
 				options: {
 					outputPath: 'fonts',
-					name: '[name].[hash].[ext]',
+					name: '[name].[hash:8].[ext]',
 				},
 			},
 			{
@@ -114,8 +67,8 @@ module.exports = {
 				loader: 'raw-loader',
 				// loader: 'html-loader',
 				// options: {
-				// 	root: path.resolve(__dirname, 'src'),
-				// 	interpolate: true,
+				// 	interpolate: false,
+				// 	attributes: false,
 				// 	esModule: true,
 				// }
 			},

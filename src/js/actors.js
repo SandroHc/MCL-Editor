@@ -1,6 +1,8 @@
-import { ASSETS } from './assets';
 import { loaded } from "./i18n";
 import { drawAvatar } from "@/functions";
+
+// TODO: load on demand
+import { emotions } from './assets/emotions';
 
 let actors = [];
 let actors_DOM = []; // Separate the DOM elements, so we can cache the actors easily
@@ -29,7 +31,7 @@ function addActor(info = emptyActor) {
 
 	let label = document.createElement('label');
 	label["for"] = 'actor_' + id + '_edit';
-	label.textContent = vegito('{{character}} ' + id, loaded);
+	label.textContent = loaded['character'] + ' ' + id;
 
 	div.appendChild(select_actor);
 	div.appendChild(label);
@@ -80,7 +82,7 @@ function addActor(info = emptyActor) {
 	let img = document.createElement('img');
 	img.id = 'actor_' + id;
 	img.classList.add('actor', 'draggable');
-	img.alt = vegito('{{character}} ' + id, loaded);
+	img.alt = loaded['character'] + ' ' + id;
 	img.style.bottom = 0;
 	img.style.left = Math.min(id * 400 - 200, 750) + 'px';
 	img.dataset.actor = id;
@@ -169,7 +171,7 @@ export function initActors() {
 }
 
 function populateEmotions(select, selected) {
-	ASSETS.emotions.forEach(function (emotion, i) {
+	emotions.forEach(function (emotion, i) {
 		let option = document.createElement('option');
 		option.textContent = emotion.name;
 		option.value = i;
@@ -189,7 +191,7 @@ function populateEmotionsSub(select) {
 		return;
 	}
 
-	let emotion = ASSETS.emotions[actorEl.value];
+	let emotion = emotions[actorEl.value];
 	emotion.variations.forEach(function (variation, i) {
 		let option = document.createElement('option');
 		option.textContent = variation.name;
@@ -203,13 +205,13 @@ function populateEmotionsSub(select) {
 }
 
 function updateActor() {
-	// console.log("CHAR SELECTED | " + ASSETS.emotions[@value].name);
+	// console.log("CHAR SELECTED | " + emotions[@value].name);
 	return populateEmotionsSub(document.getElementById('actor_' + this.dataset.actor + '_sub'));
 }
 
 function updateActorSub() {
 	let selected = this.options[this.selectedIndex];
-	let emotion = ASSETS.emotions[document.getElementById('actor_' + this.dataset.actor + '_edit').value];
+	let emotion = emotions[document.getElementById('actor_' + this.dataset.actor + '_edit').value];
 
 	console.debug('Selected ACTOR: ' + emotion.name + ' (' + selected.textContent + ')');
 

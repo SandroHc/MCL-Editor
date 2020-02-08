@@ -1,4 +1,7 @@
-import { ASSETS } from './assets';
+// TODO: move to respective files
+import { avatars } from './assets/avatars';
+import { scenes } from './assets/scenes';
+
 import { CONFIG, setConfig } from './config';
 import { drawAvatar, getPlayerInfo } from './functions';
 import { populateScenesSub } from "./functions_populate";
@@ -9,11 +12,11 @@ export function updateScene() {
 	let sub = document.querySelector(this.dataset.sub);
 	populateScenesSub(this.value, sub);
 
-	setConfig('scene', ASSETS.scenes[this.value].name);
+	setConfig('scene', scenes[this.value].name);
 }
 
 export function updateSceneSub() {
-	let scene = ASSETS.scenes[this.options[this.selectedIndex].dataset.scene];
+	let scene = scenes[this.options[this.selectedIndex].dataset.scene];
 
 	console.debug('Selected SCENE: ' + scene.name + ' (' + this.options[this.selectedIndex].textContent + ')');
 
@@ -134,7 +137,7 @@ export function updateUsernameBtn() {
 }
 
 export function updateAvatar() {
-	let avatar = ASSETS.avatars[this.value];
+	let avatar = avatars[this.value];
 	let el = document.querySelector('.player-avatar');
 	el.src = '';
 

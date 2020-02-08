@@ -1,5 +1,8 @@
 import { CONFIG, getConfig, regions } from './config';
-import { ASSETS } from './assets';
+
+// TODO move to respective files
+import { avatars } from './assets/avatars';
+import { scenes } from './assets/scenes';
 
 export function populateRegions() {
 	let select = document.getElementById('region_edit');
@@ -18,7 +21,7 @@ export function populateScenes() {
 	let select = document.getElementById('scene_edit');
 
 	// Load all scenes
-	ASSETS.scenes.forEach(function (e, i) {
+	scenes.forEach(function (e, i) {
 		let el = document.createElement('option');
 		el.textContent = e.name;
 		el.value = i;
@@ -37,7 +40,7 @@ export function populateScenesSub(index, input) {
 		input.remove(0);
 	}
 
-	let scene = ASSETS.scenes[index];
+	let scene = scenes[index];
 	scene.variations.forEach(function (e, i) {
 		let el = document.createElement('option');
 		el.textContent = e.name;
@@ -56,7 +59,7 @@ export function populateAvatars() {
 	let selected = getConfig('avatar') || '[Docete]';
 
 	let select = document.getElementById('avatar_edit');
-	ASSETS.avatars.forEach(function (e, i) {
+	avatars.forEach(function (e, i) {
 		let el = document.createElement('option');
 		el.textContent = e.name;
 		el.value = i;

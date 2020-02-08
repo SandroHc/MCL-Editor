@@ -1,7 +1,6 @@
 import CryptoJS from 'crypto-js'
 
 import { CONFIG, getConfig, regions } from './config';
-import { ASSETS } from './assets';
 
 
 let draw_avatar_dest = null;
@@ -210,7 +209,8 @@ export function sortAssets() {
 		}
 	};
 
+	// TODO
 	// ASSETS.scenes.sort(comparator);
-	ASSETS.avatars.sort(comparator);
-	ASSETS.emotions.sort(comparator);
+	// ASSETS.avatars.sort(comparator);
+	// ASSETS.emotions.sort(comparator);
 }

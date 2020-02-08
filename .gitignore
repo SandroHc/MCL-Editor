@@ -10,3 +10,5 @@ photothumb.db
 
 # NodeJS-related
 node_modules/
+
+dist/
