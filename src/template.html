@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="ie=edge" http-equiv="x-ua-compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+
+	<meta name="description" content="MyCandyLove Editor, an offline fanfic creation tool for MyCandyLove.">
+
+	<title>MCL Editor</title>
+	<link href="favicon.ico" rel="shortcut icon" />
+</head>
+<body>
+
+<div id="container" class="container">
+	<div class="row">
+		<div class="col s12 card">
+			<div class="col s12">
+				<img id="logo" src="img/logo.png" alt="My Candy Love">
+			</div>
+
+			<ul class="tabs">
+				<li class="tab col s2"><a href="#tab-account">{{account}}</a></li>
+				<li class="tab col s3"><a href="#tab-chat">{{chat}}</a></li>
+				<li class="tab col s3"><a href="#tab-scene">{{scene}}</a></li>
+				<li class="tab col s3"><a href="#tab-actors">{{characters}}</a></li>
+				<li class="tab col s1"><a href="#tab-settings"><i class="material-icons">settings</i></a></li>
+			</ul>
+		</div>
+
+		<div id="tab-account" class="col s12">
+			<div class="row">
+				<div class="col s12">
+					<p class="hide-on-med-and-down">{{welcome}}</p>
+				</div>
+
+				<div class="input-field col s12">
+					<i class="material-icons prefix">language</i>
+					<select id="region_edit"></select>
+					<label for="region_edit">{{region}}</label>
+				</div>
+
+				<div class="input-field col s12 m8 l8">
+					<i class="material-icons prefix">account_circle</i>
+					<input placeholder="{{username_placeholder}}" id="username_edit" type="text" class="validate">
+					<label for="username_edit">{{username}}</label>
+				</div>
+				<div class="input-field col s12 m4 l4">
+					<button id="username_submit" class="waves-effect waves-light btn">{{change_avatar}}</button>
+				</div>
+
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+
+				<div class="input-field col s6 m3">
+					<label>
+						<input id="lovelevel_visible" type="checkbox" class="filled-in">
+						<span>{{love_level}}</span>
+					</label>
+				</div>
+				<div class="input-field col s6 m9 range-field">
+					<input id="lovelevel_edit" value="0" type="range" min="-100" max="100">
+				</div>
+
+			</div>
+			<div class="row">
+
+				<div class="col s12">
+					<p class="legal"><a href="https://github.com/SandroHc/MCL-Editor" target="_blank">{{version}}</a>
+						&bullet; {{legal}}</p>
+				</div>
+			</div>
+		</div>
+
+		<div id="tab-chat" class="col s12">
+			<div class="row">
+
+				<div class="input-field col s12">
+					<i class="material-icons prefix">question_answer</i>
+					<textarea placeholder="{{characters_bubble}}" id="bubble_edit"
+							class="materialize-textarea"></textarea>
+					<label for="bubble_edit">{{characters_bubble_label}}</label>
+				</div>
+
+				<div class="input-field col s12">
+					<i class="material-icons prefix">mode_edit</i>
+					<textarea placeholder="{{answers}}" id="answers_edit" class="materialize-textarea"></textarea>
+					<label for="answers_edit">{{answers_label}}</label>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="tab-scene" class="col s12">
+			<div class="row">
+
+				<div class="input-field col s12 m12">
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>Ficheiro</span>
+							<input id="file_scene_edit" type="file"
+									onchange="load_from_file('file_scene_edit', null, '#scene')">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+				</div>
+
+				<div class="input-field col s12 m6">
+					<select id="scene_edit" data-sub="#scene_sub_edit"></select>
+					<label for="scene_edit">Fundo</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<select id="scene_sub_edit" data-parent="#scene_edit" data-target="#scene"></select>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="tab-actors" class="col s12">
+			<div class="row">
+
+				<!--<div class="input-field col s12 m12">-->
+				<!--Avatar:-->
+				<!--<input id="file_edit" type="file" onchange="loadFromFile('file_edit', '#scene .player-avatar', null)">-->
+				<!--</div>-->
+				<!--<div class="input-field col s12 m12">-->
+				<!--Personagem:-->
+				<!--<input id="file_char_edit" type="file">-->
+				<!--</div>-->
+
+				<div class="input-field col s12 m12">
+					<select id="avatar_edit"></select>
+					<label for="avatar_edit">{{avatar}}</label>
+					<!--<button class="file_submit waves-effect waves-light btn" onclick="loadFromFile('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
+				</div>
+
+				<div id="actors"></div>
+
+				<br><br><br>
+				<a class="btn-floating btn-large waves-effect waves-light red" onclick="addActor()"><i
+						class="material-icons">add</i></a>
+			</div>
+		</div>
+
+		<div id="tab-settings" class="col s12">
+			<div class="row">
+
+				<div class="input-field col s12">
+					<i class="material-icons prefix">language</i>
+					<select id="lang_edit"></select>
+					<label for="lang_edit">{{language}}</label>
+				</div>
+
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="col s12">
+					<h4>{{ cache }}</h4>
+				</div>
+
+				<div class="input-field col s6">
+					<button id="clear_actors" class="waves-effect waves-light btn">{{ clear_actors }}</button>
+				</div>
+				<div class="input-field col s6">
+					<button id="clear_cache" class="waves-effect waves-light btn">{{ clear_cache }}</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="scene">
+	<div id="bubble" class="draggable" style="left:65px; bottom:325px; display:none"></div>
+	<div id="loveometer" style="display: none">
+		<div class="outer-gauge">
+			<div class="inner-gauge">
+				<div class="gauge" style="height:50%"></div>
+			</div>
+		</div>
+		<div class="heart">
+			<span class="heart-text">0%</span>
+		</div>
+	</div>
+	<ul id="answers" style="display:none"></ul>
+	<div class="player" style="display:none">
+		<img class="player-avatar" src="/img/face_unknown.png" alt="Avatar do personagem">
+	</div>
+</div>
+
+<a href="#scene" id="go-to-scene" class="card">{{view_result}} &darr;</a>
+
+
+
+<script src="dist/js/vegito.min.js"></script>
+
+</body>
+</html>

@@ -2,11 +2,12 @@
 Repository of MyCandyLove Editor, an offline fanfic creation tool.
 
 ## Contributing
-Run `npm install` to install all dev dependencies, including Gulp to compile SCSS and CoffeScript.
+Use `npm install` (or `yarn install`) to install all dev dependencies, needed to compile the SCSS.
+Use `npm build` to build the final, which will be available in the `dist/` folder.
+Use `npm start` to start the development server.
 
-Changes to the CSS should be made in the respective `.scss` file. Recompile using the command `gulp sass`.
-
-Changes to the JS should be made in the respective `.coffee` script. Recompile using the command `gulp coffee`.
+Changes to the CSS should be made in the respective `.scss` file. Recompile using the command `npm build`.
+Changes to the JS should be made in the respective `.js` script. Recompile using the command `npm build`.
 
 ## Authors
 Current maintainer of this project is [https://github.com/SandroHc](SandroHc).

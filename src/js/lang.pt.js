@@ -1,0 +1,29 @@
+import { CONFIG } from './config'
+
+
+export const LANG = {
+	version: 'Versão ' + CONFIG.version,
+	welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Atualizado por <a href="https://sandrohc.net" target="_blank">SandroHc</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.',
+	legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank">Beemoov</a>',
+	account: 'Conta',
+	region: 'Região',
+	username: 'Nome',
+	username_placeholder: 'Nome de usuário (NÃO o seu e-mail)',
+	change_avatar: 'Carregar Avatar',
+	love_level: 'Barra do Amor',
+	chat: 'Diálogo',
+	characters_bubble_label: 'Bolha de fala',
+	characters_bubble: 'Bolha de fala',
+	answers_label: 'Respostas',
+	answers: 'Respostas (ENTER para separar)',
+	scene: 'Lugar',
+	characters: 'Personagens',
+	avatar: 'Avatar',
+	character: 'Caráter',
+	language: 'Idioma',
+	view_result: 'Ver Resultado',
+	use_sucrette: 'Usar Ficheiro',
+	cache: 'Cache',
+	clear_actors: 'Limpar Personagens & Lugar',
+	clear_cache: 'Limpar Tudo'
+};

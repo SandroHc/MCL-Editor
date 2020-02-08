@@ -1,20 +1,46 @@
 {
   "name": "mcl-editor",
-  "version": "0.0.1",
+  "version": "1.1.3",
   "description": "MyCandyLove Editor, an offline fanfic creation tool for MyCandyLove.",
-  "main": "index.html",
-  "dependencies": {},
+  "private": true,
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "interactjs": "^1.8.4",
+    "material-icons": "^0.3.1",
+    "materialize-css": "^1.0.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "coffee-script": "^1.12.3",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.2",
+    "fast-sass-loader": "^1.5.0",
+    "file-loader": "^5.0.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-coffee": "^2.3.3",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^2.0.1"
+    "gulp-uglify": "^2.0.1",
+    "hard-source-webpack-plugin": "^0.13.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.13.1",
+    "raw-loader": "^4.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack-dev-server": "^3.10.3"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://SandroHc@github.com/SandroHc/MCL-Editor.git"
@@ -29,5 +55,5 @@
   "bugs": {
     "url": "https://github.com/SandroHc/MCL-Editor/issues"
   },
-  "homepage": "https://github.com/SandroHc/MCL-Editor#readme"
+  "homepage": "https://mcl.sandrohc.net"
 }
