@@ -1,5 +1,4 @@
 import { ASSETS } from './assets';
-import { CONFIG } from './config';
 import { loaded } from "./i18n";
 import { drawAvatar } from "@/functions";
 
@@ -7,12 +6,14 @@ let actors = [];
 let actors_DOM = []; // Separate the DOM elements, so we can cache the actors easily
 
 export let emptyActor = {
-	name: CONFIG.default_actor,
+	name: 'Nathaniel',
 	pos: { x: 0, y: 0 },
 	flipped: false
 };
 
 function addActor(info = emptyActor) {
+	console.debug("Adding actor", info);
+
 	let id = actors.length + 1;
 
 	let root = document.createElement('div');
@@ -100,9 +101,11 @@ function addActor(info = emptyActor) {
 	});
 	persistActors();
 
-
 	populateEmotions(select_actor, info.name);
 	populateEmotionsSub(select_sub);
+
+	M.FormSelect.init(select_actor);
+	M.FormSelect.init(select_sub);
 }
 
 export function getActor(id) {
@@ -134,6 +137,8 @@ export function removeAllActors() {
 }
 
 export function initActors() {
+	document.getElementById('add-actor').addEventListener('click', () => addActor());
+
 	let cache = localStorage.getObject('actors') || [];
 	cache.clean(null); // Remove empty references (left when removing an actor)
 
@@ -160,7 +165,7 @@ export function initActors() {
 
 	cache.forEach(actor => addActor(actor));
 
-	return console.debug('Loaded ' + cache.length + ' actors');
+	console.debug('Loaded ' + cache.length + ' actors');
 }
 
 function populateEmotions(select, selected) {

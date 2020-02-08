@@ -26,7 +26,6 @@ export const CONFIG = {
 		info: null,
 		avatar: null
 	},
-	default_actor: 'Nathaniel'
 };
 
 export function setConfig(key, value) {

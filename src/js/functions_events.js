@@ -101,7 +101,7 @@ export function updateUsername(key) {
 }
 
 export function updateUsernameBtn() {
-	CONFIG.player.username = document.getElementById('username_edit').value || 'd';
+	CONFIG.player.username = document.getElementById('username_edit').value; // TODO: it used to defalut to 'd', is it some kind of default char?
 	CONFIG.region = document.getElementById('region_edit').value;
 
 	setConfig('username', CONFIG.player.username);

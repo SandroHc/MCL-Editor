@@ -16,6 +16,8 @@ export function populateRegions() {
 export function populateScenes() {
 	let selected = getConfig('scene') || 'Sala de Aula A';
 	let select = document.getElementById('scene_edit');
+
+	// Load all scenes
 	ASSETS.scenes.forEach(function (e, i) {
 		let el = document.createElement('option');
 		el.textContent = e.name;
@@ -24,6 +26,8 @@ export function populateScenes() {
 
 		select.appendChild(el);
 	});
+
+	// M.FormSelect.init(select);
 
 	select.dispatchEvent(new Event('change'));
 }
@@ -42,6 +46,8 @@ export function populateScenesSub(index, input) {
 
 		input.appendChild(el);
 	});
+
+	M.FormSelect.init(input);
 
 	input.dispatchEvent(new Event('change'));
 }

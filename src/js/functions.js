@@ -45,14 +45,18 @@ export function loadUsername() {
 	CONFIG.player.username = getConfig('username') || '';
 
 	console.info('Loaded USERNAME: ' + CONFIG.player.username);
-	document.getElementById('username_edit').value = CONFIG.player.username;
-	document.getElementById('username_submit').dispatchEvent(new Event('click'));
+
+	if (CONFIG.player.username) {
+		document.getElementById('username_edit').value = CONFIG.player.username;
+		document.getElementById('username_submit').dispatchEvent(new Event('click'));
+	}
 }
 
 export function getPlayerInfo(username) {
 	return new Promise((resolve, reject) => {
 		if (!username) {
 			reject("invalid username");
+			return;
 		}
 
 		let timestamp = Date.now().toString();
@@ -89,6 +93,7 @@ export function getPlayerAvatar(playerId) {
 	return new Promise((resolve, reject) => {
 		if (!playerId) {
 			reject("invalid id");
+			return;
 		}
 
 		// API: http://api3.amordoce.com/v2/avatar/{player_id}
