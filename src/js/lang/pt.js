@@ -1,6 +1,6 @@
 export const messages = {
 	version: 'Versão ' + VERSION,
-	welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Atualizado por <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>. Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>.',
+	welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>. Atualizado por <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>.',
 	legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
 	account: 'Conta',
 	region: 'Região',

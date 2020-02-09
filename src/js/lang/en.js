@@ -1,6 +1,6 @@
 export const messages = {
 	version: 'Version ' + VERSION,
-	welcome: 'Welcome to the unofficial scene editor of My Candy Love! A tool updated by <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>. We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>.',
+	welcome: 'Welcome to the unofficial scene editor of My Candy Love! We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>. Tool updated by <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>.',
 	legal: 'All images belong to <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
 	account: 'Account',
 	region: 'Region',
@@ -21,6 +21,6 @@ export const messages = {
 	view_result: 'View Result',
 	use_sucrette: 'Use File',
 	cache: 'Cache',
-	clear_actors: 'Clear Actors & Scene',
+	clear_actors: 'Clear Characters & Place',
 	clear_cache: 'Clear Everything'
 };

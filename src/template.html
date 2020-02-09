@@ -51,20 +51,6 @@
 				</div>
 
 			</div>
-			<div class="divider"></div>
-			<div class="row">
-
-				<div class="input-field col s6 m3">
-					<label>
-						<input id="lovelevel_visible" type="checkbox" class="filled-in">
-						<span>{{love_level}}</span>
-					</label>
-				</div>
-				<div class="input-field col s6 m9 range-field">
-					<input id="lovelevel_edit" value="0" type="range" min="-100" max="100">
-				</div>
-
-			</div>
 			<div class="row">
 
 				<div class="col s12">
@@ -76,21 +62,38 @@
 
 		<!-- Dialogue -->
 		<div id="tab-chat" class="col s12">
+			<!-- Dialogue bubble -->
 			<div class="row">
-
 				<div class="input-field col s12">
 					<i class="material-icons prefix">question_answer</i>
 					<textarea placeholder="{{characters_bubble}}" id="bubble_edit"
 							class="materialize-textarea"></textarea>
 					<label for="bubble_edit">{{characters_bubble_label}}</label>
 				</div>
+			</div>
 
+			<!-- Answers -->
+			<div class="row">
 				<div class="input-field col s12">
 					<i class="material-icons prefix">mode_edit</i>
 					<textarea placeholder="{{answers}}" id="answers_edit" class="materialize-textarea"></textarea>
 					<label for="answers_edit">{{answers_label}}</label>
 				</div>
+			</div>
 
+			<div class="divider"></div>
+
+			<!-- Love level -->
+			<div class="row">
+				<div class="input-field col s6 m3">
+					<label>
+						<input id="lovelevel_visible" type="checkbox" class="filled-in">
+						<span>{{love_level}}</span>
+					</label>
+				</div>
+				<div class="input-field col s6 m9 range-field">
+					<input id="lovelevel_edit" value="0" type="range" min="-100" max="100">
+				</div>
 			</div>
 		</div>
 
@@ -155,8 +158,8 @@
 
 				<div class="input-field col s12">
 					<i class="material-icons prefix">language</i>
-					<select id="lang_edit"></select>
-					<label for="lang_edit">{{language}}</label>
+					<select id="lang-edit"></select>
+					<label for="lang-edit">{{language}}</label>
 				</div>
 
 			</div>
@@ -170,7 +173,7 @@
 					<button id="clear-actors" class="waves-effect waves-light btn">{{ clear_actors }}</button>
 				</div>
 				<div class="input-field col s6">
-					<button id="clear_cache" class="waves-effect waves-light btn">{{ clear_cache }}</button>
+					<button id="clear-cache" class="waves-effect waves-light btn">{{ clear_cache }}</button>
 				</div>
 
 			</div>

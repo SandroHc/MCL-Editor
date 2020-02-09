@@ -25,8 +25,3 @@ export const CONFIG = {
 		avatar: null
 	},
 };
-
-export function clearConfigs() {
-	localStorage.clear();
-	window.location.reload();
-}

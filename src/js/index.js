@@ -1,30 +1,21 @@
-import interact from 'interactjs'
-
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 
-import vegito from 'vegito'
 import '@css/style.scss'
+import vegito from 'vegito'
 
-import { loaded } from '@/i18n'
-import { bubble } from '@/functions_events'
-import { getCharacter, persistCharacters } from "./wip/characters";
+import { messages } from '@/wip/lang'
 
-
-let zIndexCurrent = 0;
-
-export function init() {
+function init() {
 	console.info("[MCL] Starting up version " + VERSION);
 
 	ready(() => {
-		document.body.innerHTML = vegito(document.body.innerHTML, loaded);
+		document.body.innerHTML = vegito(document.body.innerHTML, messages);
 
 		// require('./functions').sortAssets();
 		require('./functions').loadRegion();
 
-		require('./i18n').populateLang();
 		require('./functions_populate').populateRegions();
-		// require('./functions_populate').populateScenes();
 		require('./functions_populate').populateAvatars();
 
 		require('./functions_events').initBubble();
@@ -44,8 +35,10 @@ export function init() {
 		});
 
 		// TODO: WIP
+		require('./wip/lang').load();
 		require('./wip/scenes').load();
 		require('./wip/characters').load();
+		require('./wip/settings').load();
 
 		// Bind input events
 		(function (elements) {
@@ -76,88 +69,9 @@ export function init() {
 			avatar_edit: {
 				change: require('./functions_events').updateAvatar,
 				keyup:  require('./functions_events').updateAvatar
-			},
-			lang_edit: {
-				change: require('./i18n').updateLang,
-				keyup:  require('./i18n').updateLang
-			},
-			clear_cache: {
-				click: require('./config').clearConfigs
 			}
 		});
-
-		initDrag();
 	});
-}
-
-function initDrag() {
-	interact('.draggable')
-		.draggable({
-			inertia: true,
-			modifiers: [
-				interact.modifiers.restrict({
-					restriction: 'parent',
-					endOnly: true,
-					elementRect: {
-						top:    0.5,
-						left:   0.5,
-						bottom: 0.5,
-						right:  0.5,
-					}
-				}),
-			],
-
-			listeners: {
-				start(event) {
-					event.target.style.zIndex = ++zIndexCurrent
-				},
-
-				move(event) {
-					let isActor = event.target.className.indexOf('actor') !== -1;
-					if (isActor && !event.shiftKey)
-						event.dy = 0; // Reset y-pos if the SHIFT key is not being pressed
-					return dragUpdatePos(event, event.target);
-				},
-
-				end(event) {
-					let isActor = event.target.className.indexOf('actor') !== -1;
-					if (isActor) {
-						return persistCharacters();
-					} else {
-						// Assume we're moving the bubble
-						return localStorage.setObject('bubble', bubble);
-					}
-				}
-			}
-		})
-		.on('doubletap', event => {
-			let actorId = event.target.dataset.actor;
-			if (!actorId)
-				return;
-
-			let actor = getCharacter(actorId);
-			actor.flipped = !actor.flipped;
-			persistCharacters();
-
-			dragUpdatePos(event, event.currentTarget);
-		});
-}
-
-function dragUpdatePos(event, target) {
-	let actorId = event.target.dataset.actor;
-	let info = actorId ? getCharacter(actorId) : bubble;
-
-	let x = info.pos.x + (event.dx || 0);
-	let y = info.pos.y + (event.dy || 0);
-
-	// Translate the element
-	target.style.webkitTransform
-		= target.style.transform
-		= 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (info.flipped || false ? -1 : 1) + ')';
-
-	// Update the position attributes
-	info.pos.x = x;
-	info.pos.y = y;
 }
 
 function ready(fn) {

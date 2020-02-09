@@ -1,8 +1,10 @@
-import { loaded } from "../i18n";
+import { messages } from "./lang";
+import { load as canvas } from "./canvas";
+import { drawAvatar } from "../functions";
 
 const DEFAULT_CHARACTER = {
 	name: 'Nathaniel',
-	variation: 'Normal',
+	variation: { name: 'Normal', id: 1, checksum: 'c8fa579bddd2fcd5' },
 	pos: { x: 0, y: 0 },
 	flipped: false
 };
@@ -13,14 +15,20 @@ let charactersDom = [];
 
 let nextId = 0;
 
-const $scene = document.getElementById('scene');
-const $characters = document.getElementById('characters');
+let $scene;
+let $characters;
 
 export function load() {
+	// TODO change to constants and move out of the function, after the vegito dependecy dies
+	$scene = document.getElementById('scene');
+	$characters = document.getElementById('characters');
+
 	loadCurrent();
 
 	document.getElementById('add-actor').addEventListener('click', () => addCharacter());
 	document.getElementById('clear-actors').addEventListener('click', removeAll);
+
+	canvas();
 }
 
 function loadCurrent() {
@@ -34,13 +42,13 @@ function loadCurrent() {
 
 		characters.push({
 			name: 'Nathaniel',
-			variation: 'Normal',
+			variation: { name: 'Normal', id: 1, checksum: 'c8fa579bddd2fcd5' },
 			pos: { x: -16, y: 0 },
 			flipped: false
 		});
 		characters.push({
 			name: 'Castiel',
-			variation: 'Normal',
+			variation: { name: 'Normal', id: 2, checksum: '7e39b3f5947b50be' },
 			pos: { x: -26, y: 0 },
 			flipped: false
 		});
@@ -68,7 +76,7 @@ function loadList($selectMain, $selectVariation, selected) {
 			}
 		});
 
-		// M.FormSelect.init($selectMain);
+		M.FormSelect.init($selectMain);
 
 		$selectMain.addEventListener('change', changedCharacter);
 		$selectMain.addEventListener('keyup',  changedCharacter);
@@ -96,7 +104,7 @@ function loadListVariations($select, variations, selected) {
 		$select.appendChild($option);
 	});
 
-	// M.FormSelect.init($select);
+	M.FormSelect.init($select);
 
 	$select.addEventListener('change', changedCharacterVariation);
 	$select.addEventListener('keyup',  changedCharacterVariation);
@@ -123,7 +131,7 @@ function createCharacterScene(id, info) {
 	let $img = document.createElement('img');
 	$img.id = 'actor_' + id;
 	$img.dataset.actor = id;
-	$img.alt = loaded['character'] + ' ' + (id+1);
+	$img.alt = messages['character'] + ' ' + (id+1);
 	$img.title = `${$img.alt} - ${info.name}\n\nPress SHIFT to move up and down\nDouble-click to flip`;
 	$img.classList.add('actor', 'draggable');
 	$img.style.bottom = '0';
@@ -133,6 +141,8 @@ function createCharacterScene(id, info) {
 		= `translate(${info.pos.x}px, ${info.pos.y}px) scaleX(${info.flipped ? -1 : 1})`;
 
 	$scene.appendChild($img);
+
+	updateCharacterScene($img, info);
 
 	let dom = charactersDom[id];
 	if(!dom) dom = charactersDom[id] = {}; // initialize DOM holder
@@ -153,7 +163,7 @@ function createCharacterSetting(id, info) {
 
 		let label = $divMain.appendChild(document.createElement('label'));
 		label.for = 'actor_' + id + '_edit';
-		label.textContent = loaded['character'] + ' ' + (id+1);
+		label.textContent = messages['character'] + ' ' + (id+1);
 
 		return $selectMain;
 	}
@@ -220,7 +230,6 @@ function removeCharacter(id) {
 }
 
 export function persistCharacters() {
-	console.warn('PERSIST', characters);
 	localStorage.setItem('characters', JSON.stringify(characters));
 }
 
@@ -242,26 +251,30 @@ function changedCharacterVariation() {
 	console.debug('Selected character ' + id + ': ' + emotion.name + ' (' + selected.textContent + ')');
 
 	// Update actor info
-	let character = characters[this.dataset.actor - 1];
+	let character = characters[this.dataset.actor];
 	character.name = emotion.name;
-	character.variation = variation.name;
+	character.variation = variation;
 	persistCharacters();
 
-	let $img = dom.scene;
+	updateCharacterScene(dom.scene, character);
+}
+
+function updateCharacterScene($img, character) {
 	$img.style.src = '';
 
 	// TODO: constant in PT?
-	if (emotion.name === '[Nada]') {
+	if (character.name === '[Nada]') {
 		$img.style.display = 'none';
 	} else {
 		$img.style.display = 'block';
-		if (emotion.name === '[Docete]') {
+		if (character.name === '[Docete]') {
 			drawAvatar(false, $img);
-			// target.src = assets.body
+			// $img.src = assets.body
 
 			$img.style.height = '150%';
 			$img.style.bottom = '-300px';
 		} else {
+			let variation = character.variation;
 			let asset = variation.id + (variation.checksum ? '-' + variation.checksum : '');
 			$img.src = 'assets/emotion/' + asset + '.png';
 			$img.style.backgroundImage = '';
