@@ -1,3 +1,5 @@
+import { getPlayerInfo } from "../api";
+
 const REGIONS = {
 	br: { id: 'br', link: 'amordoce.com', name: 'Brazil' },
 	us: { id: 'us', link: 'mycandylove.com', name: 'USA' },
@@ -68,9 +70,16 @@ function changedRegion() {
 	persistRegion();
 }
 
-function changedUsername() {
+function changedUsername(e) {
 	player.username = this.value;
 	persistUsername();
+
+	debugger;
+
+	// if (key.keyCode === 13) {
+	// 	key.preventDefault();
+	// 	submittedUsername();
+	// }
 }
 
 function persistUsername() {
@@ -87,4 +96,24 @@ function persistRegion() {
 
 function submittedUsername() {
 	console.warn("LOAD AVATAR");
+
+	getPlayerInfo(region, player.username)
+		.then(data => {
+			player.data = data;
+
+			for (let el in document.getElementsByClassName('actor_select')) {
+				if (el.options && el.options[el.selectedIndex].text === '[Docete]') {
+					el.dispatchEvent(new Event('change'));
+				}
+			}
+
+			let query = document.getElementById('avatar-edit');
+			if (query.options[query.selectedIndex].text === '[Docete]') {
+				query.dispatchEvent(new Event('change'));
+			}
+		})
+		.catch(error => {
+			console.warn("Unable to fetch player info:", error);
+			player.data = undefined;
+		});
 }

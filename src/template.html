@@ -9,8 +9,18 @@
 
 	<title>MCL Editor</title>
 	<link href="favicon.ico" rel="shortcut icon" />
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-W4V927S');</script>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4V927S"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div id="container" class="container">
 	<div class="row">
@@ -128,18 +138,9 @@
 		<div id="tab-characters" class="col s12">
 			<div class="row">
 
-				<!--<div class="input-field col s12 m12">-->
-				<!--Avatar:-->
-				<!--<input id="file_edit" type="file" onchange="loadFromFile('file_edit', '#scene .player-avatar', null)">-->
-				<!--</div>-->
-				<!--<div class="input-field col s12 m12">-->
-				<!--Personagem:-->
-				<!--<input id="file_char_edit" type="file">-->
-				<!--</div>-->
-
 				<div class="input-field col s12 m12">
-					<select id="avatar_edit"></select>
-					<label for="avatar_edit">{{avatar}}</label>
+					<select id="avatar-edit"></select>
+					<label for="avatar-edit">{{avatar}}</label>
 					<!--<button class="file_submit waves-effect waves-light btn" onclick="loadFromFile('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
 				</div>
 
@@ -199,15 +200,6 @@
 </div>
 
 <a href="#scene" id="go-to-scene" class="card">{{view_result}} &darr;</a>
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63320058-1"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'UA-63320058-1');
-</script>
 
 </body>
 </html>

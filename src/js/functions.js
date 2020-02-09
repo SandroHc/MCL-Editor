@@ -3,98 +3,6 @@ import CryptoJS from 'crypto-js'
 import { player, region } from './wip/account';
 
 
-let draw_avatar_dest = null;
-let draw_avatar_portrait = null;
-
-export function loadFromFile(e, bg_out = 'scene', img_out = undefined) {
-	console.log("Loading file");
-
-	const file = e.target.files[0];
-	if (!file) {
-		console.log('No file selected');
-		alert('Seleciona primeiro o ficheiro, baka!');
-		return;
-	}
-
-	if (!FileReader) {
-		console.log('FileReader not supported');
-		return;
-	}
-
-	let fr = new FileReader();
-	fr.onload = function () {
-		if (img_out) {
-			document.querySelector(img_out).src = fr.result;
-		}
-		if (bg_out) {
-			return document.getElementById(bg_out).style.backgroundImage = 'url(' + fr.result + ')';
-		}
-	};
-
-	fr.readAsDataURL(file);
-}
-
-export function getPlayerInfo(username) {
-	return new Promise((resolve, reject) => {
-		if (!username) {
-			reject("invalid username");
-			return;
-		}
-
-		let timestamp = Date.now().toString();
-		let message = [
-			'anonymous', // Private key
-			'GET',
-			'https://api3.' + region.link + '/v2/profile/find/' + username, timestamp
-		];
-
-		let hash = CryptoJS.HmacSHA1(message.join('+'), 'anonymous'); // (message, passphrase)
-
-
-		// API: https://api3.amordoce.com/v2/profile/find/{username}
-		fetch(`https://mcl.sandrohc.net/${region.id}/v2/profile/find/${username}`, {
-			headers: new Headers({
-				'X-Beemoov-Application': 'anonymous',
-				'X-Beemoov-Signature': hash,
-				'X-Beemoov-Timestamp': timestamp,
-			})
-		})
-			.then(response => {
-				if (!response.ok) throw new Error(response.status)
-			})
-			.then(data => data.json())
-			.then(data => {
-				resolve(data.data);
-			}).catch(error => {
-				reject(error);
-			});
-	})
-}
-
-export function getPlayerAvatar(playerId) {
-	return new Promise((resolve, reject) => {
-		if (!playerId) {
-			reject("invalid id");
-			return;
-		}
-
-		// API: http://api3.amordoce.com/v2/avatar/{player_id}
-		fetch(`https://mcl.sandrohc.net/${region.id}/v2/avatar/${playerId}`, {
-			headers: new Headers({
-			})
-		})
-			.then(response => {
-				if (!response.ok) throw new Error(response.status)
-			})
-			.then(data => data.json())
-			.then(data => {
-				resolve(data.data);
-			}).catch(error => {
-				reject(error);
-			});
-	})
-}
-
 export function drawAvatar(isPortrait, dest) {
 	if (!player.avatar) {
 		if (!player.data) {
@@ -108,12 +16,9 @@ export function drawAvatar(isPortrait, dest) {
 			return;
 		}
 
-		draw_avatar_dest = dest;
-		draw_avatar_portrait = isPortrait;
-
 		getPlayerAvatar(player.data.player.id).then(data => {
 			player.avatar = data;
-			drawAvatar(draw_avatar_portrait, draw_avatar_dest);
+			drawAvatar(isPortrait, dest);
 		})
 			.catch(error => console.log("Error loading player avatar: ", error));
 
@@ -171,25 +76,3 @@ export function drawAvatar(isPortrait, dest) {
 	dest.style.backgroundImage = bg;
 }
 
-export function sortAssets() {
-	let comparator = (a, b) => {
-		a = a.name.toUpperCase();
-		b = b.name.toUpperCase();
-
-		if (a.indexOf('[') > b.indexOf('[')) {
-			// Display '[val]' at the top
-			return -1;
-		} else  if (a < b) {
-			return -1;
-		} else if (a > b) {
-			return 1;
-		} else {
-			return 0;
-		}
-	};
-
-	// TODO
-	// ASSETS.scenes.sort(comparator);
-	// ASSETS.avatars.sort(comparator);
-	// ASSETS.emotions.sort(comparator);
-}

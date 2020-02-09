@@ -14,8 +14,6 @@ function init() {
 	ready(() => {
 		// require('./functions').sortAssets();
 
-		require('./functions_populate').populateAvatars();
-
 		M.FormSelect.init(document.querySelectorAll('select'));
 		M.Tabs.init(document.getElementById('tabs'));
 
@@ -23,25 +21,12 @@ function init() {
 		require('./wip/lang').init();
 		require('./wip/account').init();
 		require('./wip/answers').init();
+		require('./wip/avatar').init();
 		require('./wip/bubbles').init();
 		require('./wip/characters').init();
 		require('./wip/loveometer').init();
 		require('./wip/scenes').init();
 		require('./wip/settings').init();
-
-		// Bind input events
-		(function (elements) {
-			for (let el_name in elements) {
-				for (let event in elements[el_name]) {
-					document.getElementById(el_name).addEventListener(event, elements[el_name][event]);
-				}
-			}
-		})({
-			avatar_edit: {
-				change: require('./functions_events').updateAvatar,
-				keyup:  require('./functions_events').updateAvatar
-			}
-		});
 	});
 }
 

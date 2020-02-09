@@ -1,4 +1,4 @@
-import { loadFromFile } from '@/functions';
+import { loadFromFile } from './utils';
 
 const DEFAULT_SCENE = {
 	'name': 'Sala de Aula A',
