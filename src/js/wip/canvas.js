@@ -1,5 +1,6 @@
 import interact from "interactjs";
 import { getCharacter, persistCharacters } from "./characters";
+import { bubble, persist } from "./bubbles";
 
 
 let zIndexCurrent = 0;
@@ -36,10 +37,10 @@ export function load() {
 				end(event) {
 					let isActor = event.target.className.indexOf('actor') !== -1;
 					if (isActor) {
-						return persistCharacters();
+						persistCharacters();
 					} else {
 						// Assume we're moving the bubble
-						return localStorage.setObject('bubble', bubble);
+						persist();
 					}
 				}
 			}

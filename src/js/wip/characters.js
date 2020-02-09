@@ -18,7 +18,7 @@ let nextId = 0;
 let $scene;
 let $characters;
 
-export function load() {
+export function init() {
 	// TODO change to constants and move out of the function, after the vegito dependecy dies
 	$scene = document.getElementById('scene');
 	$characters = document.getElementById('characters');
@@ -79,7 +79,6 @@ function loadList($selectMain, $selectVariation, selected) {
 		M.FormSelect.init($selectMain);
 
 		$selectMain.addEventListener('change', changedCharacter);
-		$selectMain.addEventListener('keyup',  changedCharacter);
 	});
 }
 
@@ -94,7 +93,7 @@ function loadListVariations($select, variations, selected) {
 		return;
 	}
 
-	// load all variations
+	// init all variations
 	variations.forEach((e, i) => {
 		let $option = document.createElement('option');
 		$option.value = i;
@@ -107,7 +106,6 @@ function loadListVariations($select, variations, selected) {
 	M.FormSelect.init($select);
 
 	$select.addEventListener('change', changedCharacterVariation);
-	$select.addEventListener('keyup',  changedCharacterVariation);
 }
 
 export function getCharacter(id) {
@@ -236,6 +234,7 @@ export function persistCharacters() {
 function changedCharacter() {
 	console.debug('Character updated', this.value);
 
+	// TODO:
 	populateEmotionsSub(document.getElementById('actor_' + this.dataset.actor + '_sub'));
 }
 

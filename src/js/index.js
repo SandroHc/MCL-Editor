@@ -4,41 +4,30 @@ import 'materialize-css/dist/js/materialize.min.js'
 import '@css/style.scss'
 import vegito from 'vegito'
 
-import { messages } from '@/wip/lang'
+import { messages } from './wip/lang'
 
 function init() {
 	console.info("[MCL] Starting up version " + VERSION);
 
+	document.body.innerHTML = vegito(document.body.innerHTML, messages);
+
 	ready(() => {
-		document.body.innerHTML = vegito(document.body.innerHTML, messages);
-
 		// require('./functions').sortAssets();
-		require('./functions').loadRegion();
 
-		require('./functions_populate').populateRegions();
 		require('./functions_populate').populateAvatars();
 
-		require('./functions_events').initBubble();
-		require('./functions_events').initAnswers();
-
-		require('./functions').loadUsername();
-
-		// TODO: why not use Dropdown?
-		let elems = document.querySelectorAll('select');
-		M.FormSelect.init(elems, {
-			// https://materializecss.com/select.html#options
-		});
-
-		let tabs = document.querySelector('ul.tabs');
-		M.Tabs.init(tabs, {
-			// https://materializecss.com/tabs.html#options
-		});
+		M.FormSelect.init(document.querySelectorAll('select'));
+		M.Tabs.init(document.getElementById('tabs'));
 
 		// TODO: WIP
-		require('./wip/lang').load();
-		require('./wip/scenes').load();
-		require('./wip/characters').load();
-		require('./wip/settings').load();
+		require('./wip/lang').init();
+		require('./wip/account').init();
+		require('./wip/answers').init();
+		require('./wip/bubbles').init();
+		require('./wip/characters').init();
+		require('./wip/loveometer').init();
+		require('./wip/scenes').init();
+		require('./wip/settings').init();
 
 		// Bind input events
 		(function (elements) {
@@ -48,24 +37,6 @@ function init() {
 				}
 			}
 		})({
-			lovelevel_edit: {
-				input: require('./functions_events').loveometerLevel
-			},
-			lovelevel_visible: {
-				change: require('./functions_events').loveometer
-			},
-			bubble_edit: {
-				keyup: require('./functions_events').updateBubble
-			},
-			answers_edit: {
-				keyup: require('./functions_events').updateAnswers
-			},
-			username_submit: {
-				click: require('./functions_events').updateUsernameBtn
-			},
-			username_edit: {
-				keyup: require('./functions_events').updateUsername
-			},
 			avatar_edit: {
 				change: require('./functions_events').updateAvatar,
 				keyup:  require('./functions_events').updateAvatar

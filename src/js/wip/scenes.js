@@ -13,7 +13,7 @@ const DEFAULT_SCENE = {
 let scenes = [];
 let current = undefined;
 
-export function load() {
+export function init() {
 	loadCurrent();
 
 	import('../assets/scenes').then(module => {
@@ -65,7 +65,7 @@ function loadListVariations(variations) {
 		$el.remove(0);
 	}
 
-	// load all variations
+	// init all variations
 	variations.forEach((e, i) => {
 		let el = $el.appendChild(document.createElement('option'));
 		el.value = i;
@@ -85,7 +85,7 @@ function changedScene() {
 
 	applyScene(current.variation);
 
-	// load variation list
+	// init variation list
 	loadListVariations(current.variations);
 }
 
@@ -95,10 +95,10 @@ function changedSceneVariation() {
 
 	console.debug('Selected scene: ', scene.name + ' (' + variation.name + ')');
 
-	// load into canvas
+	// init into canvas
 	applyScene(variation);
 
-	// persist variation
+	// persistRegion variation
 	current.variation = variation;
 	persistScene(current);
 }

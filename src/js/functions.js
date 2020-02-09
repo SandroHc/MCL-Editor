@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-import { CONFIG, regions } from './config';
+import { player, region } from './wip/account';
 
 
 let draw_avatar_dest = null;
@@ -34,23 +34,6 @@ export function loadFromFile(e, bg_out = 'scene', img_out = undefined) {
 	fr.readAsDataURL(file);
 }
 
-export function loadRegion() {
-	CONFIG.region = localStorage.getItem('region') || CONFIG.default_region;
-
-	console.info('Loaded REGION: ' + regions[CONFIG.region].id + ' - ' + regions[CONFIG.region].link);
-}
-
-export function loadUsername() {
-	CONFIG.player.username = localStorage.getItem('username') || '';
-
-	console.info('Loaded USERNAME: ' + CONFIG.player.username);
-
-	if (CONFIG.player.username) {
-		document.getElementById('username_edit').value = CONFIG.player.username;
-		document.getElementById('username_submit').dispatchEvent(new Event('click'));
-	}
-}
-
 export function getPlayerInfo(username) {
 	return new Promise((resolve, reject) => {
 		if (!username) {
@@ -62,14 +45,14 @@ export function getPlayerInfo(username) {
 		let message = [
 			'anonymous', // Private key
 			'GET',
-			'https://api3.' + regions[CONFIG.region].link + '/v2/profile/find/' + username, timestamp
+			'https://api3.' + region.link + '/v2/profile/find/' + username, timestamp
 		];
 
 		let hash = CryptoJS.HmacSHA1(message.join('+'), 'anonymous'); // (message, passphrase)
 
 
 		// API: https://api3.amordoce.com/v2/profile/find/{username}
-		fetch(`https://mcl.sandrohc.net/${regions[CONFIG.region].id}/v2/profile/find/${username}`, {
+		fetch(`https://mcl.sandrohc.net/${region.id}/v2/profile/find/${username}`, {
 			headers: new Headers({
 				'X-Beemoov-Application': 'anonymous',
 				'X-Beemoov-Signature': hash,
@@ -96,7 +79,7 @@ export function getPlayerAvatar(playerId) {
 		}
 
 		// API: http://api3.amordoce.com/v2/avatar/{player_id}
-		fetch(`https://mcl.sandrohc.net/${regions[CONFIG.region].id}/v2/avatar/${playerId}`, {
+		fetch(`https://mcl.sandrohc.net/${region.id}/v2/avatar/${playerId}`, {
 			headers: new Headers({
 			})
 		})
@@ -113,37 +96,33 @@ export function getPlayerAvatar(playerId) {
 }
 
 export function drawAvatar(isPortrait, dest) {
-	if (!CONFIG.player.avatar) {
-		if (!CONFIG.player.id) {
-			if (!CONFIG.player.info) {
-				if (CONFIG.player.username) {
-					// If the player is set but there is no player info, try the outdated links
-					let timestamp = Date.now().toString();
-					dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (isPortrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
-				} else {
-					dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
-				}
-				return;
+	if (!player.avatar) {
+		if (!player.data) {
+			if (player.username) {
+				// If the player is set but there is no player info, try the outdated links
+				let timestamp = Date.now().toString();
+				dest.src = 'http://avatars.' + region.link + '/' + (isPortrait ? 'face' : 'full') + '/' + player.username + '.' + timestamp + '.png';
+			} else {
+				dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
 			}
-			CONFIG.player.id = CONFIG.player.info.player.id;
+			return;
 		}
 
 		draw_avatar_dest = dest;
 		draw_avatar_portrait = isPortrait;
 
-		getPlayerAvatar(CONFIG.player.id).then(data => {
-			CONFIG.player.avatar = data;
+		getPlayerAvatar(player.data.player.id).then(data => {
+			player.avatar = data;
 			drawAvatar(draw_avatar_portrait, draw_avatar_dest);
 		})
-			.catch(error => {
-				console.log("Error loading player avatar: ", error)
-			});
+			.catch(error => console.log("Error loading player avatar: ", error));
+
 		return;
 	}
 
-	let site = 'https://assets3.' + regions[CONFIG.region].link + '/';
+	let site = 'https://assets3.' + region.link + '/';
 	let type = isPortrait ? 'portrait' : 'normal';
-	let avatar = CONFIG.player.avatar;
+	let avatar = player.avatar;
 	let bg = '';
 
 	let firstImage = true;

@@ -19,7 +19,7 @@
 				<img id="logo" src="assets/logo.png" alt="My Candy Love">
 			</div>
 
-			<ul class="tabs">
+			<ul class="tabs" id="tabs">
 				<li class="tab col s2"><a href="#tab-account">{{account}}</a></li>
 				<li class="tab col s3"><a href="#tab-chat">{{chat}}</a></li>
 				<li class="tab col s3"><a href="#tab-scene">{{scene}}</a></li>
@@ -37,17 +37,17 @@
 
 				<div class="input-field col s12">
 					<i class="material-icons prefix">language</i>
-					<select id="region_edit"></select>
-					<label for="region_edit">{{region}}</label>
+					<select id="region-edit"></select>
+					<label for="region-edit">{{region}}</label>
 				</div>
 
 				<div class="input-field col s12 m8 l8">
 					<i class="material-icons prefix">account_circle</i>
-					<input placeholder="{{username_placeholder}}" id="username_edit" type="text" class="validate">
-					<label for="username_edit">{{username}}</label>
+					<input placeholder="{{username_placeholder}}" id="username-edit" type="text" class="validate">
+					<label for="username-edit">{{username}}</label>
 				</div>
 				<div class="input-field col s12 m4 l4">
-					<button id="username_submit" class="waves-effect waves-light btn">{{change_avatar}}</button>
+					<button id="username-submit" class="waves-effect waves-light btn">{{change_avatar}}</button>
 				</div>
 
 			</div>
@@ -66,9 +66,8 @@
 			<div class="row">
 				<div class="input-field col s12">
 					<i class="material-icons prefix">question_answer</i>
-					<textarea placeholder="{{characters_bubble}}" id="bubble_edit"
-							class="materialize-textarea"></textarea>
-					<label for="bubble_edit">{{characters_bubble_label}}</label>
+					<textarea placeholder="{{characters_bubble}}" id="bubble-edit" class="materialize-textarea"></textarea>
+					<label for="bubble-edit">{{characters_bubble_label}}</label>
 				</div>
 			</div>
 
@@ -76,8 +75,8 @@
 			<div class="row">
 				<div class="input-field col s12">
 					<i class="material-icons prefix">mode_edit</i>
-					<textarea placeholder="{{answers}}" id="answers_edit" class="materialize-textarea"></textarea>
-					<label for="answers_edit">{{answers_label}}</label>
+					<textarea placeholder="{{answers}}" id="answers-edit" class="materialize-textarea"></textarea>
+					<label for="answers-edit">{{answers_label}}</label>
 				</div>
 			</div>
 
@@ -87,12 +86,12 @@
 			<div class="row">
 				<div class="input-field col s6 m3">
 					<label>
-						<input id="lovelevel_visible" type="checkbox" class="filled-in">
+						<input id="lovelevel-visible" type="checkbox" class="filled-in">
 						<span>{{love_level}}</span>
 					</label>
 				</div>
 				<div class="input-field col s6 m9 range-field">
-					<input id="lovelevel_edit" value="0" type="range" min="-100" max="100">
+					<input id="lovelevel-edit" value="0" type="range" min="-100" max="100">
 				</div>
 			</div>
 		</div>

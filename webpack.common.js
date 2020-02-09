@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { DefinePlugin } = require('webpack');
+const { ProvidePlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
@@ -29,7 +30,10 @@ module.exports = {
 		]),
 		new DefinePlugin({
 			VERSION: JSON.stringify(require('./package.json').version)
-		})
+		}),
+		// new ProvidePlugin({
+		// 	__: path.resolve(__dirname, 'src/js/wip/utils.js'),
+		// }),
 	],
 	resolve: {
 		alias: {
@@ -56,6 +60,7 @@ module.exports = {
 				options: {
 					outputPath: 'assets',
 					name: '[name].[hash:8].[ext]',
+					esModule: false, // Workaround for: https://github.com/webpack-contrib/html-loader/issues/203
 				},
 			},
 			{
@@ -68,13 +73,11 @@ module.exports = {
 			},
 			{
 				test: /\.html$/,
-				loader: 'raw-loader',
-				// loader: 'html-loader',
-				// options: {
-				// 	interpolate: false,
-				// 	attributes: false,
-				// 	esModule: true,
-				// }
+				loader: 'html-loader',
+				options: {
+					interpolate: true,
+					esModule: true,
+				}
 			},
 		],
 	},

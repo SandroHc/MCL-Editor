@@ -1,5 +1,5 @@
 
-export function load() {
+export function init() {
 	document.getElementById('clear-cache').addEventListener('click', clearConfigs);
 }
 

@@ -7,7 +7,7 @@ const LANGUAGES = {
 
 export let messages = require(`../lang/${getLang()}.js`).messages;
 
-export function load() {
+export function init() {
 	loadList();
 
 	document.getElementById('lang-edit').addEventListener('change', changedLang);
