@@ -1,7 +1,7 @@
 export const messages = {
 	version: 'Version ' + VERSION,
-	welcome: 'Welcome to the unofficial scene editor of My Candy Love! A tool updated by <a href="https://sandrohc.net" target="_blank">SandroHc</a>. We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor">#mcleditor</a>.',
-	legal: 'All images belong to <a href="http://beemoov.com" target="_blank">Beemoov</a>',
+	welcome: 'Welcome to the unofficial scene editor of My Candy Love! A tool updated by <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>. We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>.',
+	legal: 'All images belong to <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
 	account: 'Account',
 	region: 'Region',
 	username: 'Name',

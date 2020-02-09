@@ -14,6 +14,12 @@ module.exports = merge(common, {
 		filename: '[name].[hash:8].js',
 		path: path.resolve(__dirname, 'dist'),
 	},
+	optimization: {
+		runtimeChunk: 'single',
+		splitChunks: {
+			chunks: 'all',
+		},
+	},
 	module: {
 		rules: [
 			{

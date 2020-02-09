@@ -16,8 +16,6 @@ export const regions = [
 ];
 
 export const CONFIG = {
-	default_lang: 'pt',
-	lang: 'pt',
 	default_region: '0',
 	region: '0',
 	player: {
@@ -28,37 +26,7 @@ export const CONFIG = {
 	},
 };
 
-export function setConfig(key, value) {
-	localStorage.setItem(key, value);
-}
-
-export function getConfig(key, defaultValue) {
-	if (defaultValue == null) {
-		defaultValue = void 0;
-	}
-	return localStorage.getItem(key) || defaultValue;
-}
-
 export function clearConfigs() {
 	localStorage.clear();
 	window.location.reload();
 }
-
-
-Storage.prototype.setObject = function (key, value) {
-	return this.setItem(key, JSON.stringify(value));
-};
-
-Storage.prototype.getObject = function (key) {
-	return JSON.parse(this.getItem(key));
-};
-
-Array.prototype.clean = function (deleteValue) {
-	for (let i=0; i < this.length; i++) {
-		if (this[i] === deleteValue) {
-			this.splice(i, 1);
-			i--;
-		}
-	}
-	return this;
-};

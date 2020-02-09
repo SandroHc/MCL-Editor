@@ -1,29 +1,11 @@
 // TODO: move to respective files
 import { avatars } from './assets/avatars';
-import { scenes } from './assets/scenes';
 
-import { CONFIG, setConfig } from './config';
+import { CONFIG } from './config';
 import { drawAvatar, getPlayerInfo } from './functions';
-import { populateScenesSub } from "./functions_populate";
 
 export let bubble = undefined;
 
-export function updateScene() {
-	let sub = document.querySelector(this.dataset.sub);
-	populateScenesSub(this.value, sub);
-
-	setConfig('scene', scenes[this.value].name);
-}
-
-export function updateSceneSub() {
-	let scene = scenes[this.options[this.selectedIndex].dataset.scene];
-
-	console.debug('Selected SCENE: ' + scene.name + ' (' + this.options[this.selectedIndex].textContent + ')');
-
-	let variation = scene.variations[this.value];
-	let target = document.querySelector(this.dataset.target);
-	target.style.backgroundImage = 'url(img/scene/' + variation.id + (variation.checksum ? '-' + variation.checksum : '') + '.jpg)';
-}
 
 export function loveometerLevel() {
 	let lovelevelVisible = document.getElementById('lovelevel_visible');
@@ -39,7 +21,7 @@ export function loveometer() {
 }
 
 export function initBubble() {
-	bubble = localStorage.getObject('bubble') || {
+	bubble = JSON.parse(localStorage.getItem('bubble')) || {
 		text: '',
 		pos: { x: 0, y: 0 }
 	};
@@ -62,7 +44,7 @@ export function updateBubble() {
 		el.innerHTML = this.value.replace(/\n/g, '<br>');
 
 	bubble.text = this.value;
-	localStorage.setObject('bubble', bubble);
+	localStorage.setItem('bubble', JSON.stringify(bubble));
 }
 
 export function initAnswers() {
@@ -93,7 +75,7 @@ export function updateAnswers() {
 		document.getElementById('answers').style.display = 'none';
 	}
 
-	setConfig('answers', this.value);
+	localStorage.setItem('answers', JSON.stringify(this.value));
 }
 
 export function updateUsername(key) {
@@ -107,8 +89,8 @@ export function updateUsernameBtn() {
 	CONFIG.player.username = document.getElementById('username_edit').value; // TODO: it used to defalut to 'd', is it some kind of default char?
 	CONFIG.region = document.getElementById('region_edit').value;
 
-	setConfig('username', CONFIG.player.username);
-	setConfig('region', CONFIG.region);
+	localStorage.setItem('username', CONFIG.player.username);
+	localStorage.setItem('region', CONFIG.region);
 
 	getPlayerInfo(CONFIG.player.username)
 		.then(data => {
@@ -141,7 +123,7 @@ export function updateAvatar() {
 	let el = document.querySelector('.player-avatar');
 	el.src = '';
 
-	setConfig('avatar', avatar.name);
+	localStorage.setItem('avatar', JSON.stringify(avatar.name));
 
 	if (avatar.name === '[Nada]') {
 		el.style.display = 'none';
@@ -156,6 +138,6 @@ export function updateAvatar() {
 	} else {
 		el.style.bottom = '0';
 		el.style.backgroundImage = '';
-		el.src = 'img/avatar/' + avatar.id + (avatar.checksum ? '-' + avatar.checksum : '') + '.png';
+		el.src = 'assets/avatar/' + avatar.id + (avatar.checksum ? '-' + avatar.checksum : '') + '.png';
 	}
 }

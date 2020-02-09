@@ -16,18 +16,19 @@
 	<div class="row">
 		<div class="col s12 card">
 			<div class="col s12">
-				<img id="logo" src="img/logo.png" alt="My Candy Love">
+				<img id="logo" src="assets/logo.png" alt="My Candy Love">
 			</div>
 
 			<ul class="tabs">
 				<li class="tab col s2"><a href="#tab-account">{{account}}</a></li>
 				<li class="tab col s3"><a href="#tab-chat">{{chat}}</a></li>
 				<li class="tab col s3"><a href="#tab-scene">{{scene}}</a></li>
-				<li class="tab col s3"><a href="#tab-actors">{{characters}}</a></li>
+				<li class="tab col s3"><a href="#tab-characters">{{characters}}</a></li>
 				<li class="tab col s1"><a href="#tab-settings"><i class="material-icons">settings</i></a></li>
 			</ul>
 		</div>
 
+		<!-- Account -->
 		<div id="tab-account" class="col s12">
 			<div class="row">
 				<div class="col s12">
@@ -67,12 +68,13 @@
 			<div class="row">
 
 				<div class="col s12">
-					<p class="legal"><a href="https://github.com/SandroHc/MCL-Editor" target="_blank">{{version}}</a>
+					<p class="legal"><a href="https://github.com/SandroHc/MCL-Editor" target="_blank" rel="noopener">{{version}}</a>
 						&bullet; {{legal}}</p>
 				</div>
 			</div>
 		</div>
 
+		<!-- Dialogue -->
 		<div id="tab-chat" class="col s12">
 			<div class="row">
 
@@ -90,9 +92,9 @@
 				</div>
 
 			</div>
-
 		</div>
 
+		<!-- Scene -->
 		<div id="tab-scene" class="col s12">
 			<div class="row">
 
@@ -109,18 +111,19 @@
 				</div>
 
 				<div class="input-field col s12 m6">
-					<select id="scene_edit" data-sub="#scene_sub_edit"></select>
+					<select id="scene_edit"></select>
 					<label for="scene_edit">Fundo</label>
 				</div>
 				<div class="input-field col s12 m6">
-					<select id="scene_sub_edit" data-parent="#scene_edit" data-target="#scene"></select>
+					<select id="scene_variation_edit"></select>
 				</div>
 
 			</div>
 
 		</div>
 
-		<div id="tab-actors" class="col s12">
+		<!-- Characters -->
+		<div id="tab-characters" class="col s12">
 			<div class="row">
 
 				<!--<div class="input-field col s12 m12">-->
@@ -138,7 +141,7 @@
 					<!--<button class="file_submit waves-effect waves-light btn" onclick="loadFromFile('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
 				</div>
 
-				<div id="actors"></div>
+				<div id="characters"></div>
 
 				<a id="add-actor" class="btn-floating btn-large waves-effect waves-light red">
 					<i class="material-icons">add</i>
@@ -146,6 +149,7 @@
 			</div>
 		</div>
 
+		<!-- Settings -->
 		<div id="tab-settings" class="col s12">
 			<div class="row">
 
@@ -163,7 +167,7 @@
 				</div>
 
 				<div class="input-field col s6">
-					<button id="clear_actors" class="waves-effect waves-light btn">{{ clear_actors }}</button>
+					<button id="clear-actors" class="waves-effect waves-light btn">{{ clear_actors }}</button>
 				</div>
 				<div class="input-field col s6">
 					<button id="clear_cache" class="waves-effect waves-light btn">{{ clear_cache }}</button>
@@ -188,11 +192,20 @@
 	</div>
 	<ul id="answers" style="display:none"></ul>
 	<div class="player" style="display:none">
-		<img class="player-avatar" src="/img/face_unknown.png" alt="Avatar do personagem">
+		<img class="player-avatar" src="/assets/face_unknown.png" alt="Avatar do personagem">
 	</div>
 </div>
 
 <a href="#scene" id="go-to-scene" class="card">{{view_result}} &darr;</a>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63320058-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-63320058-1');
+</script>
 
 </body>
 </html>

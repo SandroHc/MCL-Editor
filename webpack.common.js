@@ -8,7 +8,11 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 module.exports = {
 	entry: {
 		app: './src/js/index.js',
-		assets: [ './src/js/assets/avatars.js', './src/js/assets/emotions.js', './src/js/assets/scenes.js' ],
+
+		// assets: [ './src/js/assets/avatars.js', './src/js/assets/emotions.js', './src/js/assets/scenes.js' ],
+		scenes:   [ './src/js/assets/scenes.js' ],
+		avatars:  [ './src/js/assets/avatars.js' ],
+		emotions: [ './src/js/assets/emotions.js' ],
 	},
 	plugins: [
 		new HardSourceWebpackPlugin(),
@@ -20,7 +24,7 @@ module.exports = {
 		new CopyWebpackPlugin([
 			{
 				from: 'static',
-				// ignore: [ 'img/**/*' ],
+				// ignore: [ 'assets/**/*' ],
 			}
 		]),
 		new DefinePlugin({
@@ -31,7 +35,7 @@ module.exports = {
 		alias: {
 			'@': path.resolve(__dirname, 'src/js/'),
 			'@css': path.resolve(__dirname, 'src/styles/'),
-			'@img': path.resolve(__dirname, 'src/img/'),
+			'@assets': path.resolve(__dirname, 'src/assets/'),
 		}
 	},
 	module: {
@@ -50,7 +54,7 @@ module.exports = {
 				test: /\.(png|svg|jpe?g|gif)$/,
 				loader: 'file-loader',
 				options: {
-					outputPath: 'img',
+					outputPath: 'assets',
 					name: '[name].[hash:8].[ext]',
 				},
 			},

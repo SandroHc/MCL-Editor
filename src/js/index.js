@@ -7,9 +7,8 @@ import vegito from 'vegito'
 import '@css/style.scss'
 
 import { loaded } from '@/i18n'
-import { loadFromFile } from '@/functions'
-import { emptyActor, getActor, persistActors } from "@/actors"
 import { bubble } from '@/functions_events'
+import { getCharacter, persistCharacters } from "./wip/characters";
 
 
 let zIndexCurrent = 0;
@@ -21,16 +20,13 @@ export function init() {
 		document.body.innerHTML = vegito(document.body.innerHTML, loaded);
 
 		// require('./functions').sortAssets();
-
 		require('./functions').loadRegion();
-
 
 		require('./i18n').populateLang();
 		require('./functions_populate').populateRegions();
-		require('./functions_populate').populateScenes();
+		// require('./functions_populate').populateScenes();
 		require('./functions_populate').populateAvatars();
 
-		require('./actors').initActors();
 		require('./functions_events').initBubble();
 		require('./functions_events').initAnswers();
 
@@ -47,6 +43,10 @@ export function init() {
 			// https://materializecss.com/tabs.html#options
 		});
 
+		// TODO: WIP
+		require('./wip/scenes').load();
+		require('./wip/characters').load();
+
 		// Bind input events
 		(function (elements) {
 			for (let el_name in elements) {
@@ -55,14 +55,6 @@ export function init() {
 				}
 			}
 		})({
-			scene_edit: {
-				change: require('./functions_events').updateScene,
-				keyup:  require('./functions_events').updateScene
-			},
-			scene_sub_edit: {
-				change: require('./functions_events').updateSceneSub,
-				keyup:  require('./functions_events').updateSceneSub
-			},
 			lovelevel_edit: {
 				input: require('./functions_events').loveometerLevel
 			},
@@ -89,15 +81,10 @@ export function init() {
 				change: require('./i18n').updateLang,
 				keyup:  require('./i18n').updateLang
 			},
-			clear_actors: {
-				click: require('./actors').removeAllActors
-			},
 			clear_cache: {
 				click: require('./config').clearConfigs
 			}
 		});
-
-		document.getElementById('file_scene_edit').addEventListener('change', e => loadFromFile(e));
 
 		initDrag();
 	});
@@ -135,7 +122,7 @@ function initDrag() {
 				end(event) {
 					let isActor = event.target.className.indexOf('actor') !== -1;
 					if (isActor) {
-						return persistActors();
+						return persistCharacters();
 					} else {
 						// Assume we're moving the bubble
 						return localStorage.setObject('bubble', bubble);
@@ -148,9 +135,9 @@ function initDrag() {
 			if (!actorId)
 				return;
 
-			let actor = getActor(actorId);
+			let actor = getCharacter(actorId);
 			actor.flipped = !actor.flipped;
-			persistActors();
+			persistCharacters();
 
 			dragUpdatePos(event, event.currentTarget);
 		});
@@ -158,7 +145,7 @@ function initDrag() {
 
 function dragUpdatePos(event, target) {
 	let actorId = event.target.dataset.actor;
-	let info = actorId ? (getActor(actorId) || emptyActor) : bubble;
+	let info = actorId ? getCharacter(actorId) : bubble;
 
 	let x = info.pos.x + (event.dx || 0);
 	let y = info.pos.y + (event.dy || 0);
@@ -181,5 +168,14 @@ function ready(fn) {
 	}
 }
 
+Array.prototype.clean = function (deleteValue) {
+	for (let i = 0; i < this.length; i++) {
+		if (this[i] === deleteValue) {
+			this.splice(i, 1);
+			i--;
+		}
+	}
+	return this;
+};
 
 init();

@@ -1,6 +1,5 @@
-import { CONFIG, getConfig, setConfig } from '@/config'
-
-const languages = {
+const DEFAULT_LANGUAGE = 'pt';
+const LANGUAGES = {
 	pt: { name: 'Português' },
 	en: { name: 'English' },
 };
@@ -8,7 +7,7 @@ const languages = {
 export let loaded = require(`./lang/${getLang()}.js`).messages;
 
 export function getLang() {
-	let language = getConfig('lang')
+	let language = localStorage.getItem('lang')
 		|| (navigator.languages && navigator.languages[0])
 		|| navigator.language
 		|| navigator.userLanguage;
@@ -18,8 +17,8 @@ export function getLang() {
 	language = language.split('-')[0];
 
 	// Check if the language is available. If not, use the default one
-	if (languages[language] === undefined) {
-		language = CONFIG.default_lang;
+	if (LANGUAGES[language] === undefined) {
+		language = DEFAULT_LANGUAGE;
 	}
 
 	return language;
@@ -29,9 +28,9 @@ export function populateLang() {
 	let language = getLang();
 	let select = document.getElementById('lang_edit');
 
-	for (let lang in languages) {
+	for (let lang in LANGUAGES) {
 		let el = document.createElement('option');
-		el.textContent = languages[lang].name;
+		el.textContent = LANGUAGES[lang].name;
 		el.value = lang;
 		el.selected = lang === language ? 'true' : void 0;
 		select.appendChild(el);
@@ -41,7 +40,7 @@ export function populateLang() {
 export function updateLang() {
 	let selected = document.getElementById('lang_edit').value;
 	if (selected !== getLang()) {
-		setConfig('lang', selected);
+		localStorage.setItem('lang', selected);
 		return window.location.reload();
 	}
 }

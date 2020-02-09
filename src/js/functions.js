@@ -1,12 +1,12 @@
 import CryptoJS from 'crypto-js'
 
-import { CONFIG, getConfig, regions } from './config';
+import { CONFIG, regions } from './config';
 
 
 let draw_avatar_dest = null;
 let draw_avatar_portrait = null;
 
-export function loadFromFile(e, bg_out = '#scene', img_out = undefined) {
+export function loadFromFile(e, bg_out = 'scene', img_out = undefined) {
 	console.log("Loading file");
 
 	const file = e.target.files[0];
@@ -27,7 +27,7 @@ export function loadFromFile(e, bg_out = '#scene', img_out = undefined) {
 			document.querySelector(img_out).src = fr.result;
 		}
 		if (bg_out) {
-			return document.querySelector(bg_out).style.backgroundImage = 'url(' + fr.result + ')';
+			return document.getElementById(bg_out).style.backgroundImage = 'url(' + fr.result + ')';
 		}
 	};
 
@@ -35,13 +35,13 @@ export function loadFromFile(e, bg_out = '#scene', img_out = undefined) {
 }
 
 export function loadRegion() {
-	CONFIG.region = getConfig('region') || CONFIG.default_region;
+	CONFIG.region = localStorage.getItem('region') || CONFIG.default_region;
 
 	console.info('Loaded REGION: ' + regions[CONFIG.region].id + ' - ' + regions[CONFIG.region].link);
 }
 
 export function loadUsername() {
-	CONFIG.player.username = getConfig('username') || '';
+	CONFIG.player.username = localStorage.getItem('username') || '';
 
 	console.info('Loaded USERNAME: ' + CONFIG.player.username);
 
@@ -121,7 +121,7 @@ export function drawAvatar(isPortrait, dest) {
 					let timestamp = Date.now().toString();
 					dest.src = 'http://avatars.' + regions[CONFIG.region || 0].link + '/' + (isPortrait ? 'face' : 'full') + '/' + CONFIG.player.username + '.' + timestamp + '.png';
 				} else {
-					dest.src = 'img/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
+					dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
 				}
 				return;
 			}
@@ -188,7 +188,7 @@ export function drawAvatar(isPortrait, dest) {
 		addClothe(avatar.avatar.bodyType, null, 'avatarpart');
 	}
 
-	dest.src = 'img/' + (isPortrait ? 'face' : 'body') + '_placeholder.png';
+	dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_placeholder.png';
 	dest.style.backgroundImage = bg;
 }
 
