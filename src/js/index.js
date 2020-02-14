@@ -21,7 +21,7 @@ function init() {
 		require('./wip/lang').init();
 		require('./wip/account').init();
 		require('./wip/answers').init();
-		require('./wip/avatar').init();
+		require('./wip/avatars').init();
 		require('./wip/bubbles').init();
 		require('./wip/characters').init();
 		require('./wip/loveometer').init();

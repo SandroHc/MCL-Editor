@@ -1,10 +1,17 @@
 export const emotions = [
 	{
+		'name': '[Docete]',
+		'variations': [
+			{ name: 'Normal', id: 's', checksum: '-' },
+		]
+	},
+	{
 		'name': 'Agatha',
 		'variations': [
 			{ name: 'Normal', id: 9, checksum: '3079f94c4e567843' },
 		]
-	}, {
+	},
+	{
 		'name': 'Alexy',
 		'variations': [
 			{ name: 'Normal', id: 123, checksum: '' },
@@ -27,7 +34,8 @@ export const emotions = [
 			{ name: 'Traje de ciências: Sério', id: 454, checksum: '' },
 			{ name: 'Traje de ciências: Sorrindo', id: 452, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Ambre',
 		'variations': [
 			{ name: 'Normal', id: 36, checksum: '83686cd7148d751c' },
@@ -66,13 +74,15 @@ export const emotions = [
 			{ name: 'Traje esportivo: Normal', id: 688, checksum: '' },
 			{ name: 'Triste', id: 400, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Ambre e amigas',
 		'variations': [
 			{ name: 'Normal', id: 16, checksum: '' },
 			{ name: 'Traje esportivo', id: 144, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Armin',
 		'variations': [
 			{ name: 'Zangado A', id: 128, checksum: '' },
@@ -82,7 +92,8 @@ export const emotions = [
 			{ name: 'Normal', id: 126, checksum: '' },
 			{ name: 'Sorrindo', id: 127, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Efeitos',
 		'variations': [
 			{ name: 'Bing!', id: 867, checksum: '' },
@@ -97,35 +108,40 @@ export const emotions = [
 			{ name: 'Mwahaha!', id: 45, checksum: '' },
 			{ name: 'Letra F', id: 110, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Morcego',
 		'variations': [
 			{ name: 'Normal', id: 115, checksum: '' },
 			{ name: 'Feliz', id: 117, checksum: '' },
 			{ name: 'Sorrindo', id: 116, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Prof. Boris',
 		'variations': [
 			{ name: 'Normal', id: 23, checksum: '' },
 			{ name: 'Corado', id: 20, checksum: '' },
 			{ name: 'Triste', id: 21, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Prof. Delanay',
 		'variations': [
 			{ name: 'Normal', id: 515, checksum: '' },
 			{ name: 'Preocupada', id: 516, checksum: '' },
 			{ name: 'Zangada', id: 540, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Prof. Faraize',
 		'variations': [
 			{ name: 'Normal', id: 34, checksum: '' },
 			{ name: 'Sorrindo', id: 578, checksum: '' },
 			{ name: 'Corado', id: 432, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Prof. Patrick Savin',
 		'variations': [
 			{ name: 'Normal', id: 619, checksum: '' },
@@ -133,7 +149,8 @@ export const emotions = [
 			{ name: 'Incomodado', id: 621, checksum: '' },
 			{ name: 'Sério', id: 675, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Bia',
 		'variations': [
 			{ name: 'Normal', id: 60, checksum: '' },
@@ -150,7 +167,8 @@ export const emotions = [
 			{ name: 'Traje de Ciências: Sorrindo', id: 469, checksum: '' },
 			{ name: 'Traje de Ciências: Zangada', id: 470, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Castiel',
 		'variations': [
 			{ name: 'Normal', id: 2, checksum: '7e39b3f5947b50be' },
@@ -220,7 +238,8 @@ export const emotions = [
 			{ name: 'Vovozinha-Lobo Mal: Normal', id: 344, checksum: '' },
 			{ name: 'Vovozinha-Lobo Mal: Sorrindo', id: 343, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Charlie',
 		'variations': [
 			{ name: 'Normal', id: 180, checksum: '' },
@@ -228,7 +247,8 @@ export const emotions = [
 			{ name: 'Corado', id: 192, checksum: '' },
 			{ name: 'Embaraçado', id: 181, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'ChiNoMiko',
 		'variations': [
 			{ name: 'Wink', id: 22, checksum: '' },
@@ -237,21 +257,24 @@ export const emotions = [
 			{ name: 'Wink: Natal', id: 160, checksum: '' },
 			{ name: 'Wink: Halloween', id: 111, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Cotton',
 		'variations': [
 			{ name: 'Normal', id: 157, checksum: '' },
 			{ name: 'Sorrindo', id: 158, checksum: '' },
 			{ name: 'Preocupado', id: 159, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dajan',
 		'variations': [
 			{ name: 'Normal', id: 29, checksum: '70ec36c282363469' },
 			{ name: 'Sorrindo', id: 30, checksum: 'e9630ede46551912' },
 			{ name: 'Zangado', id: 31, checksum: '2f5207a31e66fa53' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dake',
 		'variations': [
 			{ name: 'Normal', id: 281, checksum: '' },
@@ -271,28 +294,33 @@ export const emotions = [
 			{ name: 'Traje esportivo: Sorrindo #1', id: 165, checksum: '' },
 			{ name: 'Traje esportivo: Sorrindo #2', id: 166, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dark Castiel',
 		'variations': [
 			{ name: 'Normal', id: 265, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dark Louis',
 		'variations': [
 			{ name: 'Normal', id: 261, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dark Nathaniel',
 		'variations': [
 			{ name: 'Normal', id: 264, checksum: '' },
 			{ name: 'Sorrindo', id: 263, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dark Diretora',
 		'variations': [
 			{ name: 'Zangada', id: 266, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Deborah',
 		'variations': [
 			{ name: 'Normal', id: 215, checksum: '' },
@@ -305,14 +333,16 @@ export const emotions = [
 			{ name: 'Chorando', id: 259, checksum: '' },
 			{ name: 'Molhada', id: 235, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dragon',
 		'variations': [
 			{ name: 'Normal', id: 89, checksum: '' },
 			{ name: 'Feliz', id: 87, checksum: '' },
 			{ name: 'Zangado', id: 88, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dimitri',
 		'variations': [
 			{ name: 'Normal', id: 112, checksum: '' },
@@ -322,12 +352,14 @@ export const emotions = [
 			{ name: 'Traje: Embaraçado', id: 287, checksum: '' },
 			{ name: 'Traje: Zangado', id: 289, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Rã',
 		'variations': [
 			{ name: 'Normal', id: 241, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Iris',
 		'variations': [
 			{ name: 'Normal', id: 17, checksum: 'd7cb3a0c9a4f3b1b' },
@@ -346,14 +378,16 @@ export const emotions = [
 			{ name: 'Zangada #2', id: 858, checksum: '' },
 			{ name: 'Zangada #3', id: 859, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Jade',
 		'variations': [
 			{ name: 'Normal', id: 26, checksum: '' },
 			{ name: 'Sorrindo', id: 27, checksum: '' },
 			{ name: 'Zangado', id: 28, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Ken',
 		'variations': [
 			{ name: 'Normal', id: 5, checksum: 'a0197b43ebdd242c' },
@@ -361,7 +395,8 @@ export const emotions = [
 			{ name: 'Apaixonado', id: 6, checksum: '3eaf31f49ef10daf' },
 			{ name: 'Chorando', id: 7, checksum: '7e3731fcde612da3' },
 		]
-	}, {
+	},
+	{
 		'name': 'Kentin',
 		'variations': [
 			{ name: 'Normal', id: 202, checksum: '' },
@@ -375,7 +410,8 @@ export const emotions = [
 			{ name: 'Zangado B', id: 210, checksum: '' },
 			{ name: 'Zangado C', id: 275, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Kim',
 		'variations': [
 			{ name: 'Normal', id: 66, checksum: '' },
@@ -397,7 +433,8 @@ export const emotions = [
 			{ name: 'Traje de Ciências: Surpresa', id: 493, checksum: '' },
 			{ name: 'Traje de Ciências: Zangada', id: 492, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Lety',
 		'variations': [
 			{ name: 'Normal', id: 276, checksum: '' },
@@ -407,7 +444,8 @@ export const emotions = [
 			{ name: 'Corada', id: 278, checksum: '' },
 			{ name: 'Surpresa', id: 678, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Leigh',
 		'variations': [
 			{ name: 'Normal', id: 70, checksum: '' },
@@ -418,13 +456,15 @@ export const emotions = [
 			{ name: 'MIB: Normal', id: 256, checksum: '' },
 			{ name: 'MIB: Óculos', id: 254, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Louis',
 		'variations': [
 			{ name: 'Normal', id: 246, checksum: '' },
 			{ name: 'Praia: Normal', id: 108, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Lysander',
 		'variations': [
 			{ name: 'Normal', id: 47, checksum: '' },
@@ -445,7 +485,8 @@ export const emotions = [
 			{ name: 'Track-suit Corado B', id: 152, checksum: '' },
 			{ name: 'Track-suit Zangado', id: 150, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Melody',
 		'variations': [
 			{ name: 'Normal', id: 57, checksum: '' },
@@ -463,12 +504,14 @@ export const emotions = [
 			{ name: 'Traje de Ciências: Sorrindo', id: 498, checksum: '' },
 			{ name: 'Traje de Ciências: Zangada', id: 500, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sombra Misteriosa',
 		'variations': [
 			{ name: 'Normal', id: 46, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Nathaniel',
 		'variations': [
 			{ name: 'Normal', id: 1, checksum: 'c8fa579bddd2fcd5' },
@@ -576,7 +619,8 @@ export const emotions = [
 			{ name: '[Antigo] Traje esportivo: Sorrindo', id: '136_old', checksum: '' },
 			{ name: '[Antigo] Traje esportivo: Zangado', id: '137_old', checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Nina',
 		'variations': [
 			{ name: 'Normal', id: 212, checksum: '' },
@@ -588,7 +632,8 @@ export const emotions = [
 			{ name: 'Maligna', id: 211, checksum: '' },
 			{ name: 'Triste', id: 670, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Peggy',
 		'variations': [
 			{ name: 'Normal', id: 54, checksum: '' },
@@ -610,7 +655,8 @@ export const emotions = [
 			{ name: 'Traje de Ciências: Sorrindo', id: 502, checksum: '' },
 			{ name: 'Traje de Ciências: Zangada', id: 504, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Rena',
 		'variations': [
 			{ name: 'Normal', id: 242, checksum: '' },
@@ -618,7 +664,8 @@ export const emotions = [
 			{ name: 'Colar Rosa', id: 244, checksum: '' },
 			{ name: 'Colar Dourado', id: 245, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Rosalya',
 		'variations': [
 			{ name: 'Normal', id: 41, checksum: '' },
@@ -679,7 +726,8 @@ export const emotions = [
 			{ name: '[Antigo] Traje de Ciências: Triste', id: 508, checksum: '' },
 			{ name: '[Antigo] Traje de Ciências: Zangada', id: 507, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Parentes',
 		'variations': [
 			{ name: 'Docete: Felizes', id: 301, checksum: '' },
@@ -737,21 +785,24 @@ export const emotions = [
 			{ name: 'Violette [Pai]', id: 309, checksum: '' },
 			{ name: 'Li', id: 307, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Diretora Shermasnky',
 		'variations': [
 			{ name: 'Normal', id: 8, checksum: '0f830c80a70bc366' },
 			{ name: 'Zangada', id: 15, checksum: 'bfb519e862a6c5c5' },
 			{ name: 'Preocupada', id: 543, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Bruxa de Halloween',
 		'variations': [
 			{ name: 'Normal', id: 227, checksum: '' },
 			{ name: 'Sorrindo', id: 228, checksum: '' },
 			{ name: 'Séria', id: 229, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Tije',
 		'variations': [
 			{ name: 'Normal', id: 238, checksum: '' },
@@ -759,7 +810,8 @@ export const emotions = [
 			{ name: 'Sorrindo B', id: 237, checksum: '' },
 			{ name: 'Rena', id: 240, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Violette',
 		'variations': [
 			{ name: 'Normal', id: 63, checksum: '' },
@@ -778,24 +830,28 @@ export const emotions = [
 			{ name: 'Traje esportivo: Sorrindo', id: 156, checksum: '' },
 			{ name: 'Traje esportivo: Triste', id: 168, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Wenka',
 		'variations': [
 			{ name: 'Normal', id: 182, checksum: '' },
 			{ name: 'Sorrindo', id: 199, checksum: '' },
 			{ name: 'Tongue', id: 184, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Wenka & Willi',
 		'variations': [
 			{ name: 'Normal', id: 189, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Vadias',
 		'variations': [
 			{ name: 'Normal', id: 280, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Willi',
 		'variations': [
 			{ name: 'Normal', id: 185, checksum: '' },
@@ -803,7 +859,8 @@ export const emotions = [
 			{ name: 'Triste', id: 188, checksum: '' },
 			{ name: 'Shock', id: 187, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Charlotte',
 		'variations': [
 			{ name: 'Normal', id: 702, checksum: '0984f335ae935183' },
@@ -812,12 +869,14 @@ export const emotions = [
 			{ name: 'Traje de Ciências: Normal', id: 472, checksum: '' },
 			{ name: 'Traje esportivo: Normal', id: 690, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Cookie',
 		'variations': [
 			{ name: 'Normal', id: 596, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Enfermeira',
 		'variations': [
 			{ name: 'Normal', id: 762, checksum: '' },
@@ -825,26 +884,30 @@ export const emotions = [
 			{ name: 'Séria', id: 763, checksum: '' },
 			{ name: 'Sorrindo', id: 765, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Médico',
 		'variations': [
 			{ name: 'Normal', id: 772, checksum: '' },
 			{ name: 'Sorrindo', id: 792, checksum: '' },
 			{ name: 'Zangado', id: 791, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Vendedora',
 		'variations': [
 			{ name: 'Normal', id: 436, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Thomas',
 		'variations': [
 			{ name: 'Normal', id: 555, checksum: '' },
 			{ name: 'Sorrindo', id: 556, checksum: '' },
 			{ name: 'Zangado', id: 856, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Priya',
 		'variations': [
 			{ name: 'Normal #1', id: 558, checksum: '' },
@@ -862,7 +925,8 @@ export const emotions = [
 			{ name: 'Raiva #4', id: 566, checksum: '' },
 			{ name: 'Surpresa', id: 562, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Viktor',
 		'variations': [
 			{ name: 'Normal', id: 'Viktor', checksum: '' },
@@ -872,7 +936,8 @@ export const emotions = [
 			{ name: 'Triste', id: 'Viktor5', checksum: '' },
 			{ name: 'Zangado', id: 'Viktor2', checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Li',
 		'variations': [
 			{ name: 'Normal', id: 705, checksum: '81f609f8e74bd734' },
@@ -887,16 +952,6 @@ export const emotions = [
 			{ name: 'Traje de Ciências: Preocupada', id: 496, checksum: '' },
 			{ name: 'Traje de Ciências: Zangada', id: 495, checksum: '' },
 			{ name: 'Traje esportivo: Normal', id: 689, checksum: '' },
-		]
-	}, {
-		'name': '[Nada]',
-		'variations': [
-			{ name: 'Normal', id: 0, checksum: '-' },
-		]
-	}, {
-		'name': '[Docete]',
-		'variations': [
-			{ name: 'Normal', id: 's', checksum: '-' },
 		]
 	}
 ];

@@ -202,6 +202,8 @@ function createCharacterSetting(id, info) {
 	loadList($main, $variation, info);
 
 	charactersDom[id].config = $root;
+	charactersDom[id].main = $main;
+	charactersDom[id].variation = $variation;
 }
 
 export function removeAll() {
@@ -232,10 +234,23 @@ export function persistCharacters() {
 }
 
 function changedCharacter() {
-	console.debug('Character updated', this.value);
+	let selected = emotions[this.value];
+	console.debug('Character updated', selected);
 
-	// TODO:
-	populateEmotionsSub(document.getElementById('actor_' + this.dataset.actor + '_sub'));
+	let id = this.dataset.actor;
+
+	// Update actor info
+	let character = characters[id];
+	character.name = selected.name;
+	character.variation = selected.variations[0];
+	persistCharacters();
+
+	// Update canvas
+	let dom = charactersDom[id];
+	updateCharacterScene(dom.scene, character);
+
+	// Upload list
+	loadListVariations(dom.variation, selected.variations, character.variation);
 }
 
 function changedCharacterVariation() {
