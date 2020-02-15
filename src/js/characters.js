@@ -43,13 +43,13 @@ function loadCurrent() {
 		characters.push({
 			name: 'Nathaniel',
 			variation: { name: 'Normal', id: 1, checksum: 'c8fa579bddd2fcd5' },
-			pos: { x: -16, y: 0 },
-			flipped: false
+			pos: { x: 360, y: 0 },
+			flipped: true
 		});
 		characters.push({
 			name: 'Castiel',
 			variation: { name: 'Normal', id: 2, checksum: '7e39b3f5947b50be' },
-			pos: { x: -26, y: 0 },
+			pos: { x: 340, y: 0 },
 			flipped: false
 		});
 	}

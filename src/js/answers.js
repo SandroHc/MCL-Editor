@@ -1,3 +1,5 @@
+const DEFAULT_ANSWERS = 'Welcome to the MyCandyLove editor!';
+
 let answers = undefined;
 
 export function init() {
@@ -7,7 +9,7 @@ export function init() {
 }
 
 function load() {
-	answers = localStorage.getItem('answers') || '';
+	answers = localStorage.getItem('answers') || DEFAULT_ANSWERS;
 
 	let $el = document.getElementById('answers-edit');
 	$el.textContent = answers;
