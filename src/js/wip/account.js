@@ -27,8 +27,8 @@ export let region = undefined;
 export let player = undefined;
 
 export function init() {
-	loadUsername();
 	loadRegions();
+	loadUsername();
 	console.debug('Loaded account', { username: player.username, region: region.id });
 
 	document.getElementById('username-edit').addEventListener('change', changedUsername);
@@ -43,6 +43,36 @@ function loadUsername() {
 	if (player.username) {
 		document.getElementById('username-edit').value = player.username;
 		document.getElementById('username-submit').dispatchEvent(new Event('click'));
+
+		if (player.data) {
+			// Bootstrap character/avatar with cached info
+		}
+
+		// Load newest info
+		getPlayerInfo(region, player.username)
+			.then(data => {
+				console.debug("Player data", data);
+				player.data = data;
+				persistPlayerData();
+
+				// Update character/avatar with newest info
+
+				// TODO
+				// for (let el in document.getElementsByClassName('actor_select')) {
+				// 	if (el.options && el.options[el.selectedIndex].text === '[Docete]') {
+				// 		el.dispatchEvent(new Event('change'));
+				// 	}
+				// }
+				//
+				// let query = document.getElementById('avatar-edit');
+				// if (query.options[query.selectedIndex].text === '[Docete]') {
+				// 	query.dispatchEvent(new Event('change'));
+				// }
+			})
+			.catch(error => {
+				console.warn("Unable to fetch player info:", error);
+				player.data = undefined;
+			});
 	}
 }
 
@@ -72,7 +102,7 @@ function changedRegion() {
 
 function changedUsername(e) {
 	player.username = this.value;
-	persistUsername();
+	persistPlayerData();
 
 	debugger;
 
@@ -82,7 +112,7 @@ function changedUsername(e) {
 	// }
 }
 
-function persistUsername() {
+export function persistPlayerData() {
 	localStorage.setItem('player', JSON.stringify(player));
 }
 

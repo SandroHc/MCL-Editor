@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js'
 
-import { player, region } from './wip/account';
+import { player, region, persistPlayerData } from './wip/account';
+import { getPlayerAvatar } from './api';
 
 
 export function drawAvatar(isPortrait, dest) {
@@ -16,8 +17,10 @@ export function drawAvatar(isPortrait, dest) {
 			return;
 		}
 
-		getPlayerAvatar(player.data.player.id).then(data => {
+		getPlayerAvatar(region, player.data.player.id).then(data => {
+			console.debug("Player avatar", data);
 			player.avatar = data;
+			persistPlayerData();
 			drawAvatar(isPortrait, dest);
 		})
 			.catch(error => console.log("Error loading player avatar: ", error));
@@ -50,26 +53,33 @@ export function drawAvatar(isPortrait, dest) {
 		bg += '.png)';
 	};
 
-	// TODO Better handle special cases, like Skin and Wig
-	for (let clothe in avatar.clothes)
-		addClothe(avatar.clothes[clothe], null, 'clothe');
+	const body = avatar.avatarBody;
+	const clothes = avatar.clothes;
 
-	addClothe(avatar.avatar.headAccessory, null, 'avatarpart');
-	addClothe(avatar.avatar.mouthType,     null, 'avatarpart');
-	addClothe(avatar.avatar.eyebrowsType,  avatar.avatar.hairColor, 'avatarpart');
-	addClothe(avatar.avatar.eyeType,       avatar.avatar.eyeColor, 'avatarpart');
+	for (let clothe in clothes)
+		if (clothes.hasOwnProperty(clothe))
+			addClothe(clothes[clothe], null, 'clothe');
 
-	if (avatar.avatar.hairType.category === 'CUSTOM') {
-		console.debug('Custom hair');
-	} else {
-		addClothe(avatar.avatar.hairType, avatar.avatar.hairColor, 'avatarpart');
+	addClothe(body['headAccessory'], null, 'avatarpart');
+	addClothe(body['mouthType'],     null, 'avatarpart');
+	addClothe(body['eyebrowsType'],  body['hairColor'], 'avatarpart');
+	addClothe(body['eyeType'],       body['eyeColor'], 'avatarpart');
+
+	if (body['hairType']) {
+		if (body['hairType'].category === 'CUSTOM') {
+			console.debug('Custom hair');
+		} else {
+			addClothe(body['hairType'], body['hairColor'], 'avatarpart');
+		}
 	}
 
-	if (avatar.avatar.bodyType.category === 'CUSTOM') {
-		console.debug('Custom body');
-		addClothe(avatar.avatar.bodyType, null, 'clothe');
-	} else {
-		addClothe(avatar.avatar.bodyType, null, 'avatarpart');
+	if (body['bodyType']) {
+		if (body['bodyType'].category === 'CUSTOM') {
+			console.debug('Custom body');
+			addClothe(body['bodyType'], null, 'clothe');
+		} else {
+			addClothe(body['bodyType'], null, 'avatarpart');
+		}
 	}
 
 	dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_placeholder.png';
