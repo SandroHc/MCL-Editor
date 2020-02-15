@@ -1,11 +1,10 @@
-
 const DEFAULT_LANGUAGE = 'pt';
 const LANGUAGES = {
 	pt: { name: 'Português' },
 	en: { name: 'English' },
 };
 
-export let messages = require(`../lang/${getLang()}.js`).messages;
+export let messages = require(`./lang/${getLang()}.js`).messages;
 
 export function init() {
 	loadList();

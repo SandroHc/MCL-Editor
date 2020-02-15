@@ -1,6 +1,6 @@
 import { messages } from "./lang";
 import { load as canvas } from "./canvas";
-import { drawAvatar } from "../functions";
+import { drawAvatar } from "./util/functions";
 
 const DEFAULT_CHARACTER = {
 	name: 'Nathaniel',
@@ -61,7 +61,7 @@ function loadCurrent() {
 }
 
 function loadList($selectMain, $selectVariation, selected) {
-	import('../assets/emotions').then(module => {
+	import('./assets/emotions').then(module => {
 		emotions = module.emotions;
 		console.debug('Loaded ' + module.emotions.length + ' emotions');
 

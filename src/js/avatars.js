@@ -1,5 +1,4 @@
-import { drawAvatar } from '../functions'
-import { sort } from './utils'
+import { drawAvatar, sort } from './util/functions'
 
 const DEFAULT_AVATAR = {
 	'name': '[Docete]',
@@ -17,16 +16,18 @@ export function init() {
 }
 
 function load() {
-	avatar = JSON.parse(localStorage.getItem('avatar')) || DEFAULT_AVATAR;
+	// TODO
+	// avatar = JSON.parse(localStorage.getItem('avatar')) || DEFAULT_AVATAR;
+	avatar = DEFAULT_AVATAR;
 
-	console.debug('Loaded avatar');
+	console.debug('Loaded avatar', avatar);
 
 	apply();
 	loadList();
 }
 
 function loadList() {
-	import('../assets/avatars').then(module => {
+	import('./assets/avatars').then(module => {
 		console.debug('Loaded ' + module.avatars.length + ' avatars');
 		avatars = sort(module.avatars, a => a.name);
 

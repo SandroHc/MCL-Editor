@@ -4,7 +4,7 @@ import 'materialize-css/dist/js/materialize.min.js'
 import '@css/style.scss'
 import vegito from 'vegito'
 
-import { messages } from './wip/lang'
+import { messages } from './lang'
 
 function init() {
 	console.info("[MCL] Starting up version " + VERSION);
@@ -14,19 +14,17 @@ function init() {
 	ready(() => {
 		// require('./functions').sortAssets();
 
-		M.FormSelect.init(document.querySelectorAll('select'));
 		M.Tabs.init(document.getElementById('tabs'));
 
-		// TODO: WIP
-		require('./wip/lang').init();
-		require('./wip/account').init();
-		require('./wip/answers').init();
-		require('./wip/avatars').init();
-		require('./wip/bubbles').init();
-		require('./wip/characters').init();
-		require('./wip/loveometer').init();
-		require('./wip/scenes').init();
-		require('./wip/settings').init();
+		require('./lang').init();
+		require('./account').init();
+		require('./answers').init();
+		require('./avatars').init();
+		require('./bubbles').init();
+		require('./characters').init();
+		require('./loveometer').init();
+		require('./scenes').init();
+		require('./settings').init();
 	});
 }
 

@@ -1,4 +1,4 @@
-import { getPlayerInfo } from "../api";
+import { getPlayerInfo } from "./util/api";
 
 const REGIONS = {
 	br: { id: 'br', link: 'amordoce.com', name: 'Brazil' },
@@ -38,7 +38,10 @@ export function init() {
 }
 
 function loadUsername() {
-	player = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
+	// TODO
+	let player2 = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
+	player = DEFAULT_PLAYER;
+	player.username = player2.username;
 
 	if (player.username) {
 		document.getElementById('username-edit').value = player.username;
@@ -49,7 +52,7 @@ function loadUsername() {
 		}
 
 		// Load newest info
-		getPlayerInfo(region, player.username)
+		getPlayerInfo(player.username)
 			.then(data => {
 				console.debug("Player data", data);
 				player.data = data;

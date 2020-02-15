@@ -32,7 +32,7 @@ module.exports = {
 			VERSION: JSON.stringify(require('./package.json').version)
 		}),
 		// new ProvidePlugin({
-		// 	__: path.resolve(__dirname, 'src/js/wip/utils.js'),
+		// 	__: path.resolve(__dirname, 'src/js/util/functions.js'),
 		// }),
 	],
 	resolve: {

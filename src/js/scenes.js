@@ -1,4 +1,4 @@
-import { loadFromFile } from './utils';
+import { loadFromFile } from './util/functions';
 
 const DEFAULT_SCENE = {
 	'name': 'Sala de Aula A',
@@ -16,7 +16,7 @@ let current = undefined;
 export function init() {
 	loadCurrent();
 
-	import('../assets/scenes').then(module => {
+	import('./assets/scenes').then(module => {
 		scenes = module.scenes;
 		console.debug('Loaded ' + module.scenes.length + ' scenes');
 

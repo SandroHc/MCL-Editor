@@ -2,6 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const common = require('./webpack.common.js');
 
@@ -19,6 +20,10 @@ module.exports = merge(common, {
 		},
 	},
 	plugins: [
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'static',
+			openAnalyzer: false,
+		}),
 		new MinifyPlugin({
 			// https://github.com/babel/minify/tree/master/packages/babel-preset-minify#options
 		}, {

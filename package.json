@@ -40,6 +40,7 @@
 		"raw-loader": "^4.0.0",
 		"sass-loader": "^8.0.2",
 		"style-loader": "^1.1.3",
+		"webpack-bundle-analyzer": "^3.6.0",
 		"webpack-dev-server": "^3.10.3",
 		"webpack-merge": "^4.2.2"
 	},
@@ -53,8 +54,7 @@
 		"./src/index.js"
 	],
 	"browserslist": [
-		"last 2 version",
-		"not dead"
+		"defaults"
 	],
 	"repository": {
 		"type": "git",
