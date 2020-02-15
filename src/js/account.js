@@ -1,4 +1,6 @@
-import { getPlayerInfo } from "./util/api";
+import { getPlayerInfo } from './util/api'
+import { apply as bootstrapAvatar } from "./avatars";
+import { updateDocete as bootstrapCharacter } from "./characters";
 
 const REGIONS = {
 	br: { id: 'br', link: 'amordoce.com', name: 'Brazil' },
@@ -31,51 +33,21 @@ export function init() {
 	loadUsername();
 	console.debug('Loaded account', { username: player.username, region: region.id });
 
-	document.getElementById('username-edit').addEventListener('change', changedUsername);
-	document.getElementById('username-submit').addEventListener('keyup', submittedUsername);
+	document.getElementById('username-submit').addEventListener('click', submittedUsername);
 
 	document.getElementById('region-edit').addEventListener('change', changedRegion);
 }
 
 function loadUsername() {
-	// TODO
-	let player2 = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
-	player = DEFAULT_PLAYER;
-	player.username = player2.username;
+	player = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
 
 	if (player.username) {
 		document.getElementById('username-edit').value = player.username;
-		document.getElementById('username-submit').dispatchEvent(new Event('click'));
 
-		if (player.data) {
-			// Bootstrap character/avatar with cached info
+		// Load cached data
+		if (!player.data) {
+			bootstrap();
 		}
-
-		// Load newest info
-		getPlayerInfo(player.username)
-			.then(data => {
-				console.debug("Player data", data);
-				player.data = data;
-				persistPlayerData();
-
-				// Update character/avatar with newest info
-
-				// TODO
-				// for (let el in document.getElementsByClassName('actor_select')) {
-				// 	if (el.options && el.options[el.selectedIndex].text === '[Docete]') {
-				// 		el.dispatchEvent(new Event('change'));
-				// 	}
-				// }
-				//
-				// let query = document.getElementById('avatar-edit');
-				// if (query.options[query.selectedIndex].text === '[Docete]') {
-				// 	query.dispatchEvent(new Event('change'));
-				// }
-			})
-			.catch(error => {
-				console.warn("Unable to fetch player info:", error);
-				player.data = undefined;
-			});
 	}
 }
 
@@ -103,18 +75,6 @@ function changedRegion() {
 	persistRegion();
 }
 
-function changedUsername(e) {
-	player.username = this.value;
-	persistPlayerData();
-
-	debugger;
-
-	// if (key.keyCode === 13) {
-	// 	key.preventDefault();
-	// 	submittedUsername();
-	// }
-}
-
 export function persistPlayerData() {
 	localStorage.setItem('player', JSON.stringify(player));
 }
@@ -128,25 +88,24 @@ function persistRegion() {
 }
 
 function submittedUsername() {
-	console.warn("LOAD AVATAR");
+	player.username = document.getElementById('username-edit').value;
+	persistPlayerData();
 
-	getPlayerInfo(region, player.username)
+	console.info('Loading avatar for:', player.username);
+
+	// Load newest data
+	bootstrap();
+}
+
+function bootstrap() {
+	getPlayerInfo(player.username)
 		.then(data => {
+			console.debug("Player data", data);
 			player.data = data;
+			persistPlayerData();
 
-			for (let el in document.getElementsByClassName('actor_select')) {
-				if (el.options && el.options[el.selectedIndex].text === '[Docete]') {
-					el.dispatchEvent(new Event('change'));
-				}
-			}
-
-			let query = document.getElementById('avatar-edit');
-			if (query.options[query.selectedIndex].text === '[Docete]') {
-				query.dispatchEvent(new Event('change'));
-			}
+			bootstrapCharacter();
+			bootstrapAvatar();
 		})
-		.catch(error => {
-			console.warn("Unable to fetch player info:", error);
-			player.data = undefined;
-		});
+		.catch(error => console.warn("Unable to fetch player info:", error));
 }

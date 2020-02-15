@@ -152,7 +152,7 @@ function createCharacterSetting(id, info) {
 
 	function createMain() {
 		let $divMain = $root.appendChild(document.createElement('div'));
-		$divMain.classList.add('input-field', 'col', 's12', 'm5', 'actor_' + id); // TODO why the 'actor_{id}'?
+		$divMain.classList.add('input-field', 'col', 's12', 'm5');
 
 		let $selectMain = $divMain.appendChild(document.createElement('select'));
 		$selectMain.id = 'actor_' + id + '_edit';
@@ -168,7 +168,7 @@ function createCharacterSetting(id, info) {
 
 	function createVariation() {
 		let $divVariation = $root.appendChild(document.createElement('div'));
-		$divVariation.classList.add('input-field', 'col', 's12', 'm5', 'actor_' + id); // TODO why the 'actor_{id}'?
+		$divVariation.classList.add('input-field', 'col', 's12', 'm5');
 
 		let $selectVariation = $divVariation.appendChild(document.createElement('select'));
 		$selectVariation.id = 'actor_' + id + '_sub';
@@ -179,7 +179,7 @@ function createCharacterSetting(id, info) {
 
 	function createRemove() {
 		let $div = $root.appendChild(document.createElement('div'));
-		$div.classList.add('input-field', 'col', 's6', 'm2', 'actor_' + id);
+		$div.classList.add('input-field', 'col', 's6', 'm2');
 		$div.style.height = '66px';
 
 		// i.e.: <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
@@ -276,7 +276,7 @@ function changedCharacterVariation() {
 function updateCharacterScene($img, character) {
 	$img.style.src = '';
 
-	// TODO: constant in PT?
+	// TODO: constants in PT?
 	if (character.name === '[Nada]') {
 		$img.style.display = 'none';
 	} else {
@@ -294,6 +294,17 @@ function updateCharacterScene($img, character) {
 			$img.style.backgroundImage = '';
 			$img.style.height = '92.24138%';
 			$img.style.bottom = '0';
+		}
+	}
+}
+
+export function updateDocete() {
+	for (let key in characters) {
+		let character = characters[key];
+		let dom = charactersDom[key];
+
+		if (character.name === '[Docete]') {
+			updateCharacterScene(dom.scene, character);
 		}
 	}
 }

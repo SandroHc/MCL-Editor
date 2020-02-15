@@ -16,9 +16,7 @@ export function init() {
 }
 
 function load() {
-	// TODO
-	// avatar = JSON.parse(localStorage.getItem('avatar')) || DEFAULT_AVATAR;
-	avatar = DEFAULT_AVATAR;
+	avatar = JSON.parse(localStorage.getItem('avatar')) || DEFAULT_AVATAR;
 
 	console.debug('Loaded avatar', avatar);
 
@@ -29,7 +27,10 @@ function load() {
 function loadList() {
 	import('./assets/avatars').then(module => {
 		console.debug('Loaded ' + module.avatars.length + ' avatars');
-		avatars = sort(module.avatars, a => a.name);
+
+		// TODO
+		// avatars = sort(module.avatars, a => a.name);
+		avatars = module.avatars;
 
 		let $select = document.getElementById('avatar-edit');
 		avatars.forEach((e, i) => {
@@ -57,7 +58,7 @@ function changedAvatar() {
 	apply();
 }
 
-function apply() {
+export function apply() {
 	let $el = document.querySelector('.player-avatar');
 	$el.src = '';
 

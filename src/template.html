@@ -72,6 +72,15 @@
 
 		<!-- Dialogue -->
 		<div id="tab-chat" class="col s12">
+			<!-- Avatar -->
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">person</i>
+					<select id="avatar-edit"></select>
+					<label for="avatar-edit">{{avatar}}</label>
+				</div>
+			</div>
+
 			<!-- Dialogue bubble -->
 			<div class="row">
 				<div class="input-field col s12">
@@ -138,12 +147,6 @@
 		<div id="tab-characters" class="col s12">
 			<div class="row">
 
-				<div class="input-field col s12 m12">
-					<select id="avatar-edit"></select>
-					<label for="avatar-edit">{{avatar}}</label>
-					<!--<button class="file_submit waves-effect waves-light btn" onclick="loadFromFile('file_edit', '#scene .player-avatar', null)">{{use_sucrette}}</button>-->
-				</div>
-
 				<div id="characters"></div>
 
 				<a id="add-actor" class="btn-floating btn-large waves-effect waves-light red">
@@ -195,7 +198,7 @@
 	</div>
 	<ul id="answers" style="display:none"></ul>
 	<div class="player" style="display:none">
-		<img class="player-avatar" src="/assets/face_unknown.png" alt="Avatar do personagem">
+		<img class="player-avatar" src="/assets/portrait_unknown.png" alt="Avatar do personagem">
 	</div>
 </div>
 

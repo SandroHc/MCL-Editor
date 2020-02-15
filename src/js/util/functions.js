@@ -1,6 +1,5 @@
-import { player, region, persistPlayerData } from '../account';
+import { persistPlayerData, player, region } from '../account';
 import { getPlayerAvatar } from './api';
-
 
 // import { messages } from '@/wip/lang'
 //
@@ -8,85 +7,81 @@ import { getPlayerAvatar } from './api';
 // 	return messages[key] || ('{{' + key + '}}');
 // }
 
-export function drawAvatar(isPortrait, dest) {
-	if (!player.avatar) {
+function loadPlayerAvatar() {
+	return new Promise((resolve, reject) => {
+		if (player.avatar) {
+			resolve(player.avatar);
+		}
+
 		if (!player.data) {
-			if (player.username) {
-				// If the player is set but there is no player info, try the outdated links
-				let timestamp = Date.now().toString();
-				dest.src = 'http://avatars.' + region.link + '/' + (isPortrait ? 'face' : 'full') + '/' + player.username + '.' + timestamp + '.png';
-			} else {
-				dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_unknown.png';
-			}
+			reject('no player data');
 			return;
 		}
 
-		getPlayerAvatar(player.data.player.id).then(data => {
-			console.debug("Player avatar", data);
-			player.avatar = data;
-			persistPlayerData();
-			drawAvatar(isPortrait, dest);
+		getPlayerAvatar(player.data.player.id)
+			.then(data => {
+				player.avatar = data;
+				persistPlayerData();
+
+				resolve(data);
+			})
+			.catch(error => reject(error));
+	})
+}
+
+export function drawAvatar(isPortrait, dest) {
+	loadPlayerAvatar(dest)
+		.then(avatar => {
+			console.debug('Player avatar', avatar);
+			drawAvatarInternal(avatar, isPortrait, dest);
 		})
-			.catch(error => console.log("Error loading player avatar: ", error));
+		.catch(e => {
+			console.debug('Unable to load player avatar:', e);
 
-		return;
-	}
+			// Load default asset
+			dest.src = 'assets/' + (isPortrait ? 'portrait' : 'normal') + '_unknown.png';
+		});
+}
 
+function drawAvatarInternal(avatar, isPortrait, dest) {
 	let site = 'https://assets3.' + region.link + '/';
 	let type = isPortrait ? 'portrait' : 'normal';
-	let avatar = player.avatar;
 	let bg = '';
 
 	let firstImage = true;
-	let addClothe = function (data, color, clothe_type) {
-		if (data.category === 'Skin') {
-			avatar.avatar.bodyType = data;
-			avatar.avatar.bodyType.category = 'CUSTOM';
-			return;
-		} else if (data.category === 'Wig') {
-			avatar.avatar.hairType.category = 'CUSTOM';
-		}
+	let addClothe = function (data, secondary, clothe_type) {
+		// console.debug('CLOTHE', clothe_type, color, data);
 
 		bg += firstImage ? '' : ',';
 		firstImage = false;
 
 		bg += `url(${site}${clothe_type}/web/${type}/${data.id}-${data.security}`;
-		if (color) {
-			bg += `_${color.id}-${color.security}`;
-		}
+
+		// secondary parameter, usually color
+		if (secondary)
+			bg += `_${secondary.id}-${secondary.security}`;
+
+		if (data.type === 'MouthType' || data.type === 'EyeType')
+			bg += '_no';
+
 		bg += '.png)';
 	};
 
-	const body = avatar.avatarBody;
-	const clothes = avatar.clothes;
+	const body = avatar['avatarBody'];
+	const clothes = avatar['clothes'];
 
-	for (let clothe in clothes)
-		if (clothes.hasOwnProperty(clothe))
-			addClothe(clothes[clothe], null, 'clothe');
+	// iterate clothes in reverse order (to prevent underwear from rendering above the pants, etc.)
+	for (let i = clothes.length - 1; i >= 0; i--)
+		addClothe(clothes[i], null, 'clothe');
 
 	addClothe(body['headAccessory'], null, 'avatarpart');
 	addClothe(body['mouthType'],     null, 'avatarpart');
 	addClothe(body['eyebrowsType'],  body['hairColor'], 'avatarpart');
 	addClothe(body['eyeType'],       body['eyeColor'], 'avatarpart');
+	addClothe(body['hairType'],      body['hairColor'], 'avatarpart');
+	addClothe(body['bodyColor'],     null, 'avatarpart');
 
-	if (body['hairType']) {
-		if (body['hairType'].category === 'CUSTOM') {
-			console.debug('Custom hair');
-		} else {
-			addClothe(body['hairType'], body['hairColor'], 'avatarpart');
-		}
-	}
-
-	if (body['bodyType']) {
-		if (body['bodyType'].category === 'CUSTOM') {
-			console.debug('Custom body');
-			addClothe(body['bodyType'], null, 'clothe');
-		} else {
-			addClothe(body['bodyType'], null, 'avatarpart');
-		}
-	}
-
-	dest.src = 'assets/' + (isPortrait ? 'face' : 'body') + '_placeholder.png';
+	dest.src = `assets/${type}_placeholder.png`;
 	dest.style.backgroundImage = bg;
 }
 
