@@ -2,6 +2,7 @@ export const messages = {
 	// Miscellaneous
 	version: 'Version ' + VERSION,
 	title: 'MCL | MyCandyLove Editor',
+	description: 'MyCandyLove Editor, an offline fanfic creation tool for MyCandyLove.',
 	welcome: 'Welcome to the unofficial scene editor of My Candy Love! We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>. Tool updated by <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>.',
 	legal: 'All images belong to <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
 	view_result: 'View Result',
