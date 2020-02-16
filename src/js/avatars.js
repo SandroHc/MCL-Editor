@@ -52,8 +52,15 @@ export function persist() {
 function changedAvatar() {
 	console.debug('Avatar updated', this.value);
 
-	// TODO:
 	avatar = avatars[this.value];
+
+	if (USE_GTAG) {
+		gtag('event', 'changed_avatar', {
+			'event_category': 'avatar',
+			'value': avatar?.name
+		});
+	}
+
 	persist();
 	apply();
 }

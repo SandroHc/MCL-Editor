@@ -29,7 +29,8 @@ module.exports = {
 			}
 		]),
 		new DefinePlugin({
-			VERSION: JSON.stringify(require('./package.json').version)
+			VERSION: JSON.stringify(require('./package.json').version),
+			USE_GTAG: true
 		}),
 		// new ProvidePlugin({
 		// 	__: path.resolve(__dirname, 'src/js/util/functions.js'),

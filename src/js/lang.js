@@ -61,6 +61,13 @@ function changedLang() {
 		return;
 	}
 
+	if (USE_GTAG) {
+		gtag('event', 'changed_language', {
+			'event_category': 'language',
+			'value': selected
+		});
+	}
+
 	localStorage.setItem('lang', selected);
 	window.location.reload();
 }

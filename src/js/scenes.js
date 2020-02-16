@@ -83,6 +83,14 @@ function changedScene() {
 	current.variation = current.variations[0];
 	persistScene(current);
 
+	if (USE_GTAG) {
+		let desc = current.name + ' (' + current.variation.name + ')';
+		gtag('event', 'changed_scene', {
+			'event_category': 'scene',
+			'value': desc
+		});
+	}
+
 	applyScene(current.variation);
 
 	// init variation list
@@ -93,7 +101,15 @@ function changedSceneVariation() {
 	let scene = current;
 	let variation = current.variations[this.value];
 
-	console.debug('Selected scene: ', scene.name + ' (' + variation.name + ')');
+	let desc = scene.name + ' (' + variation.name + ')';
+	console.debug('Selected scene: ', desc);
+
+	if (USE_GTAG) {
+		gtag('event', 'changed_scene', {
+			'event_category': 'scene',
+			'value': desc
+		});
+	}
 
 	// init into canvas
 	applyScene(variation);
