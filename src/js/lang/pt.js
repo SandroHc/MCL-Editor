@@ -1,6 +1,7 @@
 export const messages = {
 	// Miscellaneous
 	version: 'Versão ' + VERSION,
+	title: 'Amor Doce | MyCandyLove Editor',
 	welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>. Atualizado por <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>.',
 	legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
 	view_result: 'Ver Resultado',

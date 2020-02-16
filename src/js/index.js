@@ -7,6 +7,7 @@ import { lang, messages } from './lang'
 
 function init() {
 	document.getElementsByTagName('html')[0].lang = lang;
+	document.getElementsByTagName('title')[0].textContent = messages['title'];
 
 	console.info('[MCL] Starting up version ' + VERSION + ' for language ' + lang);
 
