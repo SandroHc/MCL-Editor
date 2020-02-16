@@ -1,13 +1,14 @@
-import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 
-import '@css/style.scss'
+import '../styles/style.scss'
 import vegito from 'vegito'
 
-import { messages } from './lang'
+import { lang, messages } from './lang'
 
 function init() {
-	console.info("[MCL] Starting up version " + VERSION);
+	document.getElementsByTagName('html')[0].lang = lang;
+
+	console.info('[MCL] Starting up version ' + VERSION + ' for language ' + lang);
 
 	document.body.innerHTML = vegito(document.body.innerHTML, messages);
 

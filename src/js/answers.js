@@ -1,4 +1,6 @@
-const DEFAULT_ANSWERS = 'Welcome to the MyCandyLove editor!';
+import { messages } from './lang'
+
+const DEFAULT_ANSWERS = messages['answers_default'];
 
 let answers = undefined;
 

@@ -1,10 +1,11 @@
-const DEFAULT_LANGUAGE = 'pt';
+const DEFAULT_LANGUAGE = 'en';
 const LANGUAGES = {
 	pt: { name: 'Português' },
 	en: { name: 'English' },
 };
 
-export let messages = require(`./lang/${getLang()}.js`).messages;
+export let lang = getLang();
+export let messages = require(`./lang/${lang}.js`).messages;
 
 export function init() {
 	loadList();
@@ -30,10 +31,17 @@ function loadList() {
 }
 
 function getLang() {
-	let language = localStorage.getItem('lang')
-		|| (navigator.languages && navigator.languages[0])
-		|| navigator.language
-		|| navigator.userLanguage;
+	let language = localStorage.getItem('lang');
+
+	if (!language && URLSearchParams) {
+		language = new URLSearchParams(window.location.search).get('lang');
+	}
+
+	if (!language) {
+		language = (navigator.languages && navigator.languages[0])
+			|| navigator.language
+			|| navigator.userLanguage;
+	}
 
 	// Strip the language variation.
 	// e.g. "pt-BR" is converted to "pt"
