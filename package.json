@@ -1,6 +1,6 @@
 {
 	"name": "mcl-editor",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "MyCandyLove Editor, an offline fanfic creation tool for MyCandyLove.",
 	"private": true,
 	"dependencies": {
