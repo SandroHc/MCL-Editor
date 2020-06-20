@@ -32,8 +32,12 @@ export function init() {
 }
 
 function loadCurrent() {
-	characters = JSON.parse(localStorage.getItem('characters')) || [];
-	characters.clean(null); // remove null values, left by removing characters in previous session
+	try {
+		characters = JSON.parse(localStorage.getItem('characters')) || [];
+		characters.clean(null); // remove null values, left by removing characters in previous session
+	} catch(e) {
+		characters = [];
+	}
 
 	console.debug('Loaded ' + characters.length + ' characters');
 

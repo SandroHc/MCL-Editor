@@ -33,7 +33,12 @@ export function init() {
 }
 
 function loadCurrent() {
-	current = JSON.parse(localStorage.getItem('scene')) || DEFAULT_SCENE;
+	try {
+		current = JSON.parse(localStorage.getItem('scene')) || DEFAULT_SCENE;
+	} catch(e) {
+		current = DEFAULT_SCENE;
+	}
+
 	applyScene(current.variation);
 }
 

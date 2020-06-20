@@ -12,7 +12,11 @@ export function init() {
 }
 
 function load() {
-	bubble = JSON.parse(localStorage.getItem('bubble')) || DEFAULT_BUBBLE;
+	try {
+		bubble = JSON.parse(localStorage.getItem('bubble')) || DEFAULT_BUBBLE;
+	} catch(e) {
+		bubble = DEFAULT_BUBBLE;
+	}
 
 	let $bubbleSetting = document.getElementById('bubble-edit');
 	$bubbleSetting.value = bubble.text;

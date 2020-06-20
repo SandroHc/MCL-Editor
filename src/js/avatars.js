@@ -16,7 +16,11 @@ export function init() {
 }
 
 function load() {
-	avatar = JSON.parse(localStorage.getItem('avatar')) || DEFAULT_AVATAR;
+	try {
+		avatar = JSON.parse(localStorage.getItem('avatar')) || DEFAULT_AVATAR;
+	} catch(e) {
+		avatar = DEFAULT_AVATAR;
+	}
 
 	console.debug('Loaded avatar', avatar);
 

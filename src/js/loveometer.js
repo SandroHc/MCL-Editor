@@ -12,8 +12,17 @@ export function init() {
 }
 
 function loadLoveometer() {
-	loveometerLevel   = JSON.parse(localStorage.getItem('loveometer-level')) || DEFAULT_LOVEOMETER_LEVEL;
-	loveometerVisible = JSON.parse(localStorage.getItem('loveometer-visible')) || DEFAULT_LOVEOMETER_VISIBLE;
+	try {
+		loveometerLevel = JSON.parse(localStorage.getItem('loveometer-level')) || DEFAULT_LOVEOMETER_LEVEL;
+	} catch(e) {
+		loveometerLevel = DEFAULT_LOVEOMETER_LEVEL;
+	}
+
+	try {
+		loveometerVisible = JSON.parse(localStorage.getItem('loveometer-visible')) || DEFAULT_LOVEOMETER_VISIBLE;
+	} catch(e) {
+		loveometerVisible = DEFAULT_LOVEOMETER_VISIBLE;
+	}	
 
 	document.getElementById('lovelevel-edit').value = loveometerLevel;
 	document.getElementById('lovelevel-visible').checked = loveometerVisible;

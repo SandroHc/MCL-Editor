@@ -39,7 +39,11 @@ export function init() {
 }
 
 function loadUsername() {
-	player = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
+	try {
+		player = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
+	} catch(e) {
+		player = DEFAULT_PLAYER;
+	}
 
 	if (player.username) {
 		document.getElementById('username-edit').value = player.username;
