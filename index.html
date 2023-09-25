@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta content="ie=edge" http-equiv="x-ua-compatible">
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Primary Meta Tags | https://metatags.io -->
 	<title>MyCandyLove Editor</title>
@@ -36,7 +34,7 @@
 	</script>
 </head>
 <body>
-	<script type="module" src="/src/index.js"></script>
+	<script type="module" src="/src/main.ts"></script>
 
 	<div id="container" class="container">
 		<div class="row">
@@ -50,7 +48,11 @@
 					<li class="tab col s3"><a href="#tab-chat">{{dialogue}}</a></li>
 					<li class="tab col s3"><a href="#tab-scene">{{place}}</a></li>
 					<li class="tab col s3"><a href="#tab-characters">{{characters}}</a></li>
-					<li class="tab col s1"><a href="#tab-settings"><i class="material-icons">settings</i></a></li>
+					<li class="tab col s1"><a href="#tab-settings">
+						<svg class="icon" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconSettings %>"></path>
+						</svg>
+					</a></li>
 				</ul>
 			</div>
 
@@ -62,23 +64,26 @@
 					</div>
 
 					<div class="input-field col s12">
-						<i class="material-icons prefix">language</i>
+						<svg class="prefix" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconAccountRegion %>"></path>
+						</svg>
 						<select id="region-edit"></select>
 						<label for="region-edit">{{region}}</label>
 					</div>
 
 					<div class="input-field col s12 m8 l8">
-						<i class="material-icons prefix">account_circle</i>
+						<svg class="prefix" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconAccountName %>"></path>
+						</svg>
 						<input placeholder="{{username_placeholder}}" id="username-edit" type="text" class="validate">
 						<label for="username-edit">{{username}}</label>
 					</div>
 					<div class="input-field col s12 m4 l4">
 						<button id="username-submit" class="waves-effect waves-light btn">{{change_avatar}}</button>
 					</div>
-
 				</div>
-				<div class="row">
 
+				<div class="row">
 					<div class="col s12">
 						<p class="legal"><a href="https://github.com/SandroHc/MCL-Editor" target="_blank" rel="noopener">{{version}}</a>
 							&bullet; {{legal}}</p>
@@ -91,7 +96,9 @@
 				<!-- Avatar -->
 				<div class="row">
 					<div class="input-field col s12">
-						<i class="material-icons prefix">person</i>
+						<svg class="prefix" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconDialogueAvatar %>"></path>
+						</svg>
 						<select id="avatar-edit"></select>
 						<label for="avatar-edit">{{avatar}}</label>
 					</div>
@@ -100,7 +107,9 @@
 				<!-- Dialogue bubble -->
 				<div class="row">
 					<div class="input-field col s12">
-						<i class="material-icons prefix">question_answer</i>
+						<svg class="prefix" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconDialogueBubble %>"></path>
+						</svg>
 						<textarea placeholder="{{characters_bubble}}" id="bubble-edit" class="materialize-textarea"></textarea>
 						<label for="bubble-edit">{{characters_bubble_label}}</label>
 					</div>
@@ -109,24 +118,27 @@
 				<!-- Answers -->
 				<div class="row">
 					<div class="input-field col s12">
-						<i class="material-icons prefix">mode_edit</i>
+						<svg class="prefix" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconDialogueAnswers %>"></path>
+						</svg>
 						<textarea placeholder="{{answers}}" id="answers-edit" class="materialize-textarea"></textarea>
 						<label for="answers-edit">{{answers_label}}</label>
 					</div>
 				</div>
 
-				<div class="divider"></div>
-
 				<!-- Love level -->
 				<div class="row">
-					<div class="input-field col s6 m3">
+					<div class="input-field col s4 m2">
 						<label>
-							<input id="lovelevel-visible" type="checkbox" class="filled-in">
+							<input id="lovelevel-toggle" type="checkbox" class="filled-in">
 							<span>{{love_level}}</span>
 						</label>
 					</div>
-					<div class="input-field col s6 m9 range-field">
+					<div class="input-field col s7 m9 range-field">
 						<input id="lovelevel-edit" value="0" type="range" min="-100" max="100">
+					</div>
+					<div class="col s1 m1">
+						<span id="lovelevel-percentage"></span>
 					</div>
 				</div>
 			</div>
@@ -134,53 +146,51 @@
 			<!-- Place -->
 			<div id="tab-scene" class="col s12">
 				<div class="row">
+					<div class="input-field col s12 m6">
+						<select id="scene-edit"></select>
+						<label for="scene-edit">{{places}}</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<select id="scene-variant-edit"></select>
+					</div>
 
 					<div class="input-field col s12 m12">
 						<div class="file-field input-field">
 							<div class="btn">
 								<span>{{file}}</span>
-								<input id="file_scene_edit" type="file">
+								<input id="scene-file-picker" type="file">
 							</div>
 							<div class="file-path-wrapper">
 								<input class="file-path validate" type="text">
 							</div>
 						</div>
 					</div>
-
-					<div class="input-field col s12 m6">
-						<select id="scene_edit"></select>
-						<label for="scene_edit">{{places}}</label>
-					</div>
-					<div class="input-field col s12 m6">
-						<select id="scene_variation_edit"></select>
-					</div>
-
 				</div>
-
 			</div>
 
 			<!-- Characters -->
 			<div id="tab-characters" class="col s12">
 				<div class="row">
-
 					<div id="characters"></div>
-
-					<a id="add-actor" class="btn-floating btn-large waves-effect waves-light red">
-						<i class="material-icons">add</i>
-					</a>
 				</div>
+
+				<a id="add-character" class="btn-floating btn-large waves-effect waves-light red" title="{{add_character}}">
+					<svg viewBox="0 0 24 24">
+						<path fill="currentColor" d="<%- iconAdd %>"></path>
+					</svg>
+				</a>
 			</div>
 
 			<!-- Settings -->
 			<div id="tab-settings" class="col s12">
 				<div class="row">
-
 					<div class="input-field col s12">
-						<i class="material-icons prefix">language</i>
+						<svg class="prefix" viewBox="0 0 24 24">
+							<path fill="currentColor" d="<%- iconSettingsLanguage %>"></path>
+						</svg>
 						<select id="lang-edit"></select>
 						<label for="lang-edit">{{language}}</label>
 					</div>
-
 				</div>
 				<div class="divider"></div>
 				<div class="row">
@@ -189,12 +199,11 @@
 					</div>
 
 					<div class="input-field col s6">
-						<button id="clear-actors" class="waves-effect waves-light btn">{{clear_actors}}</button>
+						<button id="clear-characters" class="waves-effect waves-light btn">{{clear_characters}}</button>
 					</div>
 					<div class="input-field col s6">
 						<button id="clear-cache" class="waves-effect waves-light btn">{{clear_cache}}</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -205,16 +214,16 @@
 		<div id="loveometer" style="display: none;">
 			<div class="outer-gauge">
 				<div class="inner-gauge">
-					<div class="gauge" style="height: 50%;"></div>
+					<div id="gauge" style="height: 50%;"></div>
 				</div>
 			</div>
 			<div class="heart">
-				<span class="heart-text">0%</span>
+				<span id="heart-text">0%</span>
 			</div>
 		</div>
 		<ul id="answers" style="display: none;"></ul>
-		<div class="player" style="display: none;">
-			<img class="player-avatar" src="/assets/portrait_unknown.png" alt="Player avatar">
+		<div id="player" style="display: none;">
+			<img id="player-avatar" src="/assets/portrait_unknown.png" alt="Player avatar">
 		</div>
 	</div>
 

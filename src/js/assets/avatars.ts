@@ -1,5 +1,4 @@
-
-export const avatars = [
+export const AVATARS = [
 	{
 		'name': '[Nada]',
 		'id': '0',

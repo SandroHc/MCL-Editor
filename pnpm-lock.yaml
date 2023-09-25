@@ -5,15 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@mdi/js':
+    specifier: ^7.2.96
+    version: 7.2.96
   crypto-js:
     specifier: ~3.1
     version: 3.1.8
   interactjs:
     specifier: ~1.8
     version: 1.8.5(@interactjs/offset@1.8.5)
-  material-icons:
-    specifier: ~0.3
-    version: 0.3.1
   materialize-css:
     specifier: ~1.0
     version: 1.0.0
@@ -38,7 +38,7 @@ devDependencies:
     specifier: ~0.5
     version: 0.5.1(vite@4.4.9)
   vite-plugin-html:
-    specifier: ~3.2
+    specifier: ~3.2.0
     version: 3.2.0(vite@4.4.9)
   vite-plugin-singlefile:
     specifier: ~0.13
@@ -436,6 +436,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
+
+  /@mdi/js@7.2.96:
+    resolution: {integrity: sha512-paR9M9ZT7rKbh2boksNUynuSZMHhqRYnEZOm/KrZTjQ4/FzyhjLHuvw/8XYzP+E7fS4+/Ms/82EN1pl/OFsiIA==}
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -870,10 +874,6 @@ packages:
     dependencies:
       tslib: 2.6.2
     dev: true
-
-  /material-icons@0.3.1:
-    resolution: {integrity: sha512-5Hbj76A6xDPcDZEbM4oxTknhWuMwGWnAHVLLPCEq9eVlcHb0fn4koU9ZeyMy1wjARtDEPAHfd5ZdL2Re5hf0zQ==}
-    dev: false
 
   /materialize-css@1.0.0:
     resolution: {integrity: sha512-4/oecXl8y/1i8RDZvyvwAICyqwNoKU4or5uf8uoAd74k76KzZ0Llym4zhJ5lLNUskcqjO0AuMcvNyDkpz8Z6zw==}

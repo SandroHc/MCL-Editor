@@ -1,42 +1,48 @@
-export const scenes = [
+export const SCENES = [
 	{
 		'name': 'Escola: Entrada',
 		'variations': [
 			{ name: 'Normal', id: 116, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Ônibus',
 		'variations': [
 			{ name: 'Interior', id: 875, checksum: '' },
 			{ name: 'Antigo: Interior', id: 39, checksum: '' },
 			{ name: 'Parada de Ônibus', id: 123, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Lanchonete',
 		'variations': [
 			{ name: 'Normal', id: 124, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sala de Aula A',
 		'variations': [
 			{ name: 'Dia', id: 1, checksum: '938f8d285289b68b' },
 			{ name: 'Noite', id: 7, checksum: '' },
 			{ name: 'Sepia', id: 96, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sala de Aula B',
 		'variations': [
 			{ name: 'Dia', id: 21, checksum: '' },
 			{ name: 'Sepia', id: 95, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sala de Aula C',
 		'variations': [
 			{ name: 'Dia', id: 939, checksum: '' },
 			{ name: 'Tarde', id: 941, checksum: '' },
 			{ name: 'Noite', id: 940, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sala do Grêmio',
 		'variations': [
 			{ name: 'Dia', id: 2, checksum: '98976cf117e7835f' },
@@ -44,12 +50,14 @@ export const scenes = [
 			{ name: 'Escuro', id: 108, checksum: '' },
 			{ name: 'Sepia', id: 93, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sala de Artes Plásticas',
 		'variations': [
 			{ name: 'Normal', id: 241, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Pátio',
 		'variations': [
 			{ name: 'Dia', id: 4, checksum: '58fb29de83d23557' },
@@ -58,36 +66,42 @@ export const scenes = [
 			{ name: 'Stargate: Dia', id: 127, checksum: '' },
 			{ name: 'Stargate: Noite', id: 129, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Primeiro Andar',
 		'variations': [
 			{ name: 'Dia', id: 110, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Jardim',
 		'variations': [
 			{ name: 'Dia', id: 5, checksum: 'cf5cfca0a87e77a6' },
 			{ name: 'Noite', id: 13, checksum: '' },
 			{ name: 'Sepia', id: 91, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Vestiário',
 		'variations': [
 			{ name: 'Normal', id: 80, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Ginásio',
 		'variations': [
 			{ name: 'Dia', id: 6, checksum: '78b327b40089e33d' },
 			{ name: 'Noite', id: 12, checksum: '' },
 			{ name: 'Sepia', id: 92, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Laboratório',
 		'variations': [
 			{ name: 'Dia', id: 132, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Corredor Principal',
 		'variations': [
 			{ name: 'Dia', id: 3, checksum: '030e3bada6b6436a' },
@@ -97,21 +111,24 @@ export const scenes = [
 			{ name: 'Antigo: Dia', id: 125, checksum: '' },
 			{ name: 'Antigo: Noite', id: 130, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Segundo Corredor',
 		'variations': [
 			{ name: 'Dia', id: 14, checksum: '' },
 			{ name: 'Noite', id: 9, checksum: '' },
 			{ name: 'Sepia', id: 94, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escola: Escadaria',
 		'variations': [
 			{ name: 'Dia', id: 15, checksum: '' },
 			{ name: 'Borrada', id: 109, checksum: '' },
 			{ name: 'Noite', id: 16, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Porão',
 		'variations': [
 			{ name: 'Claro', id: 980, checksum: '' },
@@ -121,7 +138,8 @@ export const scenes = [
 			{ name: 'Antigo: Escuro', id: 232, checksum: '' },
 			{ name: 'Antigo: Fotografia', id: 229, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Cemitério',
 		'variations': [
 			{ name: '1', id: 32, checksum: '' },
@@ -129,7 +147,8 @@ export const scenes = [
 			{ name: '3', id: 34, checksum: '' },
 			{ name: 'Dimitri', id: 36, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Concerto',
 		'variations': [
 			{ name: 'Escuro', id: 956, checksum: '' },
@@ -137,20 +156,23 @@ export const scenes = [
 			{ name: 'Vazio', id: 957, checksum: '' },
 			{ name: 'Antigo: Normal', id: 88, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Lojas',
 		'variations': [
 			{ name: '1', id: 121, checksum: '' },
 			{ name: '2', id: 122, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Loja de Animais',
 		'variations': [
 			{ name: '1', id: 222, checksum: '' },
 			{ name: '2', id: 223, checksum: '' },
 			{ name: '3', id: 224, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Supermercado',
 		'variations': [
 			{ name: 'Dia', id: 992, checksum: '' },
@@ -158,20 +180,23 @@ export const scenes = [
 			{ name: 'Noite', id: 994, checksum: '' },
 			{ name: 'Dia #2', id: 930, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Parque',
 		'variations': [
 			{ name: 'Normal', id: 119, checksum: '' },
 			{ name: 'Entrada', id: 118, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Campo',
 		'variations': [
 			{ name: '1', id: 81, checksum: '' },
 			{ name: '2', id: 82, checksum: '' },
 			{ name: '3', id: 83, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Praia',
 		'variations': [
 			{ name: '1', id: 22, checksum: '' },
@@ -184,7 +209,8 @@ export const scenes = [
 			{ name: '8', id: 29, checksum: '' },
 			{ name: '9', id: 30, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Floresta',
 		'variations': [
 			{ name: '1', id: 40, checksum: '' },
@@ -207,7 +233,8 @@ export const scenes = [
 			{ name: '18', id: 74, checksum: '' },
 			{ name: '19', id: 75, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Floresta: Noite',
 		'variations': [
 			{ name: '1', id: 76, checksum: '' },
@@ -215,18 +242,21 @@ export const scenes = [
 			{ name: '3', id: 78, checksum: '' },
 			{ name: '4', id: 79, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Bosque Escuro',
 		'variations': [
 			{ name: '1', id: 35, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Restaurante',
 		'variations': [
 			{ name: 'Dia', id: 1016, checksum: '' },
 			{ name: 'Noite', id: 227, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Teatro',
 		'variations': [
 			{ name: '1', id: 146, checksum: '' },
@@ -254,7 +284,8 @@ export const scenes = [
 			{ name: '23', id: 168, checksum: '' },
 			{ name: '24', id: 169, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Casa da Docete',
 		'variations': [
 			{ name: 'Dia', id: 37, checksum: '' },
@@ -263,7 +294,8 @@ export const scenes = [
 			{ name: 'Rua: Dia', id: 120, checksum: '' },
 			{ name: 'Rua: Noite', id: 228, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Casa da Iris',
 		'variations': [
 			{ name: 'Banheiro: Dia', id: 253, checksum: '' },
@@ -283,14 +315,16 @@ export const scenes = [
 			{ name: 'Varanda: Dia', id: 255, checksum: '' },
 			{ name: 'Varanda: Noite', id: 262, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Casa da Melody',
 		'variations': [
 			{ name: 'Quarto', id: 18, checksum: '' },
 			{ name: 'Corredor', id: 19, checksum: '' },
 			{ name: 'Banheiro', id: 20, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Casa da Nathaniel',
 		'variations': [
 			{ name: 'Entrada', id: 215, checksum: '' },
@@ -307,22 +341,26 @@ export const scenes = [
 			{ name: 'Sala de Jantar: Dia', id: 210, checksum: '' },
 			{ name: 'Sala de Jantar: Noite', id: 219, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Céu',
 		'variations': [
 			{ name: 'Normal', id: 230, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Escuridão',
 		'variations': [
 			{ name: 'Normal', id: 214, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Biblioteca',
 		'variations': [
 			{ name: 'Normal', id: 225, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Hospital',
 		'variations': [
 			{ name: 'Elevador: Dia', id: 236, checksum: '' },
@@ -340,14 +378,16 @@ export const scenes = [
 			{ name: 'Terceiro Andar: Dia', id: 237, checksum: '' },
 			{ name: 'Terceiro Andar: Noite', id: 245, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Sala dos Profesores',
 		'variations': [
 			{ name: 'Dia', id: 924, checksum: '' },
 			{ name: 'Noite', id: 925, checksum: '' },
 			{ name: 'Antigo: Dia', id: 17, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Shopping',
 		'variations': [
 			{ name: '1', id: 133, checksum: '' },
@@ -364,7 +404,8 @@ export const scenes = [
 			{ name: '12', id: 144, checksum: '' },
 			{ name: '13', id: 145, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Japão',
 		'variations': [
 			{ name: 'Sala de Aula A', id: 873, checksum: '' },
@@ -395,7 +436,8 @@ export const scenes = [
 			{ name: 'Rua F: Tarde', id: 945, checksum: '' },
 			{ name: 'Rua F: Noite', id: 944, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Quartos',
 		'variations': [
 			{ name: 'Quarto A: Dia', id: 911, checksum: '' },
@@ -435,41 +477,48 @@ export const scenes = [
 			{ name: 'Quarto O: Noite', id: 1014, checksum: '' },
 			{ name: 'Quarto de Casal', id: 968, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Mundo Alternativo',
 		'variations': [
 			{ name: 'Normal', id: 128, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Dimensão Desconhecida',
 		'variations': [
 			{ name: 'Normal', id: 31, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Montanha Nevada',
 		'variations': [
 			{ name: '1', id: 111, checksum: '' },
 			{ name: '2', id: 112, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Natal',
 		'variations': [
 			{ name: 'Neve', id: 38, checksum: '' },
 			{ name: 'Casa', id: 115, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Estábulo de Renas',
 		'variations': [
 			{ name: '1', id: 113, checksum: '' },
 			{ name: '2', id: 114, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Halloween',
 		'variations': [
 			{ name: 'Lago', id: 100, checksum: '' },
 			{ name: 'Caminho', id: 102, checksum: '' },
 		]
-	}, {
+	},
+	{
 		'name': 'Casa da Bruxa',
 		'variations': [
 			{ name: 'Entrada', id: 101, checksum: '' },
@@ -478,3 +527,8 @@ export const scenes = [
 		]
 	}
 ]
+
+export const DEFAULT_SCENE = {
+	...SCENES[3],
+	variation: SCENES[3].variations[0]
+};

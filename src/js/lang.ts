@@ -36,11 +36,12 @@ export const MESSAGES = {
 		// Characters
 		character: 'Character',
 		use_sucrette: 'Use File',
+		add_character: 'Add Character',
 
 		// Settings
 		language: 'Language',
 		cache: 'Cache',
-		clear_actors: 'Reset Characters & Place',
+		clear_characters: 'Reset Characters & Place',
 		clear_cache: 'Reset Everything'
 	},
 	'pt': {
@@ -80,11 +81,12 @@ export const MESSAGES = {
 		// Characters
 		character: 'Personagem',
 		use_sucrette: 'Usar Ficheiro',
+		add_character: 'Adiciionar Personagem',
 
 		// Settings
 		language: 'Idioma',
 		cache: 'Cache',
-		clear_actors: 'Limpar Personagens & Lugar',
+		clear_characters: 'Limpar Personagens & Lugar',
 		clear_cache: 'Limpar Tudo'
 	}
 }
@@ -96,68 +98,84 @@ const LANGUAGES = {
 	pt: { name: 'Português' },
 };
 
-export let lang = getLang();
-export let messages = lang in MESSAGES ? MESSAGES[lang] : MESSAGES[DEFAULT_LANGUAGE];
+export let selectedLanguage = getCurrentLanguage();
+export let messages = MESSAGES[selectedLanguage];
 
-export function init() {
+export function loadLang() {
 	loadList();
 
-	document.getElementById('lang-edit').addEventListener('change', changedLang);
-	document.getElementById('lang-edit').addEventListener('keyup',  changedLang);
+	const languageSelector = document.getElementById('lang-edit')!;
+	languageSelector.addEventListener('change', updateLang);
+	languageSelector.addEventListener('keyup',  updateLang);
 }
 
 function loadList() {
-	let language = getLang();
-	let $el = document.getElementById('lang-edit');
+	const languageSelector = document.getElementById('lang-edit')!;
 
-	for (let lang in LANGUAGES) {
-		let $option = document.createElement('option');
-		$option.value = lang;
-		$option.textContent = LANGUAGES[lang].name;
-		$option.selected = lang === language;
+	for (const [lang, data] of Object.entries(LANGUAGES)) {
+		const option = document.createElement('option');
+		option.value = lang;
+		option.textContent = data.name;
+		option.selected = lang === selectedLanguage;
 
-		$el.appendChild($option);
+		languageSelector.appendChild(option);
 	}
 
-	M.FormSelect.init($el);
+	M.FormSelect.init(languageSelector);
 }
 
-function getLang() {
-	let language = localStorage.getItem('lang');
+export function getCurrentLanguage() {
+	function findLanguagePreference() {
+		const stored = localStorage.getItem('lang');
+		if (stored) {
+			return stored;
+		}
 
-	if (!language && URLSearchParams) {
-		language = new URLSearchParams(window.location.search).get('lang');
+		const searchParams = URLSearchParams && new URLSearchParams(window.location.search).get('lang');
+		if (searchParams) {
+			return searchParams;
+		}
+
+		const urlParts = window.location.pathname.split('/');
+		const urlLang = urlParts && urlParts[urlParts.length - 1];
+		if (urlLang && urlLang.length === 2) {
+			return urlLang;
+		}
+
+		const browserLang = (navigator.languages && navigator.languages[0]) || navigator.language;
+		if (browserLang) {
+			return browserLang;
+		}
+
+		return DEFAULT_LANGUAGE;
 	}
 
-	if (!language) {
-		language = (navigator.languages && navigator.languages[0])
-			|| navigator.language
-			|| navigator.userLanguage;
-	}
+	let language = findLanguagePreference();
 
-	// Strip the language variation.
-	// e.g. "pt-BR" is converted to "pt"
-	language = language.split('-')[0];
+	// Strip the language variant - e.g. "pt-BR" is converted to "pt"
+	language = language ? language.split('-')[0] : '';
 
 	// Check if the language is available. If not, use the default one
-	if (LANGUAGES[language] === undefined) {
+	if (!(language in LANGUAGES)) {
 		language = DEFAULT_LANGUAGE;
 	}
 
 	return language;
 }
 
-function changedLang() {
-	let selected = document.getElementById('lang-edit').value;
-	if (selected === getLang()) {
-		return;
-	}
+function updateLang() {
+	const languageSelector = document.getElementById('lang-edit')! as HTMLSelectElement;
+	const newLanguage = languageSelector.value;
+	console.debug(`Changing language from ${selectedLanguage} to ${newLanguage}`);
 
 	gtag('event', 'changed_language', {
 		'event_category': 'language',
-		'value': selected
+		'value': newLanguage
 	});
 
-	localStorage.setItem('lang', selected);
-	window.location.reload();
+	localStorage.setItem('lang', newLanguage);
+
+	if (newLanguage !== selectedLanguage) {
+		window.location.reload();
+	}
 }

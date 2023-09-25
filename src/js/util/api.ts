@@ -1,6 +1,6 @@
 import hmacSHA1 from 'crypto-js/hmac-sha1';
 
-import { region } from '../account'
+import { region } from '../account.js'
 
 function getApiHeaders(region, endpoint) {
 	const privateKey = 'anonymous';

@@ -13,11 +13,7 @@ $color_response: #8cc503;
 $color_response_hover: #64a625;
 $color_player: #f4508e;
 
-$font: 'Trebuchet MS', 'Arial', sans-serif;
-
-// Icons
-$material-icons-font-path: 'node_modules/material-icons/iconfont/';
-@import "material-icons/iconfont/material-icons.scss";
+$mcl-font: 'Trebuchet MS', 'Arial', sans-serif;
 
 // URLs
 $loveo-gauge: url(assets/gauge.png);		// Original: http://www.amordoce.com/image/high-school/gauge.png
@@ -27,9 +23,19 @@ $zindex-1: 100000;
 $zindex-2: 100100;
 $zindex-3: 100200;
 
+.row {
+	margin-bottom: 0;
+}
+
+
 #logo {
 	display: flex;
 	margin: 0 auto;
+}
+
+#tabs svg {
+	width: 24px;
+	height: 100%;
 }
 
 #container > .card {
@@ -56,11 +62,9 @@ $zindex-3: 100200;
 		width: 50px;
 		height: 280px;
 		margin-left: 19px;
-		//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
 		border-radius: 30px;
 		border: 5px solid $white;
 		background: linear-gradient(to right, $color_gauge_bg_darker 50%, $color_gauge_bg 0);
-		//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
 		box-shadow: 0 0 12px 3px $color_gauge_border_darker, inset 0 0 3px 2px $color_gauge_border;
 	}
 	.inner-gauge {
@@ -68,17 +72,15 @@ $zindex-3: 100200;
 		width: 100%;
 		height: 260px;
 	}
-	.gauge {
+	#gauge {
 		position: absolute;
 		bottom: 0;
 		width: 100%;
 		background: $loveo-gauge no-repeat left bottom;
-		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
 		transition: height 500ms;
 	}
 	.heart {
 		position: relative;
-		//Instead of the line below you could use @include box-sizing($bs)
 		box-sizing: border-box;
 		width: 88px;
 		height: 80px;
@@ -92,6 +94,10 @@ $zindex-3: 100200;
 	}
 }
 
+#lovelevel-percentage {
+	line-height: 73px;
+}
+
 #answers {
 	position: absolute;
 	width: calc(75% + 100px);
@@ -100,53 +106,61 @@ $zindex-3: 100200;
 	padding: 15px 0 10px 100px;
 	background-color: $color_bubble_bg;
 	border: solid $color_response_border 4px;
+	border-top-left-radius: 3em;
 	z-index: $zindex-1;
 
 	list-style: none outside none;
 
-	.response {
+	> li {
 		position: relative;
 		font-weight: bold;
 		list-style-type: upper-alpha;
 		list-style-position: inside;
-		color: $color_response;
+		font-family: $mcl-font;
+		color: $black;
 		pointer-events: auto;
 		line-height: 24px;
 		font-size: 18px;
 		padding: 3px 40px;
 
-		.text {
-			font-family: $font;
-			color: $black;
+		&::marker {
+			color: $color_response;
 		}
 
-		&:hover,
 		&.checked {
 			color: $white;
-			.text {
+
+			&::marker {
 				color: $white;
 			}
 
 			cursor: pointer;
-			//vendor-prefix found
-			//background: -webkit-linear-gradient(-270deg, #64a625 0%, #96ca19 100%)
 			background: linear-gradient(0deg, $color_response_hover 0, $color_response 100%);
+		}
+
+		&:hover {
+			color: $white;
+
+			&::marker {
+				color: $white;
+			}
+
+			cursor: pointer;
+			background: linear-gradient(0deg, rgba($color_response_hover, 0.70) 0, rgba($color_response, 0.70) 100%);
 		}
 	}
 }
 
-.player {
+#player {
 	width: 250px;
 	height: 250px;
 	position: absolute;
 	bottom: -70px;
 	left: 25px;
 	margin: auto;
-	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
 	border-radius: 50%;
 	background: $white;
 	overflow: hidden;
-	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
 	box-shadow: 0 -3px 2px 1px $color_player;
 	z-index: $zindex-1;
 
@@ -161,13 +175,12 @@ $zindex-3: 100200;
 #bubble {
 	position: absolute;
 	overflow: hidden;
-	font-family: $font;
+	font-family: $mcl-font;
 	max-width: 50%;
 	font-size: 16px;
 	font-weight: normal;
 	line-height: 24px;
 	padding: 15px;
-	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
 	border-radius: 25px;
 	background-color: $color_bubble_bg;
 	text-align: center;
@@ -183,7 +196,22 @@ $zindex-3: 100200;
 	line-height: inherit;
 }
 
-#tab-actors .btn-floating {
+#tab-characters .btn-floating {
+	&.btn-large {
+		svg {
+			width: 60%;
+			margin-left: unset;
+		}
+	}
+
+	svg {
+		width: 30px;
+		height: 100%;
+		margin-left: 5px;
+	}
+}
+
+#add-character {
 	display: block;
 	margin: 0 auto;
 }
@@ -192,8 +220,20 @@ $zindex-3: 100200;
 	margin-top: 0;
 }
 
-.input-field ul {
-	z-index: $zindex-3;
+.input-field {
+	margin-bottom: 0;
+
+	ul {
+		z-index: $zindex-3;
+	}
+
+	button {
+		width: 100%;
+	}
+
+	svg.prefix {
+		width: 30px;
+	}
 }
 
 .draggable {
@@ -213,21 +253,16 @@ $zindex-3: 100200;
 	display: inline-block;
 }
 
-.input-field button {
-	width: 100%;
-}
-
 #go-to-scene {
 	top: 1em;
 	right: 1em;
 	position: fixed;
 	padding: .5em 1em;
 	text-decoration: none;
-	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
 	border-radius: 5px;
 }
 
-@media(min-width: 1578px) {
+@media(min-width: 1450px) {
 	#container {
 		width: calc(100% - 978px);
 		float: left;

@@ -1,17 +1,33 @@
 import {defineConfig} from "vite";
-// import { viteSingleFile } from "vite-plugin-singlefile";
-// import { createHtmlPlugin } from "vite-plugin-html";
-// import viteCompression from "vite-plugin-compression";
+import { viteSingleFile } from "vite-plugin-singlefile";
+import { createHtmlPlugin } from "vite-plugin-html";
+import viteCompression from "vite-plugin-compression";
+
+// Icons
+import {mdiAccount, mdiAccountCircle, mdiCog, mdiForum, mdiPencil, mdiPlus, mdiWeb} from "@mdi/js";
 
 export default defineConfig({
 	plugins: [
-		// // inline all assets (JS, CSS) into the HTML
-		// viteSingleFile(),
-		// // minify HTML
-		// createHtmlPlugin(),
-		// // compress assets
-		// viteCompression({ algorithm: "gzip" }),
-		// viteCompression({ algorithm: "brotliCompress" }),
+		// inline all assets (JS, CSS) into the HTML
+		viteSingleFile(),
+		// minify HTML
+		createHtmlPlugin({
+			inject: {
+				data: {
+					iconAccountRegion: mdiWeb,
+					iconAccountName: mdiAccountCircle,
+					iconDialogueAvatar: mdiAccount,
+					iconDialogueBubble: mdiForum,
+					iconDialogueAnswers: mdiPencil,
+					iconSettings: mdiCog,
+					iconSettingsLanguage: mdiWeb,
+					iconAdd: mdiPlus,
+				},
+			},
+		}),
+		// compress assets
+		viteCompression({ algorithm: "gzip" }),
+		viteCompression({ algorithm: "brotliCompress" }),
 	],
 	build: {
 		modulePreload: false,

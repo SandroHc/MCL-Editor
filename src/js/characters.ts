@@ -1,6 +1,8 @@
-import { messages } from "./lang";
-import { load as canvas } from "./canvas";
-import { drawAvatar } from "./util/functions";
+import { messages } from './lang.js';
+import { loadCanvas } from './canvas';
+import { CHARACTERS } from './assets/characters';
+import { drawAvatar } from './util/functions';
+import { mdiClose } from '@mdi/js';
 
 const DEFAULT_CHARACTER = {
 	name: 'Nathaniel',
@@ -9,40 +11,43 @@ const DEFAULT_CHARACTER = {
 	flipped: false
 };
 
-let emotions = [];
 let characters = [];
 let charactersDom = [];
 
 let nextId = 0;
 
-let $scene;
-let $characters;
+let sceneElement;
+let charactersElement;
 
-export function init() {
-	// TODO change to constants and move out of the function, after the vegito dependecy dies
-	$scene = document.getElementById('scene');
-	$characters = document.getElementById('characters');
+export function loadCharacters() {
+	// TODO change to constants and move out of the function after the vegito dependency dies
+	sceneElement = document.getElementById('scene');
+	charactersElement = document.getElementById('characters');
 
 	loadCurrent();
 
-	document.getElementById('add-actor').addEventListener('click', () => addCharacter());
-	document.getElementById('clear-actors').addEventListener('click', removeAll);
+	const addCharacterBtn = document.getElementById('add-character')!;
+	addCharacterBtn.addEventListener('click', () => addCharacter());
 
-	canvas();
+	const clearCharactersBtn = document.getElementById('clear-characters')!;
+	clearCharactersBtn.addEventListener('click', removeAll);
+
+	loadCanvas();
 }
 
 function loadCurrent() {
 	try {
-		characters = JSON.parse(localStorage.getItem('characters')) || [];
-		characters.clean(null); // remove null values, left by removing characters in previous session
-	} catch(e) {
+		const storedCharacters = localStorage.getItem('characters');
+		if (storedCharacters) {
+			characters = JSON.parse(storedCharacters) || [];
+		}
+	} catch (e) {
 		characters = [];
 	}
-
 	console.debug('Loaded ' + characters.length + ' characters');
 
 	if (characters.length === 0) {
-		console.debug('List of characters is empty. Loading defaults');
+		console.debug('List of characters is empty; loading defaults');
 
 		characters.push({
 			name: 'Nathaniel',
@@ -60,30 +65,29 @@ function loadCurrent() {
 
 	nextId = characters.length;
 
-	// initialize DOM
+	// Initialize character in DOM
 	characters.forEach((character, i) => addCharacter(i, character));
 }
 
 function loadList($selectMain, $selectVariation, selected) {
-	import('./assets/emotions').then(module => {
-		emotions = module.emotions;
-		console.debug('Loaded ' + module.emotions.length + ' emotions');
+	console.debug('Loaded ' + CHARACTERS.length + ' characters');
 
-		module.emotions.forEach((emotion, i) => {
-			let $option = $selectMain.appendChild(document.createElement('option'));
-			$option.value = i;
-			$option.textContent = emotion.name;
-			$option.selected = emotion.name === selected.name;
+	CHARACTERS.forEach((character, i) => {
+		const option = document.createElement('option');
+		option.value = i.toString();
+		option.textContent = character.name;
+		option.selected = character.name === selected.name;
 
-			if ($option.selected) {
-				loadListVariations($selectVariation, emotion.variations, selected.variation);
-			}
-		});
+		if (option.selected) {
+			loadListVariations($selectVariation, character.variations, selected.variation);
+		}
 
-		M.FormSelect.init($selectMain);
-
-		$selectMain.addEventListener('change', changedCharacter);
+		$selectMain.appendChild(option);
 	});
+
+	M.FormSelect.init($selectMain);
+
+	$selectMain.addEventListener('change', characterChanged);
 }
 
 function loadListVariations($select, variations, selected) {
@@ -130,25 +134,22 @@ function addCharacter(id = nextId++, info = DEFAULT_CHARACTER) {
 }
 
 function createCharacterScene(id, info) {
-	let $img = document.createElement('img');
-	$img.id = 'actor_' + id;
-	$img.dataset.actor = id;
-	$img.alt = messages['character'] + ' ' + (id+1);
-	$img.title = `${$img.alt} - ${info.name}\n\nPress SHIFT to move up and down\nDouble-click to flip`;
-	$img.classList.add('actor', 'draggable');
-	$img.style.bottom = '0';
-	$img.style.left = Math.min(id * 400 - 200, 750) + 'px';
-	$img.style.webkitTransform
-		= $img.style.transform
-		= `translate(${info.pos.x}px, ${info.pos.y}px) scaleX(${info.flipped ? -1 : 1})`;
+	let characterImg = document.createElement('img');
+	characterImg.id = 'actor_' + id;
+	characterImg.dataset.actor = id;
+	characterImg.alt = messages['character'] + ' ' + (id+1);
+	characterImg.classList.add('actor', 'draggable');
+	characterImg.style.bottom = '0';
+	characterImg.style.left = Math.min(id * 400 - 200, 750) + 'px';
+	characterImg.style.transform = `translate(${info.pos.x}px, ${info.pos.y}px) scaleX(${info.flipped ? -1 : 1})`;
 
-	$scene.appendChild($img);
+	sceneElement.appendChild(characterImg);
 
-	updateCharacterScene($img, info);
+	updateCharacterScene(characterImg, info);
 
 	let dom = charactersDom[id];
 	if(!dom) dom = charactersDom[id] = {}; // initialize DOM holder
-	dom.scene = $img;
+	dom.scene = characterImg;
 }
 
 function createCharacterSetting(id, info) {
@@ -182,26 +183,33 @@ function createCharacterSetting(id, info) {
 	}
 
 	function createRemove() {
-		let $div = $root.appendChild(document.createElement('div'));
-		$div.classList.add('input-field', 'col', 's6', 'm2');
-		$div.style.height = '66px';
+		const svgNamespace = 'http://www.w3.org/2000/svg';
 
-		// i.e.: <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+		const removeContainer = document.createElement('div');
+		removeContainer.classList.add('input-field', 'col', 's6', 'm2');
 
-		let $removeBtn = $div.appendChild(document.createElement('a'));
-		$removeBtn.classList.add('btn-floating', 'waves-effect', 'waves-light', 'red');
-		$removeBtn.onclick = () => removeCharacter(id);
+		const removeBtn = document.createElement('a');
+		removeBtn.classList.add('btn-floating', 'waves-effect', 'waves-light', 'red');
+		removeBtn.onclick = () => removeCharacter(id);
 
-		let $removeIcon = $removeBtn.appendChild(document.createElement('i'));
-		$removeIcon.classList.add('material-icons');
-		$removeIcon.textContent = 'remove_circle_outline';
+		const removeIcon = document.createElementNS(svgNamespace, 'svg');
+		removeIcon.setAttribute('viewBox', '0 0 24 24');
+
+		const removeIconPath = document.createElementNS(svgNamespace, 'path');
+		removeIconPath.setAttribute('fill', 'currentColor');
+		removeIconPath.setAttribute('d', mdiClose);
+
+		removeIcon.appendChild(removeIconPath);
+		removeBtn.appendChild(removeIcon);
+		removeContainer.appendChild(removeBtn);
+		$root.appendChild(removeContainer);
 	}
 
 	let $main = createMain();
 	let $variation = createVariation();
 	createRemove();
 
-	$characters.appendChild($root);
+	charactersElement.appendChild($root);
 
 	loadList($main, $variation, info);
 
@@ -234,11 +242,19 @@ function removeCharacter(id) {
 }
 
 export function persistCharacters() {
-	localStorage.setItem('characters', JSON.stringify(characters));
+	// Clears any `null` characters that were left behind by removing characters in the current session
+	const charactersToPersist = [];
+	for (const character of characters) {
+		if (character) {
+			charactersToPersist.push(character);
+		}
+	}
+
+	localStorage.setItem('characters', JSON.stringify(charactersToPersist));
 }
 
-function changedCharacter() {
-	let selected = emotions[this.value];
+function characterChanged() {
+	let selected = CHARACTERS[this.value];
 	console.debug('Character updated', selected);
 
 	let id = this.dataset.actor;
@@ -263,22 +279,24 @@ function changedCharacterVariation() {
 
 	let selected = this.options[this.selectedIndex];
 
-	let emotion = emotions[document.getElementById('actor_' + this.dataset.actor + '_edit').value];
-	let variation = emotion.variations[this.value];
+	let characterEditorIdx = document.getElementById('actor_' + this.dataset.actor + '_edit')!.value;
+	let character = CHARACTERS[characterEditorIdx];
+	let variation = character.variations[this.value];
 
-	console.debug('Selected character ' + id + ': ' + emotion.name + ' (' + selected.textContent + ')');
+	console.debug('Selected character ' + id + ': ' + character.name + ' (' + selected.textContent + ')');
 
 	// Update actor info
-	let character = characters[this.dataset.actor];
-	character.name = emotion.name;
-	character.variation = variation;
+	let characterEditor = characters[this.dataset.actor];
+	characterEditor.name = character.name;
+	characterEditor.variation = variation;
 	persistCharacters();
 
-	updateCharacterScene(dom.scene, character);
+	updateCharacterScene(dom.scene, characterEditor);
 }
 
 function updateCharacterScene($img, character) {
 	$img.style.src = '';
+	$img.title = `[${$img.alt}]\n${character.name}\n\n- Drag with SHIFT to move up and down.\n- Double-click to flip.`;
 
 	// TODO: constants in PT?
 	if (character.name === '[Nada]') {
@@ -287,14 +305,12 @@ function updateCharacterScene($img, character) {
 		$img.style.display = 'block';
 		if (character.name === '[Docete]') {
 			drawAvatar(false, $img);
-			// $img.src = assets.body
-
 			$img.style.height = '150%';
 			$img.style.bottom = '-300px';
 		} else {
 			let variation = character.variation;
 			let asset = variation.id + (variation.checksum ? '-' + variation.checksum : '');
-			$img.src = 'assets/emotion/' + asset + '.png';
+			$img.src = 'assets/character/' + asset + '.png';
 			$img.style.backgroundImage = '';
 			$img.style.height = '92.24138%';
 			$img.style.bottom = '0';

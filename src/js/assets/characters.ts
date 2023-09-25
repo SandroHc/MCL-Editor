@@ -1,4 +1,4 @@
-export const emotions = [
+export const CHARACTERS = [
 	{
 		'name': '[Docete]',
 		'variations': [

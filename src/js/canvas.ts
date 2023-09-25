@@ -1,11 +1,11 @@
 import interact from "interactjs";
-import { getCharacter, persistCharacters } from "./characters";
-import { bubble, persist } from "./bubbles";
+import { getCharacter, persistCharacters } from "./characters.js";
+import { bubble, persistBubble } from "./bubbles";
 
 
 let zIndexCurrent = 0;
 
-export function load() {
+export function loadCanvas() {
 	interact('.draggable')
 		.draggable({
 			inertia: true,
@@ -40,7 +40,7 @@ export function load() {
 						persistCharacters();
 					} else {
 						// Assume we're moving the bubble
-						persist();
+						persistBubble();
 					}
 				}
 			}
@@ -59,8 +59,8 @@ export function load() {
 }
 
 function dragUpdatePos(event, target) {
-	let actorId = event.target.dataset.actor;
-	let info = actorId ? getCharacter(actorId) : bubble;
+	let characterId = event.target.dataset.actor;
+	let info = characterId ? getCharacter(characterId) : bubble;
 
 	let x = info.pos.x + (event.dx || 0);
 	let y = info.pos.y + (event.dy || 0);

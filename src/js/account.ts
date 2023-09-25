@@ -1,6 +1,7 @@
 import { getPlayerInfo } from './util/api'
-import { apply as bootstrapAvatar } from "./avatars";
-import { updateDocete as bootstrapCharacter } from "./characters";
+import { apply as bootstrapAvatar } from './avatars.js';
+import { updateDocete as bootstrapCharacter } from './characters.js';
+import { getCurrentLanguage } from './lang';
 
 const REGIONS = {
 	br: { id: 'br', link: 'amordoce.com', name: 'Brazil' },
@@ -19,34 +20,63 @@ const REGIONS = {
 	uk: { id: 'uk', link: 'sweetcrush.co.uk', name: 'United Kingdom' },
 };
 
-const DEFAULT_REGION = REGIONS.br;
+const DEFAULT_REGION = getCurrentLanguage() === 'pt' ? REGIONS.br : REGIONS.us;
 const DEFAULT_PLAYER = {
 	username: '',
-	data: undefined,
+	data: null,
+	avatar: null,
 };
 
-export let region = undefined;
-export let player = undefined;
+export let region = DEFAULT_REGION;
+export let player = DEFAULT_PLAYER;
 
-export function init() {
-	loadRegions();
+export function loadAccount() {
+	loadRegion();
 	loadUsername();
 	console.debug('Loaded account', { username: player.username, region: region.id });
 
-	document.getElementById('username-submit').addEventListener('click', submittedUsername);
+	document.getElementById('username-submit')!.addEventListener('click', submittedUsername);
+	document.getElementById('region-edit')!.addEventListener('change', changedRegion);
+}
 
-	document.getElementById('region-edit').addEventListener('change', changedRegion);
+function loadRegion() {
+	let storedRegion = localStorage.getItem('region') || '';
+	region = storedRegion in REGIONS ? REGIONS[storedRegion] : DEFAULT_REGION;
+
+	let regions = document.getElementById('region-edit')!;
+	for (const data of Object.values(REGIONS)) {
+		let option = document.createElement('option');
+		option.value = data.id;
+		option.selected = data.id === region.id;
+		option.textContent = data.name + ' — ' + data.link;
+
+		regions.appendChild(option);
+	}
+
+	M.FormSelect.init(regions);
+}
+
+function changedRegion() {
+	region = REGIONS[this.value];
+	persistRegion();
 }
 
 function loadUsername() {
 	try {
-		player = JSON.parse(localStorage.getItem('player')) || DEFAULT_PLAYER;
-	} catch(e) {
+		const storedPlayer = localStorage.getItem('player');
+		if (storedPlayer) {
+			player = JSON.parse(storedPlayer);
+		}
+		if (!player) {
+			player = DEFAULT_PLAYER;
+		}
+	} catch (e) {
 		player = DEFAULT_PLAYER;
 	}
 
 	if (player.username) {
-		document.getElementById('username-edit').value = player.username;
+		const usernameEditor = document.getElementById('username-edit')! as HTMLInputElement;
+		usernameEditor.value = player.username;
 
 		// Load cached data
 		if (!player.data) {
@@ -55,32 +85,12 @@ function loadUsername() {
 	}
 }
 
-function loadRegions() {
-	let id = localStorage.getItem('region');
-	region = REGIONS[id] || DEFAULT_REGION;
-
-	let $el = document.getElementById('region-edit');
-	for (id in REGIONS) {
-		let obj = REGIONS[id];
-
-		let $option = document.createElement('option');
-		$option.value = obj.id;
-		$option.selected = obj.id === region.id;
-		$option.textContent = obj.name + ' — ' + obj.link;
-
-		$el.appendChild($option);
-	}
-
-	M.FormSelect.init($el);
-}
-
-function changedRegion() {
-	region = REGIONS[this.value];
-	persistRegion();
-}
-
 export function persistPlayerData() {
-	localStorage.setItem('player', JSON.stringify(player));
+	if (player) {
+		localStorage.setItem('player', JSON.stringify(player));
+	} else {
+		localStorage.removeItem('player');
+	}
 }
 
 function persistRegion() {
@@ -92,7 +102,7 @@ function persistRegion() {
 }
 
 function submittedUsername() {
-	player.username = document.getElementById('username-edit').value;
+	player.username = document.getElementById('username-edit')!.value;
 	persistPlayerData();
 
 	console.info('Loading avatar for:', player.username);
