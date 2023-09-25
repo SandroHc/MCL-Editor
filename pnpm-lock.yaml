@@ -6,14 +6,14 @@ settings:
 
 dependencies:
   '@mdi/js':
-    specifier: ^7.2.96
+    specifier: ~7.2
     version: 7.2.96
   crypto-js:
-    specifier: ~3.1
-    version: 3.1.8
+    specifier: ~4.1
+    version: 4.1.1
   interactjs:
-    specifier: ~1.8
-    version: 1.8.5(@interactjs/offset@1.8.5)
+    specifier: ~1.10
+    version: 1.10.19
   materialize-css:
     specifier: ~1.0
     version: 1.0.0
@@ -23,7 +23,7 @@ dependencies:
 
 devDependencies:
   '@types/node':
-    specifier: ^20.6.5
+    specifier: ~20.6
     version: 20.6.5
   sass:
     specifier: ~1.68
@@ -38,7 +38,7 @@ devDependencies:
     specifier: ~0.5
     version: 0.5.1(vite@4.4.9)
   vite-plugin-html:
-    specifier: ~3.2.0
+    specifier: ~3.2
     version: 3.2.0(vite@4.4.9)
   vite-plugin-singlefile:
     specifier: ~0.13
@@ -244,160 +244,8 @@ packages:
     dev: true
     optional: true
 
-  /@interactjs/actions@1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-/dBS+7ivQbisCo35R5KW2Ky3S6TgIr4qtCyB1nYWewt6NyEDtW3XzFkUf1Zru/Yo4/iNRhuTrVKHWKn5lURjYQ==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/auto-scroll@1.8.5(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-yOdvbvBzg9Lb0LmfGyDI/uVgJDZOr9mAa6ofCXMUGPqcxI28/Of9EBTDuwM4Oiy4fHjHouA/72ktlRNoNLLvAw==}
-    peerDependencies:
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/auto-start@1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-jfVWhvAZkmTtdSy6rdNECIi31jXViE0zPUor51fgEngiQjnmGVQ+wFW8JGYqAhLvFIlzEs7nkboZ9CTBqBQrVQ==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/core@1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-eWFpfN3zHCZojBLmMsomdGgRXhCzvvwR7Zhg4taCKeBG7Un8lf7JJvvJvPEBqd6dnWZ2TG4Ryac2EnLk9L4F4g==}
-    peerDependencies:
-      '@interactjs/dev-tools': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/dev-tools': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/dev-tools@1.8.5:
-    resolution: {integrity: sha512-HwkLHVcLGDtVd5euzeoS2NPhmwmTrFQOef29dPbf/EIKy9BHiCdhrJqSW4U8vz6Qv86zFF+9kQ/4QFmY2VWBHA==}
-    dependencies:
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/inertia@1.8.5(@interactjs/core@1.8.5)(@interactjs/modifiers@1.8.5)(@interactjs/offset@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-zvkysaFdrl9WnguZMOdFyl0p8D64RvhvvZyb5uh9bOh34K6A8EWBXnehVdLwMpLe4dFNK6I5y8+hTIRY/UgikQ==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/modifiers': 1.8.5
-      '@interactjs/offset': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/modifiers': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/offset': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/interact@1.8.5(@interactjs/actions@1.8.5)(@interactjs/auto-scroll@1.8.5)(@interactjs/auto-start@1.8.5)(@interactjs/core@1.8.5)(@interactjs/dev-tools@1.8.5)(@interactjs/inertia@1.8.5)(@interactjs/modifiers@1.8.5)(@interactjs/offset@1.8.5)(@interactjs/pointer-events@1.8.5)(@interactjs/reflow@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-mTCYcllKGWchbuMBBd++boItU9odINLQVeKAXuriX+UNiGfn+lFgTLwUaeyOLE8inXNULq2rlLsvOtSMSOt5UQ==}
-    peerDependencies:
-      '@interactjs/actions': 1.8.5
-      '@interactjs/auto-scroll': 1.8.5
-      '@interactjs/auto-start': 1.8.5
-      '@interactjs/core': 1.8.5
-      '@interactjs/dev-tools': 1.8.5
-      '@interactjs/inertia': 1.8.5
-      '@interactjs/modifiers': 1.8.5
-      '@interactjs/offset': 1.8.5
-      '@interactjs/pointer-events': 1.8.5
-      '@interactjs/reflow': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/actions': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/auto-scroll': 1.8.5(@interactjs/utils@1.8.5)
-      '@interactjs/auto-start': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/dev-tools': 1.8.5
-      '@interactjs/inertia': 1.8.5(@interactjs/core@1.8.5)(@interactjs/modifiers@1.8.5)(@interactjs/offset@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/modifiers': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/offset': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/pointer-events': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/reflow': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/interactjs@1.8.5(@interactjs/offset@1.8.5):
-    resolution: {integrity: sha512-Ns3pumi495MZekpCv/G9EvYjmKQuKgIT4JzUURB6RtU2FoTzROWAPoR0cZNyh7zdQxiDGKE+IPBvn08gzldtcw==}
-    dependencies:
-      '@interactjs/types': 1.8.5(@interactjs/offset@1.8.5)
-    transitivePeerDependencies:
-      - '@interactjs/offset'
-    dev: false
-
-  /@interactjs/modifiers@1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-GqwOLwzATT7VBY6VS8jQ2l86JVIZDGdaCzm0X+UvTC/La/uPeTYbC2Bdm7ScpDL1j1EVypDne6i/TYvzPNS+5Q==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/offset@1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-OsR+Gj2ic33Y2lxh0vKYJv2ZYNeh0rlgQcdQ4fa8Nin4GkL+lF59EcWgVK+m3phHSkOpzXQSAGnXiIrHGN3iCg==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/pointer-events@1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-NpaD5+vf8iIzViG8Efag5rDZtTthIPgKthczeWHrl8F91kKZq5os8FoASOJtWo79TYMO6lMtpBz7jCEcI9M8Cg==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/reflow@1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5):
-    resolution: {integrity: sha512-9x2UEGXWuHHUmEYPtWEk8/WC8wpgMYv86Z0hTfb2ReP0vRRK74zGGX5aha74cUlPq1c+5TpM/lDDcBugr17aDg==}
-    peerDependencies:
-      '@interactjs/core': 1.8.5
-      '@interactjs/utils': 1.8.5
-    dependencies:
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    dev: false
-
-  /@interactjs/types@1.8.5(@interactjs/offset@1.8.5):
-    resolution: {integrity: sha512-7O4HntsLt6dDnL2JOuR7F7MbPVSSg2px1EC2YxRJVVni2KSV7WjQX4YwkcO3nsRj0e2S1q3Gp90wyuJMQ2vHqA==}
-    dependencies:
-      '@interactjs/actions': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/auto-scroll': 1.8.5(@interactjs/utils@1.8.5)
-      '@interactjs/auto-start': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/core': 1.8.5(@interactjs/dev-tools@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/dev-tools': 1.8.5
-      '@interactjs/inertia': 1.8.5(@interactjs/core@1.8.5)(@interactjs/modifiers@1.8.5)(@interactjs/offset@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/interact': 1.8.5(@interactjs/actions@1.8.5)(@interactjs/auto-scroll@1.8.5)(@interactjs/auto-start@1.8.5)(@interactjs/core@1.8.5)(@interactjs/dev-tools@1.8.5)(@interactjs/inertia@1.8.5)(@interactjs/modifiers@1.8.5)(@interactjs/offset@1.8.5)(@interactjs/pointer-events@1.8.5)(@interactjs/reflow@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/modifiers': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/pointer-events': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/reflow': 1.8.5(@interactjs/core@1.8.5)(@interactjs/utils@1.8.5)
-      '@interactjs/utils': 1.8.5
-    transitivePeerDependencies:
-      - '@interactjs/offset'
-    dev: false
-
-  /@interactjs/utils@1.8.5:
-    resolution: {integrity: sha512-3m3jJj6IatoxMT7VXrdj+PEn4Cgv+nhQemm1Y3Vr+ybsTLuj7XzI4EJoHTkjGX265rziYLO2toVyK8zysDa1gQ==}
+  /@interactjs/types@1.10.19:
+    resolution: {integrity: sha512-oEqGmt9/Ob+jz0FUaBzpDXBmf+2dfdhPuEwQcMGH6nQTR2ETGtYIlAnQtADHvnCin+cVkrmqVohfHBysyQr4Lw==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -610,8 +458,8 @@ packages:
     resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==}
     dev: true
 
-  /crypto-js@3.1.8:
-    resolution: {integrity: sha512-4E+PJNbUbBrzQLB9Vw86eaF5xZ8MB6dw4aaZ67YhLNduTmqJ5AziuLrYikPWHJkC59DYZp+cyj+qg3vBE8OnOQ==}
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
     dev: false
 
   /css-select@4.3.0:
@@ -817,13 +665,10 @@ packages:
     resolution: {integrity: sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==}
     dev: true
 
-  /interactjs@1.8.5(@interactjs/offset@1.8.5):
-    resolution: {integrity: sha512-wCg761eIvueTN3JFhEZaq3c8hLt7CYY6kBPMclBgykIHwuh45l3C5aVM6JfhxH7a3yKmTn2vlKM/1DqlfhBZ0Q==}
+  /interactjs@1.10.19:
+    resolution: {integrity: sha512-5zWXBrfLnXAyhrxKlhRiud/JxWd3GvZkvdTf8bqjeHWDx9zgiu+qFNA3nnJMszadFCig2GU5zKx9PYrkT87OKA==}
     dependencies:
-      '@interactjs/interactjs': 1.8.5(@interactjs/offset@1.8.5)
-      '@interactjs/types': 1.8.5(@interactjs/offset@1.8.5)
-    transitivePeerDependencies:
-      - '@interactjs/offset'
+      '@interactjs/types': 1.10.19
     dev: false
 
   /is-binary-path@2.1.0:
