@@ -1,16 +1,31 @@
-@import "~materialize-css/sass/materialize";
+@import "materialize-css/sass/materialize";
 
-@import "colors";
-@import "fonts";
+$black: #000;
+$black_50: rgba(0, 0, 0, .5);
+$white: #fff;
+$color_bubble_bg: rgba(255, 255, 255, 0.85);
+$color_gauge_bg: #c8c8c8;
+$color_gauge_bg_darker: #b9b9b9;
+$color_gauge_border: rgba(140, 140, 140, 0.75);
+$color_gauge_border_darker: rgba(24, 24, 24, 0.75);
+$color_response_border: #ee3d73;
+$color_response: #8cc503;
+$color_response_hover: #64a625;
+$color_player: #f4508e;
+
+$font: 'Trebuchet MS', 'Arial', sans-serif;
+
+// Icons
+$material-icons-font-path: 'node_modules/material-icons/iconfont/';
+@import "material-icons/iconfont/material-icons.scss";
 
 // URLs
-$loveo-gauge: url(../assets/gauge.png);		// Original: http://www.amordoce.com/image/high-school/gauge.png
-$loveo-heart: url(../assets/lom-heart.png);	// Original: http://www.amordoce.com/image/high-school/lom-heart.png
+$loveo-gauge: url(assets/gauge.png);		// Original: http://www.amordoce.com/image/high-school/gauge.png
+$loveo-heart: url(assets/lom-heart.png);	// Original: http://www.amordoce.com/image/high-school/lom-heart.png
 
 $zindex-1: 100000;
 $zindex-2: 100100;
 $zindex-3: 100200;
-
 
 #logo {
 	display: flex;

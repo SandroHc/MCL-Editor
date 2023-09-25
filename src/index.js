@@ -1,16 +1,25 @@
 import 'materialize-css/dist/js/materialize.min.js'
 
-import '../styles/style.scss'
+import './style.scss'
 import vegito from 'vegito'
 
-import { lang, messages } from './lang'
+import { lang, messages } from './js/lang.js'
+import { init as langInit } from './js/lang.js';
+import { init as accountInit } from './js/account.js';
+import { init as answersInit } from './js/answers.js';
+import { init as avatarsInit } from './js/avatars.js';
+import { init as bubblesInit } from './js/bubbles.js';
+import { init as charactersInit } from './js/characters.js';
+import { init as loveometerInit } from './js/loveometer.js';
+import { init as scenesInit } from './js/scenes.js';
+import { init as settingsInit } from './js/settings.js';
 
 function init() {
 	document.getElementsByTagName('html')[0].lang = lang;
 	document.getElementsByTagName('title')[0].textContent = messages['title'];
 	document.querySelector('meta[name=description]').content = messages['description'];
 
-	console.info('[MCL] Starting up version ' + VERSION + ' for language ' + lang);
+	console.info('[MCL] Starting up version ' + APP_VERSION + ' for language ' + lang);
 
 	document.body.innerHTML = vegito(document.body.innerHTML, messages);
 
@@ -19,15 +28,15 @@ function init() {
 
 		M.Tabs.init(document.getElementById('tabs'));
 
-		require('./lang').init();
-		require('./account').init();
-		require('./answers').init();
-		require('./avatars').init();
-		require('./bubbles').init();
-		require('./characters').init();
-		require('./loveometer').init();
-		require('./scenes').init();
-		require('./settings').init();
+		langInit();
+		accountInit();
+		answersInit();
+		avatarsInit();
+		bubblesInit();
+		charactersInit();
+		loveometerInit();
+		scenesInit();
+		settingsInit();
 	});
 }
 

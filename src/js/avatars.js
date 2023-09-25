@@ -58,12 +58,10 @@ function changedAvatar() {
 
 	avatar = avatars[this.value];
 
-	if (USE_GTAG) {
-		gtag('event', 'changed_avatar', {
-			'event_category': 'avatar',
-			'value': avatar?.name
-		});
-	}
+	gtag('event', 'changed_avatar', {
+		'event_category': 'avatar',
+		'value': avatar?.name
+	});
 
 	persist();
 	apply();

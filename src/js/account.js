@@ -50,7 +50,7 @@ function loadUsername() {
 
 		// Load cached data
 		if (!player.data) {
-			bootstrap();
+			loadPlayerData();
 		}
 	}
 }
@@ -98,10 +98,10 @@ function submittedUsername() {
 	console.info('Loading avatar for:', player.username);
 
 	// Load newest data
-	bootstrap();
+	loadPlayerData();
 }
 
-function bootstrap() {
+function loadPlayerData() {
 	getPlayerInfo(player.username)
 		.then(data => {
 			console.debug("Player data", data);
