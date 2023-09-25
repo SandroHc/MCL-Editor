@@ -3,9 +3,9 @@ export const MESSAGES = {
 		// Miscellaneous
 		version: 'Version ' + APP_VERSION,
 		title: 'MyCandyLove Editor',
-		description: 'MyCandyLove Editor, an offline fanfic creation tool for MyCandyLove.',
-		welcome: 'Welcome to the unofficial scene editor of My Candy Love! We hope you have fun! You can publish your creations under the tag <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>. Tool updated by <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>.',
-		legal: 'All images belong to <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
+		description: 'MyCandyLove Editor, create your own fanfic of MyCandyLove!',
+		welcome: 'Welcome to the unofficial scene editor of My Candy Love! We hope you have fun!',
+		legal: 'All assets belong to <a href="http://beemoov.com" target="_blank" rel="noreferrer">Beemoov</a>',
 		view_result: 'View Result',
 		file: 'File',
 
@@ -40,16 +40,16 @@ export const MESSAGES = {
 		// Settings
 		language: 'Language',
 		cache: 'Cache',
-		clear_actors: 'Clear Characters & Place',
-		clear_cache: 'Clear Everything'
+		clear_actors: 'Reset Characters & Place',
+		clear_cache: 'Reset Everything'
 	},
 	'pt': {
 		// Miscellaneous
 		version: 'Versão ' + APP_VERSION,
 		title: 'Amor Doce | MyCandyLove Editor',
-		description: 'MyCandyLove Editor, uma ferramenta de criação de fanfics para o jogo Amor Doce.',
-		welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Esperemos que você se divirta! Você pode publicar as suas criações em <a href="https://tumblr.com/tagged/mcleditor" rel="noopener">#mcleditor</a>. Atualizado por <a href="https://sandrohc.net" target="_blank" rel="noopener">SandroHc</a>.',
-		legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank" rel="noopener noreferrer">Beemoov</a>',
+		description: 'MyCandyLove Editor, crie os seus fanfics de Amor Doce!',
+		welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Esperemos que você se divirta!',
+		legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank" rel="noreferrer">Beemoov</a>',
 		view_result: 'Ver Resultado',
 		file: 'Ficheiro',
 
