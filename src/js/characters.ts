@@ -157,7 +157,7 @@ function createCharacterSetting(id, info) {
 
 	function createMain() {
 		let $divMain = $root.appendChild(document.createElement('div'));
-		$divMain.classList.add('input-field', 'col', 's12', 'm5');
+		$divMain.classList.add('input-field', 'col', 's7', 'm5');
 
 		let $selectMain = $divMain.appendChild(document.createElement('select'));
 		$selectMain.id = 'actor_' + id + '_edit';
@@ -173,7 +173,7 @@ function createCharacterSetting(id, info) {
 
 	function createVariation() {
 		let $divVariation = $root.appendChild(document.createElement('div'));
-		$divVariation.classList.add('input-field', 'col', 's12', 'm5');
+		$divVariation.classList.add('input-field', 'col', 's5', 'm5');
 
 		let $selectVariation = $divVariation.appendChild(document.createElement('select'));
 		$selectVariation.id = 'actor_' + id + '_sub';
@@ -186,9 +186,10 @@ function createCharacterSetting(id, info) {
 		const svgNamespace = 'http://www.w3.org/2000/svg';
 
 		const removeContainer = document.createElement('div');
-		removeContainer.classList.add('input-field', 'col', 's6', 'm2');
+		removeContainer.classList.add('input-field', 'col', 's12', 'm2', 'remove-col');
 
 		const removeBtn = document.createElement('a');
+		removeBtn.title = `Remove character ${id + 1}`;
 		removeBtn.classList.add('btn-floating', 'waves-effect', 'waves-light', 'red');
 		removeBtn.onclick = () => removeCharacter(id);
 

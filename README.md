@@ -1,15 +1,17 @@
 # MCL Editor
 
-Repository of MyCandyLove Editor, an offline fanfic creation tool.
+Repository of MyCandyLove Editor, a fanfic creation tool for MyCandyLove.
+
+Online editor available at [https://mcl.sandro.dev](https://mcl.sandro.dev)
 
 ## Contributing
 
-Use `npm install` (or `yarn install`) to install all dev dependencies, needed to compile the SCSS.
+Use `npm install` to install all dev dependencies.
 Use `npm build` to build the final, which will be available in the `dist/` folder.
-Use `npm start` to start the development server.
+Use `npm dev` to start the development server.
 
 Changes to the CSS should be made in the respective `.scss` file. Recompile using the command `npm build`.
-Changes to the JS should be made in the respective `.js` script. Recompile using the command `npm build`.
+Changes to the JS should be made in the respective `.ts` script. Recompile using the command `npm build`.
 
 ## Authors
 
