@@ -251,6 +251,10 @@ $zindex-3: 100200;
 	font-size: 0.9em;
 	text-align: right;
 	padding: 0.75rem !important;
+
+	> span {
+		white-space: nowrap;
+	}
 }
 
 #go-to-scene {
