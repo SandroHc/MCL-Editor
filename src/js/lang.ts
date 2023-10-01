@@ -39,6 +39,7 @@ export const MESSAGES = {
 		character: 'Character',
 		use_sucrette: 'Use File',
 		add_character: 'Add Character',
+		character_details: '[Character{{id}}]\n{{name}}\n\n- Drag with SHIFT to move up and down.\n- Double-click to flip.',
 
 		// Settings
 		language: 'Language',
@@ -85,7 +86,8 @@ export const MESSAGES = {
 		// Characters
 		character: 'Personagem',
 		use_sucrette: 'Usar Ficheiro',
-		add_character: 'Adiciionar Personagem',
+		add_character: 'Adicionar Personagem',
+		character_details: '[Personagem{{id}}]\n{{name}}\n\n- Arraste enquanto pressiona SHIFT para mover livremente.\n- Duplo-clique para espelhar.',
 
 		// Settings
 		language: 'Idioma',

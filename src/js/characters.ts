@@ -145,7 +145,7 @@ function createCharacterScene(id, info) {
 
 	sceneElement.appendChild(characterImg);
 
-	updateCharacterScene(characterImg, info);
+	updateCharacterScene(characterImg, info, id);
 
 	let dom = charactersDom[id];
 	if(!dom) dom = charactersDom[id] = {}; // initialize DOM holder
@@ -269,7 +269,7 @@ function characterChanged() {
 
 	// Update canvas
 	let dom = charactersDom[id];
-	updateCharacterScene(dom.scene, character);
+	updateCharacterScene(dom.scene, character, id);
 
 	// Upload list
 	loadListVariations(dom.variation, selected.variations, character.variation);
@@ -288,17 +288,19 @@ function changedCharacterVariation() {
 	console.debug('Selected character ' + id + ': ' + character.name + ' (' + selected.textContent + ')');
 
 	// Update actor info
-	let characterEditor = characters[this.dataset.actor];
+	let characterEditor = characters[id];
 	characterEditor.name = character.name;
 	characterEditor.variation = variation;
 	persistCharacters();
 
-	updateCharacterScene(dom.scene, characterEditor);
+	updateCharacterScene(dom.scene, characterEditor, id);
 }
 
-function updateCharacterScene($img, character) {
+function updateCharacterScene($img, character, charId) {
 	$img.style.src = '';
-	$img.title = `[${$img.alt}]\n${character.name}\n\n- Drag with SHIFT to move up and down.\n- Double-click to flip.`;
+	$img.title = messages['character_details']
+		.replace('{{id}}', charId !== undefined ? (' ' + (charId + 1)) : '')
+		.replace('{{name}}', character.name);
 
 	// TODO: constants in PT?
 	if (character.name === '[Nada]') {
