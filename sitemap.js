@@ -16,6 +16,10 @@ const urls = [
 		link: "https://mcl.sandro.dev/pt",
 		since: "2023-09-27",
 	},
+	{
+		link: "https://mcl.sandro.dev/fr",
+		since: "2023-10-01",
+	},
 ]
 let sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
 for (const url of urls) {

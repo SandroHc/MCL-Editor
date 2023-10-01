@@ -138,7 +138,54 @@ export const MESSAGES = {
 		language: 'Idioma',
 		cache: 'Cache',
 		clear_characters: 'Limpar Personagens',
-		clear_cache: 'Limpar Tudo'
+		clear_cache: 'Limpar Tudo',
+	},
+	'fr': {
+		// Miscellaneous
+		version: 'Version ' + APP_VERSION,
+		build_date: 'Construit sur ' + APP_BUILD_DATE,
+		title: 'Amour Sucré | MyCandyLove Editor',
+		description: 'MyCandyLove Editor, créer des fanfics et parcourir les illustrations de Amour Sucré!',
+		welcome: 'Bienvenue sur le site de fanfic et d\'illustration de Amour Sucré! Nous espérons que vous vous amuserez!',
+		legal: 'Tous les éléments appartiennent à <a href="http://beemoov.com" target="_blank" rel="noreferrer">Beemoov</a>',
+		report_problem: 'Déclarer un problème',
+		view_result: 'Voir le Résultat',
+		file: 'Fichier',
+
+		// Tabs
+		account: 'Compte',
+		dialogue: 'Dialogue',
+		place: 'Lieu',
+		characters: 'Personnages',
+
+		// Account
+		region: 'Région',
+		username: 'Nom',
+		username_placeholder: 'Nom d\'utilisateur (PAS votre e-mail)',
+		change_avatar: 'Charger l\'avatar',
+
+		// Dialogue
+		avatar: 'Avatar',
+		characters_bubble_label: 'Bulle de dialogue',
+		characters_bubble: 'Bulle de dialogue',
+		answers_label: 'Réponses',
+		answers: 'Réponses (ENTER pour séparer)',
+		answers_default: 'Bienvenue sur l\'éditeur de Amour Sucré!',
+		love_level: 'Niveau d\'amour',
+
+		// Place
+		places: 'Lieu',
+
+		// Characters
+		character: 'Personnage',
+		add_character: 'Ajouter un personnage',
+		character_details: '[Personnage{{id}}]\n{{name}}\n\n- Faire glisser avec la touche SHIFT pour se déplacer librement.\n- Double-clic pour inverser.',
+
+		// Settings
+		language: 'Langue',
+		cache: 'Cache',
+		clear_characters: 'Réinitialiser les personnages',
+		clear_cache: 'Tout réinitialiser',
 	}
 }
 
@@ -148,6 +195,7 @@ const LANGUAGES = {
 	en: { name: 'English' },
 	es: { name: 'Español' },
 	pt: { name: 'Português' },
+	fr: { name: 'Français' },
 };
 
 export let selectedLanguage = getCurrentLanguage();

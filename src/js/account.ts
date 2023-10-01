@@ -3,6 +3,7 @@ import { apply as bootstrapAvatar } from './avatars.js';
 import { updateDocete as bootstrapCharacter } from './characters.js';
 import { getCurrentLanguage } from './lang';
 
+// Trends: https://trends.google.com/trends/explore?q=amor%20doce,candy%20love,amour%20sucr%C3%A9,Coraz%C3%B3n%20de%20Mel%C3%B3n,S%C5%82odki%20Flirt
 const REGIONS = {
 	us: { id: 'us', link: 'mycandylove.com', name: 'My Candy Love', lang: 'English - United States' },
 	uk: { id: 'uk', link: 'sweetcrush.co.uk', name: 'Sweet Crush', lang: 'English - United Kingdom' },
