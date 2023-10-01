@@ -4,14 +4,22 @@ import * as fs from 'node:fs';
 import * as zlib from 'node:zlib';
 
 const urls = [
-	"https://mcl.sandro.dev",
-	"https://mcl.sandro.dev/pt",
+	{
+		link: "https://mcl.sandro.dev",
+		since: "2023-09-27",
+	},
+	{
+		link: "https://mcl.sandro.dev/es",
+		since: "2023-10-01",
+	},
+	{
+		link: "https://mcl.sandro.dev/pt",
+		since: "2023-09-27",
+	},
 ]
-const today = new Date().toISOString().split('T')[0]
-
 let sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
 for (const url of urls) {
-	sitemap += `<url><loc>${url}</loc><lastmod>${today}</lastmod></url>`;
+	sitemap += `<url><loc>${url.link}</loc><lastmod>${url.since}</lastmod></url>`;
 }
 sitemap += "</urlset>";
 

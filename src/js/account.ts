@@ -4,23 +4,23 @@ import { updateDocete as bootstrapCharacter } from './characters.js';
 import { getCurrentLanguage } from './lang';
 
 const REGIONS = {
-	br: { id: 'br', link: 'amordoce.com', name: 'Brazil' },
-	us: { id: 'us', link: 'mycandylove.com', name: 'USA' },
-	de: { id: 'de', link: 'sweetamoris.de', name: 'Germany' },
-	es: { id: 'es', link: 'corazondemelon.es', name: 'Spain' },
-	fi: { id: 'fi', link: 'flirttistoori.com', name: 'Finland' },
-	fr: { id: 'fr', link: 'amoursucre.com', name: 'France' },
-	hu: { id: 'hu', link: 'csabitasboljeles.hu', name: 'Hungary' },
-	it: { id: 'it', link: 'dolceflirt.it', name: 'Italy' },
-	mx: { id: 'mx', link: 'corazondebombon.com', name: 'Mexico' },
-	pl: { id: 'pl', link: 'slodkiflirt.pl', name: 'Poland' },
-	ro: { id: 'ro', link: 'sweetflirt.ro', name: 'Romania' },
-	ru: { id: 'ru', link: 'sladkiiflirt.ru', name: 'Russia' },
-	tr: { id: 'tr', link: 'askito-m.com', name: 'Turkey' },
-	uk: { id: 'uk', link: 'sweetcrush.co.uk', name: 'United Kingdom' },
+	us: { id: 'us', link: 'mycandylove.com', name: 'My Candy Love', lang: 'English - United States' },
+	uk: { id: 'uk', link: 'sweetcrush.co.uk', name: 'Sweet Crush', lang: 'English - United Kingdom' },
+	pt: { id: 'pt', link: 'amordoce.com', name: 'Amor Doce', lang: 'Portuguese' },
+	fr: { id: 'fr', link: 'amoursucre.com', name: 'Amour Sucré', lang: 'French' },
+	tr: { id: 'tr', link: 'askito-m.com', name: 'Askitom', lang: 'Turkish' },
+	es: { id: 'es', link: 'corazondemelon.es', name: 'Corazón de Melón', lang: 'Spanish' },
+	mx: { id: 'mx', link: 'corazondebombon.com', name: 'Corazón de Bombón', lang: 'Mexican' },
+	hu: { id: 'hu', link: 'csabitasboljeles.hu', name: 'Csábításból jeles', lang: 'Hungarian' },
+	ru: { id: 'ru', link: 'sladkiiflirt.ru', name: 'Cладкий флирт', lang: 'Russian' },
+	it: { id: 'it', link: 'dolceflirt.it', name: 'Dolce Flirt', lang: 'Italian' },
+	de: { id: 'de', link: 'sweetamoris.de', name: 'Sweet Amoris', lang: 'German' },
+	ro: { id: 'ro', link: 'sweetflirt.ro', name: 'Sweet Flirt', lang: 'Romanian' },
+	pl: { id: 'pl', link: 'slodkiflirt.pl', name: 'Słodki Flirt', lang: 'Polish' },
 };
 
-const DEFAULT_REGION = getCurrentLanguage() === 'pt' ? REGIONS.br : REGIONS.us;
+const LANG = getCurrentLanguage();
+const DEFAULT_REGION = LANG in REGIONS ? REGIONS[LANG] : REGIONS.us;
 const DEFAULT_PLAYER = {
 	username: '',
 	data: null,
@@ -48,7 +48,7 @@ function loadRegion() {
 		let option = document.createElement('option');
 		option.value = data.id;
 		option.selected = data.id === region.id;
-		option.textContent = data.name + ' — ' + data.link;
+		option.textContent = `${data.name} — ${data.link} (${data.lang})`;
 
 		regions.appendChild(option);
 	}

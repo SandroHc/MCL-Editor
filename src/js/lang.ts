@@ -5,7 +5,7 @@ export const MESSAGES = {
 		build_date: 'Built on ' + APP_BUILD_DATE,
 		title: 'MyCandyLove Editor',
 		description: 'MyCandyLove Editor, create fanfics and browse through the My Candy Love illustrations!',
-		welcome: 'Welcome to the unofficial scene editor of My Candy Love! We hope you have fun!',
+		welcome: 'Welcome to the My Candy Love fanfic and illustration tool! We hope you have fun!',
 		legal: 'All assets belong to <a href="http://beemoov.com" target="_blank" rel="noreferrer">Beemoov</a>',
 		report_problem: 'Report a problem',
 		view_result: 'View Result',
@@ -37,7 +37,6 @@ export const MESSAGES = {
 
 		// Characters
 		character: 'Character',
-		use_sucrette: 'Use File',
 		add_character: 'Add Character',
 		character_details: '[Character{{id}}]\n{{name}}\n\n- Drag with SHIFT to move up and down.\n- Double-click to flip.',
 
@@ -45,7 +44,54 @@ export const MESSAGES = {
 		language: 'Language',
 		cache: 'Cache',
 		clear_characters: 'Reset Characters',
-		clear_cache: 'Reset Everything'
+		clear_cache: 'Reset Everything',
+	},
+	'es': {
+		// Miscellaneous
+		version: 'Versión ' + APP_VERSION,
+		build_date: 'Construido en ' + APP_BUILD_DATE,
+		title: 'Corazón de Melón | MyCandyLove Editor',
+		description: 'MyCandyLove Editor, crea fanfics y navega por las ilustraciones de Corazón de Melón!',
+		welcome: 'Bienvenido a la página de fanfics e ilustraciones de Corazón de Melón. ¡Deseamos que te diviertas!',
+		legal: 'Todos los contenidos pertenecen a <a href="http://beemoov.com" target="_blank" rel="noreferrer">Beemoov</a>',
+		report_problem: 'Comunicar un problema',
+		view_result: 'Ver Resultado',
+		file: 'Archivo',
+
+		// Tabs
+		account: 'Cuenta',
+		dialogue: 'Diálogo',
+		place: 'Lugar',
+		characters: 'Personajes',
+
+		// Account
+		region: 'Región',
+		username: 'Nombre',
+		username_placeholder: 'Nombre de usuario (NO su correo electrónico)',
+		change_avatar: 'Cargar avatar',
+
+		// Dialogue
+		avatar: 'Avatar',
+		characters_bubble_label: 'Burbuja de diálogo',
+		characters_bubble: 'Burbuja de diálogo',
+		answers_label: 'Respuestas',
+		answers: 'Respuestas (ENTER para separar)',
+		answers_default: 'Bienvenido al editor de Corazón de Melón!',
+		love_level: 'Nivel de Amor',
+
+		// Place
+		places: 'Lugar',
+
+		// Characters
+		character: 'Personaje',
+		add_character: 'Añadir personaje',
+		character_details: '[Personaje{{id}}]\n{{name}}\n\n- Arrastre con SHIFT para mover libremente.\n- Doble clic para girar.',
+
+		// Settings
+		language: 'Idioma',
+		cache: 'Cache',
+		clear_characters: 'Reiniciar Personajes',
+		clear_cache: 'Reiniciar Todo',
 	},
 	'pt': {
 		// Miscellaneous
@@ -53,7 +99,7 @@ export const MESSAGES = {
 		build_date: 'Versão criada em ' + APP_BUILD_DATE,
 		title: 'Amor Doce | MyCandyLove Editor',
 		description: 'MyCandyLove Editor, crie fanfics e explore as ilustrações de Amor Doce!',
-		welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Esperemos que você se divirta!',
+		welcome: 'Bem-vindo ao criador de fanfics e ilustrações do Amor Doce! Esperemos que você se divirta!',
 		legal: 'Todas as imagens pertencem a <a href="http://beemoov.com" target="_blank" rel="noreferrer">Beemoov</a>',
 		report_problem: 'Reportar problema',
 		view_result: 'Ver Resultado',
@@ -85,7 +131,6 @@ export const MESSAGES = {
 
 		// Characters
 		character: 'Personagem',
-		use_sucrette: 'Usar Ficheiro',
 		add_character: 'Adicionar Personagem',
 		character_details: '[Personagem{{id}}]\n{{name}}\n\n- Arraste enquanto pressiona SHIFT para mover livremente.\n- Duplo-clique para espelhar.',
 
@@ -101,6 +146,7 @@ export const MESSAGES = {
 const DEFAULT_LANGUAGE = 'en';
 const LANGUAGES = {
 	en: { name: 'English' },
+	es: { name: 'Español' },
 	pt: { name: 'Português' },
 };
 
