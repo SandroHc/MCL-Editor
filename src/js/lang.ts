@@ -43,7 +43,7 @@ export const MESSAGES = {
 		// Settings
 		language: 'Language',
 		cache: 'Cache',
-		clear_characters: 'Reset Characters & Place',
+		clear_characters: 'Reset Characters',
 		clear_cache: 'Reset Everything'
 	},
 	'pt': {
@@ -90,7 +90,7 @@ export const MESSAGES = {
 		// Settings
 		language: 'Idioma',
 		cache: 'Cache',
-		clear_characters: 'Limpar Personagens & Lugar',
+		clear_characters: 'Limpar Personagens',
 		clear_cache: 'Limpar Tudo'
 	}
 }

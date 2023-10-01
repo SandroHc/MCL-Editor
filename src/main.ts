@@ -3,8 +3,7 @@ import 'materialize-css/dist/js/materialize.min.js'
 import './style.scss'
 import vegito from 'vegito'
 
-import { selectedLanguage, messages } from './js/lang'
-import { loadLang } from './js/lang';
+import { loadLang, selectedLanguage, messages } from './js/lang';
 import { loadAccount } from './js/account';
 import { loadAnswers } from './js/answers';
 import { loadAvatars } from './js/avatars';

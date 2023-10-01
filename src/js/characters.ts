@@ -30,7 +30,7 @@ export function loadCharacters() {
 	addCharacterBtn.addEventListener('click', () => addCharacter());
 
 	const clearCharactersBtn = document.getElementById('clear-characters')!;
-	clearCharactersBtn.addEventListener('click', removeAll);
+	clearCharactersBtn.addEventListener('click', () => removeAll());
 
 	loadCanvas();
 }
@@ -44,7 +44,7 @@ function loadCurrent() {
 	} catch (e) {
 		characters = [];
 	}
-	console.debug('Loaded ' + characters.length + ' characters');
+	console.debug('Fetched ' + characters.length + ' characters from storage');
 
 	if (characters.length === 0) {
 		console.debug('List of characters is empty; loading defaults');
@@ -53,13 +53,13 @@ function loadCurrent() {
 			name: 'Nathaniel',
 			variation: { name: 'Normal', id: 1, checksum: 'c8fa579bddd2fcd5' },
 			pos: { x: 360, y: 0 },
-			flipped: true
+			flipped: false
 		});
 		characters.push({
 			name: 'Castiel',
 			variation: { name: 'Normal', id: 2, checksum: '7e39b3f5947b50be' },
 			pos: { x: 340, y: 0 },
-			flipped: false
+			flipped: true
 		});
 	}
 
@@ -220,7 +220,8 @@ function createCharacterSetting(id, info) {
 }
 
 export function removeAll() {
-	characters.forEach(actor => removeCharacter(actor.id));
+	const chars = document.querySelectorAll('img[data-actor]');
+	chars.forEach(char => removeCharacter(char.dataset.actor));
 }
 
 function removeCharacter(id) {

@@ -5,7 +5,10 @@ const DEFAULT_ANSWERS = messages['answers_default'];
 let answers = DEFAULT_ANSWERS;
 
 export function loadAnswers() {
-	answers = localStorage.getItem('answers') || DEFAULT_ANSWERS;
+	answers = localStorage.getItem('answers');
+	if (!answers && answers !== '') {
+		answers = DEFAULT_ANSWERS
+	}
 
 	const answersEditor = document.getElementById('answers-edit')! as HTMLTextAreaElement;
 	answersEditor.textContent = answers;
@@ -70,9 +73,5 @@ function apply() {
 }
 
 function persistAnswers() {
-	if (answers) {
-		localStorage.setItem('answers', answers);
-	} else {
-		localStorage.removeItem('answers');
-	}
+	localStorage.setItem('answers', answers);
 }
