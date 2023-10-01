@@ -37,6 +37,25 @@ function init() {
 		loadScenes();
 		settingsInit();
 	});
+
+	onResize();
+	window.addEventListener('resize', _e => onResize(), true);
+
+	function onResize() {
+		const CANVAS_WIDTH = 978;
+		const CANVAS_HEIGHT = 698;
+		const w = window.innerWidth;
+		const canvas = document.getElementById('scene')!;
+		if (w < CANVAS_WIDTH) {
+			const scale = w / CANVAS_WIDTH;
+			const pushX = (CANVAS_WIDTH - w) / 2 * (1 / scale);
+			const pushY = pushX * (CANVAS_HEIGHT / CANVAS_WIDTH);
+
+			canvas.style.transform = `scale(${scale}) translate(-${pushX}px, -${pushY}px)`;
+		} else {
+			canvas.style.transform = ''; // clear
+		}
+	}
 }
 
 function ready(fn: { (): void }) {

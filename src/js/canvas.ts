@@ -66,9 +66,7 @@ function dragUpdatePos(event, target) {
 	let y = info.pos.y + (event.dy || 0);
 
 	// Translate the element
-	target.style.webkitTransform
-		= target.style.transform
-		= 'translate(' + x + 'px, ' + y + 'px) scaleX(' + (info.flipped || false ? -1 : 1) + ')';
+	target.style.transform = `translate(${x}px, ${y}px) scaleX(${info.flipped ? -1 : 1})`;
 
 	// Update the position attributes
 	info.pos.x = x;

@@ -260,13 +260,13 @@ $zindex-3: 100200;
 #go-to-scene {
 	top: 1em;
 	right: 1em;
-	position: fixed;
+	position: absolute;
 	padding: .5em 1em;
 	text-decoration: none;
 	border-radius: 5px;
 }
 
-@media(max-width: 600px) {
+@media(max-width: 978px) {
 	html {
 		font-size: 18px;
 	}
