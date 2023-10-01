@@ -15,7 +15,7 @@ import { loadScenes } from './js/scenes';
 import { init as settingsInit } from './js/settings';
 
 function init() {
-	console.info(`[MCL] Starting up MCL editor ${APP_VERSION} with language ${selectedLanguage}`);
+	console.info(`[MCL] Starting up MCL editor ${APP_VERSION} (${APP_BUILD_DATE}) with language ${selectedLanguage}`);
 
 	document.head.getElementsByTagName('title')[0].textContent = messages['title'];
 	document.querySelector('meta[name=description]')!.setAttribute('content', messages['description']);

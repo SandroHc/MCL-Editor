@@ -2,6 +2,7 @@ export const MESSAGES = {
 	'en': {
 		// Miscellaneous
 		version: 'Version ' + APP_VERSION,
+		build_date: 'Built on ' + APP_BUILD_DATE,
 		title: 'MyCandyLove Editor',
 		description: 'MyCandyLove Editor, create fanfics and browse through the My Candy Love illustrations!',
 		welcome: 'Welcome to the unofficial scene editor of My Candy Love! We hope you have fun!',
@@ -48,6 +49,7 @@ export const MESSAGES = {
 	'pt': {
 		// Miscellaneous
 		version: 'Versão ' + APP_VERSION,
+		build_date: 'Versão criada em ' + APP_BUILD_DATE,
 		title: 'Amor Doce | MyCandyLove Editor',
 		description: 'MyCandyLove Editor, crie fanfics e explore as ilustrações de Amor Doce!',
 		welcome: 'Bem-vindo ao editor não oficial do Amor Doce! Esperemos que você se divirta!',
