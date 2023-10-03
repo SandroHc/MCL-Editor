@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://mcl.sandro.dev/sitemap.xml
